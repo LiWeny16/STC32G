@@ -1,0 +1,1 @@
+"Lib\seekfree_peripheral\SEEKFREE_PRINTF.c" XSMALL INTR2 BROWSE INCDIR(.\Lib\libraries;.\Lib\seekfree_libraries;.\Lib\seekfree_peripheral;.\User\User_h) DEBUG PRINT(.\Listings\SEEKFREE_PRINTF.lst) TABS (2) OBJECT(.\Out\SEEKFREE_PRINTF.obj)

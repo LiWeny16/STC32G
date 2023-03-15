@@ -1,0 +1,6 @@
+Build target 'STC32G12K128'
+linking...
+Program Size: data=8.0 edata+hdata=1112 xdata=0 const=451 code=19400
+creating hex file from ".\Out\main"...
+".\Out\main" - 0 Error(s), 0 Warning(s).
+Build Time Elapsed:  00:00:01
