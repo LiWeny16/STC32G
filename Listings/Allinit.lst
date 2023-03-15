@@ -1,0 +1,256 @@
+C251 COMPILER V5.60.0,  Allinit                                                            15/03/23  18:34:48  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE Allinit
+OBJECT MODULE PLACED IN .\Out\Allinit.obj
+COMPILER INVOKED BY: C:\Learning\Keil_v5\body\C251\BIN\C251.EXE User\User_c\Allinit.c XSMALL INTR2 BROWSE INCDIR(.\Lib\l
+                    -ibraries;.\Lib\seekfree_libraries;.\Lib\seekfree_peripheral;.\User\User_h) DEBUG PRINT(.\Listings\Allinit.lst) TABS(2) O
+                    -BJECT(.\Out\Allinit.obj) 
+
+stmt  level    source
+
+    1          // ¸ÃÎÄ¼şÓÃÓÚ½«¸÷²¿·Ö³õÊ¼»¯£¬²¢½«ÆäÕûºÏÎªÒ»¸öº¯ÊıAllinit£¨£©
+    2          
+    3          #include "Allinit.h"
+    4          // 1.µç¸ĞADCÄ£¿é³õÊ¼»¯º¯Êı£¨³õÊ¼»¯¸÷IO¿ÚÎªADC²ÉÑù¿Ú£¬²¢¶¨Òå²ÉÑùÆµÂÊÎªSYSclkµÄÒ»°ë£©
+    5          void ADC_all_init(void)
+    6          {
+    7   1        adc_init(ADC_P00, ADC_SYSclk_DIV_2);
+    8   1        adc_init(ADC_P01, ADC_SYSclk_DIV_2);
+    9   1        adc_init(ADC_P05, ADC_SYSclk_DIV_2);
+   10   1        adc_init(ADC_P06, ADC_SYSclk_DIV_2);
+   11   1        // adc_init(ADC_P11, ADC_SYSclk_DIV_2);
+   12   1        // adc_init(ADC_P10, ADC_SYSclk_DIV_2);
+   13   1      
+   14   1        err_steering.Err_x = 0; // ¶æ»úÆ«²î½á¹¹Ìå£¨Êµ²Î£©
+   15   1        err_steering.Err_h = 0;
+   16   1        err_steering.Err_s = 0;
+   17   1        err_steering.Err = 0;
+   18   1        err_steering.Err_last = 0;
+   19   1        err_steering.Err_x_last = 0;
+   20   1        err_steering.Err_h_last = 0;
+   21   1        err_steering.Errsum = 0;
+   22   1        err_steering.Errdif = 0;
+   23   1      
+   24   1        dg_state.L_zx_real = 0; // µç¸Ğ×´Ì¬½á¹¹Ìå£¨Êµ²Î£©
+   25   1        dg_state.L_zh_real = 0;
+   26   1        dg_state.L_zs_real = 0;
+   27   1        dg_state.L_ys_real = 0;
+   28   1        dg_state.L_yh_real = 0;
+   29   1        dg_state.L_yx_real = 0;
+   30   1      
+   31   1        dg_state.L_zx_max = 33; // ¼ì²âµ½µÄ×î´óÖµ
+   32   1        dg_state.L_zh_max = 2183;
+   33   1        dg_state.L_zs_max = 0;
+   34   1        dg_state.L_ys_max = 0;
+   35   1        dg_state.L_yh_max = 1831;
+   36   1        dg_state.L_yx_max = 1700;
+   37   1      
+   38   1        dg_state.L_zx_once = 0; // Ò»´Î¹éÒ»»¯ºó
+   39   1        dg_state.L_zh_once = 0;
+   40   1        dg_state.L_zs_once = 0;
+   41   1        dg_state.L_ys_once = 0;
+   42   1        dg_state.L_yh_once = 0;
+   43   1        dg_state.L_yx_once = 0;
+   44   1      
+   45   1        dg_state.L_zx_twice = 0; // Á½´Î¹éÒ»»¯ºó
+   46   1        dg_state.L_zh_twice = 0;
+   47   1        dg_state.L_zs_twice = 0;
+   48   1        dg_state.L_ys_twice = 0;
+   49   1        dg_state.L_yh_twice = 0;
+   50   1        dg_state.L_yx_twice = 0;
+   51   1      
+   52   1        /*
+   53   1        adc_init(ADC_P14,ADC_SYSclk_DIV_2);
+   54   1        adc_init(ADC_P15,ADC_SYSclk_DIV_2);
+   55   1        */
+   56   1        // P14¡¢P15ÎªADC¿Ú±¸ÓÃ£¬µÚÒ»°æ³ÌĞòÏÈ×¢ÊÍµô
+   57   1      }
+C251 COMPILER V5.60.0,  Allinit                                                            15/03/23  18:34:48  PAGE 2   
+
+   58          
+   59          // 2.IO¿Ú³õÊ¼»¯
+   60          void GPIO_init(void)
+   61          {
+   62   1        gpio_mode(P1_3, GPO_PP);
+   63   1        P13 = 1;
+   64   1        // °å×ÓÉÏ½«P13ÓÃ×÷ÆäËû5VÄ£¿éµÄ¹©µç£¬Ö»Òª½«P13¿ÚÉèÖÃÎªÍÆÍìÊä³ö£¬²¢¸³¸ß¼´¿ÉÎÈ¶¨Êä³ö5VµçÑ¹
+   65   1      }
+   66          
+   67          // 3.PWM³õÊ¼»¯£¨¶æ»úµç»ú·äÃùÆ÷£©
+   68          void PWM_SMB_init(void)
+   69          {
+   70   1        // pwm_init(MOTOR1_P, 17000, 5000);     //Ê¹ÓÃÒı½ÅP6.0  Êä³öPWMÆµÂÊ17000HZ   Õ¼¿Õ±ÈÎª£¨5000/10000£©£¬¼´°
+             -Ù·ÖÖ®50%µÄPWM
+   71   1        // pwm_init(MOTOR1_N, 17000, 5000);     //Ê¹ÓÃÒı½ÅP6.1  Êä³öPWMÆµÂÊ17000HZ   Õ¼¿Õ±ÈÎª£¨5000/10000£©£¬¼´°
+             -Ù·ÖÖ®50%µÄPWM
+   72   1        // MOTOR1_My_a
+   73   1        pwm_init(PWMA_CH1P_P60, 17000, 5000);
+   74   1        pwm_init(PWMA_CH2P_P62, 17000, 5000);
+   75   1        // ÒÔÉÏÁ½×éÎªµç»ú1£¬ĞèÒª»¥·´µÄPWMÇı¶¯
+   76   1        // pwm_init(MOTOR2_P, 17000, 5000);     //Ê¹ÓÃÒı½ÅP6.4  Êä³öPWMÆµÂÊ17000HZ   Õ¼¿Õ±ÈÎª£¨5000/10000£©£¬¼´°
+             -Ù·ÖÖ®50%µÄPWM
+   77   1        // pwm_init(MOTOR2_N, 17000, 5000);     //Ê¹ÓÃÒı½ÅP6.5  Êä³öPWMÆµÂÊ17000HZ   Õ¼¿Õ±ÈÎª£¨5000/10000£©£¬¼´°
+             -Ù·ÖÖ®50%µÄPWM
+   78   1        pwm_init(PWMA_CH3P_P64, 17000, 5000);
+   79   1        pwm_init(PWMA_CH4P_P66, 17000, 5000);
+   80   1      
+   81   1        // ÒÔÉÏÁ½×éÎªµç»ú2£¬ĞèÒª»¥·´µÄPWMÇı¶¯
+   82   1        pwm_init(BUZZER, 2000, 0); // Ê¹ÓÃÒı½ÅP6.3  Êä³öPWMÆµÂÊ2000HZ   Õ¼¿Õ±ÈÎª£¨0/10000£©£¬¼´°Ù·ÖÖ®0µÄPWM
+   83   1        // ÒÔÉÏÎª·äÃùÆ÷£¬³õÊ¼»¯Êä³ö2000HzÆµÂÊ¡£Õ¼¿Õ±ÈÎª0
+   84   1        pwm_init(STEERING, 50, 750); // Ê¹ÓÃÒı½ÅP7.4  Êä³öPWMÆµÂÊ50HZ   Õ¼¿Õ±ÈÎª£¨750/10000£©£¬¼´°Ù·ÖÖ®7.5£¨¸ßµç
+             -Æ½Ê±¼äÎª1.5ms£©µÄPWM£¬¶æ»ú¹éÖĞ
+   85   1        // ÒÔÉÏÎª¶æ»ú£¬¶æ»úĞèÒªÆµÂÊÒ»¶¨µÄPWMÇı¶¯£¬¿¿¸ßµçÆ½Ê±¼ä¶ÔÓ¦Æä½Ç¶È
+   86   1      }
+   87          
+   88          // 4.¶¨Ê±ÖĞ¶Ï£¨ÓÃÓÚÖ÷³ÌĞòÔËĞĞ£©³õÊ¼»¯
+   89          void PIT_init(void)
+   90          {
+   91   1        pit_timer_ms(TIM_4, 20); // Ê¹ÓÃ¼ÆÊ±Æ÷4£¬Ã¿20ms½øÈëÒ»´ÎÖĞ¶Ï
+   92   1      }
+   93          
+   94          // 5.PID³õÊ¼»¯
+   95          void PID_init(void)
+   96          {
+   97   1      
+   98   1        pid_steering.p_steering = 5;
+   99   1        pid_steering.i_steering = 5;
+  100   1        pid_steering.d_steering = 5;
+  101   1        pid_steering.imax = 5;
+  102   1        pid_steering.imin = -5;
+  103   1        pid_steering.PID_STEERING_OUT = 750;
+  104   1      
+  105   1        pid_motor.p_motor = 2;       // ÓÃÓÚ´æ·Å±ÈÀıÏµÊıp
+  106   1        pid_motor.i_motor = 0.5;     // ÓÃÓÚ´æ·Å»ı·ÖÏµÊıi
+  107   1        pid_motor.d_motor = 1;       // ÓÃÓÚ´æ·ÅÎ¢·ÖÏµÊıd
+  108   1        pid_motor.PID_MOTOR_L_OUT = 0; // ÓÃÓÚ´æ·Å×îÖÕÊä³ö¸øµç»úµÄ×óÂÖPWMÔöÁ¿Öµ
+  109   1        pid_motor.PID_MOTOR_R_OUT = 0; // ÓÃÓÚ´æ·Å×îÖÕÊä³ö¸øµç»úµÄÓÒÂÖPWMÔöÁ¿Öµ
+  110   1      }
+  111          
+  112          // 6.¶æ»ú³õÊ¼»¯
+  113          void Steering_init(void)
+  114          {
+  115   1        PWM_Steering_now = 750;
+  116   1        PWM_Steering_Max = 850; // ×î´ó×îĞ¡ÖµÎªÊµ²â²ÎÊı
+  117   1        PWM_Steering_Min = 650;
+  118   1      }
+C251 COMPILER V5.60.0,  Allinit                                                            15/03/23  18:34:48  PAGE 3   
+
+  119          
+  120          // 7.µç»ú³õÊ¼»¯
+  121          void Motor_init(void)
+  122          {
+  123   1        speed_state.Outgar_speed_L_ai = 0; // ³ö¿â×ó
+  124   1        speed_state.Outgar_speed_R_ai = 0; // ³ö¿âÓÒ
+  125   1      
+  126   1        speed_state.Strai_speed_L_ai = MFBL * 0.1; // Ö±µÀ×ó
+  127   1        speed_state.Strai_speed_R_ai = MFBL * 0.1; // Ö±µÀÓÒ
+  128   1      
+  129   1        speed_state.Cur_speed_L_ai = 0; // ÍäµÀ×ó
+  130   1        speed_state.Cur_speed_R_ai = 0; // ÍäµÀÓÒ
+  131   1      
+  132   1        speed_state.Cross_speed_L_ai = 0; // Ê®×Ö×ó
+  133   1        speed_state.Cross_speed_R_ai = 0; // Ê®×ÖÓÒ
+  134   1      
+  135   1        speed_state.Rampin_speed_L_ai = 0; // ÉÏÆÂµÀ×ó
+  136   1        speed_state.Rampin_speed_R_ai = 0; // ÉÏÆÂµÀÓÒ
+  137   1      
+  138   1        speed_state.Ramp_speed_L_ai = 0; // ÆÂµÀ×ó
+  139   1        speed_state.Ramp_speed_R_ai = 0; // ÆÂµÀÓÒ
+  140   1      
+  141   1        speed_state.Ring_speed_L_ai = 0; // Ô²»·ÄÚ²¿×ó
+  142   1        speed_state.Ring_speed_R_ai = 0; // Ô²»·ÄÚ²¿ÓÒ
+  143   1      
+  144   1        speed_state.Ringin_speed_L_ai = 0; // ½øÔ²»·×ó
+  145   1        speed_state.Ringin_speed_R_ai = 0; // ½øÔ²»·ÓÒ
+  146   1      
+  147   1        speed_state.Ringout_speed_L_ai = 0; // ³öÔ²»·×ó
+  148   1        speed_state.Ringout_speed_R_ai = 0; // ³öÔ²»·ÓÒ
+  149   1      
+  150   1        speed_state.Three_speed_L_ai = 0; // Èı²í×ó
+  151   1        speed_state.Three_speed_R_ai = 0; // Èı²íÓÒ
+  152   1      
+  153   1        speed_state.Threein_speed_L_ai = 0; // ½øÈı²í×ó
+  154   1        speed_state.Threein_speed_R_ai = 0; // ½øÈı²íÓÒ
+  155   1      
+  156   1        speed_now.speed_L = 0;    // ×óÂÖµ±Ç°ËÙ¶ÈÖµ
+  157   1        speed_now.speed_L_ai = 0; // ×óÂÖÄ¿±êÖµ
+  158   1        speed_now.speed_R = 0;    // ÓÒÂÖµ±Ç°ËÙ¶ÈÖµ
+  159   1        speed_now.speed_R_ai = 0; // ÓÒÂÖÄ¿±êÖµ
+  160   1      
+  161   1        PWM_Motor_Max = 9000;
+  162   1        PWM_Motor_Min = 1000;
+  163   1        PWM_Motor_L_now = 2000;
+  164   1        PWM_Motor_R_now = 2000;
+  165   1      }
+  166          
+  167          // 8.±àÂëÆ÷³õÊ¼»¯£¨´ø´®¿Ú£©
+  168          void Encoder_init(void)
+  169          {
+  170   1        ctimer_count_init(Encoder_L);
+  171   1        ctimer_count_init(Encoder_R);
+  172   1        err_motor.err_L_m = 0;         // ¸ù¾İµ±Ç°½âÂëÆ÷Êä³ö¼ÆËã³öµÄ×óÂÖÆ«²îÖµ
+  173   1        err_motor.err_last_L_m = 0;      // ÓÃÓÚ´æ·ÅÉÏÒ»´Î¼ÆËã³öµÄ×óÂÖÆ«²îÖµ
+  174   1        err_motor.err_past_L_m = 0;      // ÓÃÓÚ´æ·ÅÉÏÉÏÒ»´Î¼ÆËã³öµÄ×óÂÖÆ«²îÖµ
+  175   1        err_motor.err_derivative_L_m = 0;  // ÓÃÓÚ´æ·Å×óÂÖ±¾´ÎÆ«²îÓëÉÏ´ÎÆ«²îÖ®²î
+  176   1        err_motor.err_derivative2_L_m = 0; // ÓÃÓÚ´æ·Å×óÂÖÉÏ´ÎÆ«²îÓëÉÏÉÏ´ÎÆ«²îÖ®²î
+  177   1      
+  178   1        err_motor.err_R_m = 0;         // ¸ù¾İµ±Ç°½âÂëÆ÷Êä³ö¼ÆËã³öµÄÓÒÂÖÆ«²îÖµ
+  179   1        err_motor.err_last_R_m = 0;      // ÓÃÓÚ´æ·ÅÉÏÒ»´Î¼ÆËã³öµÄÓÒÂÖÆ«²îÖµ
+  180   1        err_motor.err_past_R_m = 0;      // ÓÃÓÚ´æ·ÅÉÏÉÏÒ»´Î¼ÆËã³öµÄÓÒÂÖÆ«²îÖµ
+  181   1        err_motor.err_derivative_R_m = 0;  // ÓÃÓÚ´æ·ÅÓÒÂÖ±¾´ÎÆ«²îÓëÉÏ´ÎÆ«²îÖ®²î
+  182   1        err_motor.err_derivative2_R_m = 0; // ÓÃÓÚ´æ·ÅÓÒÂÖÉÏ´ÎÆ«²îÓëÉÏÉÏ´ÎÆ«²îÖ®²î
+  183   1      }
+  184          // 9.Â·¿öÅĞ¶Ï±êÖ¾Î»³õÊ¼»¯
+C251 COMPILER V5.60.0,  Allinit                                                            15/03/23  18:34:48  PAGE 4   
+
+  185          void FLAG_init(void)
+  186          {
+  187   1      }
+  188          
+  189          // 10.ÎŞÏß´®¿Ú³õÊ¼»¯
+  190          void WIRELESS_init(void)
+  191          {
+  192   1        // seekfree_wireless_init();
+  193   1      }
+  194          
+  195          // 11.×ÜÌå³õÊ¼»¯
+  196          void ALL_init(void)
+  197          {
+  198   1      
+  199   1        ADC_all_init();
+  200   1        GPIO_init();
+  201   1        PWM_SMB_init();
+  202   1        PIT_init();
+  203   1        PID_init();
+  204   1        Steering_init();
+  205   1        Motor_init();
+  206   1        Encoder_init();
+  207   1        FLAG_init();
+  208   1      //  seekfree_wireless_init();
+  209   1        // WIRELESS_init();
+  210   1      }
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =       649     ------
+  ecode size           =    ------     ------
+  data size            =    ------     ------
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =    ------     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------     ------
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =    ------     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

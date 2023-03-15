@@ -1,0 +1,1 @@
+"User\User_c\Variable.c" XSMALL INTR2 BROWSE INCDIR(.\Lib\libraries;.\Lib\seekfree_libraries;.\Lib\seekfree_peripheral;.\User\User_h) DEBUG PRINT(.\Listings\Variable.lst) TABS (2) OBJECT(.\Out\Variable.obj)

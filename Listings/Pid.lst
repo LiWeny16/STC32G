@@ -1,0 +1,63 @@
+C251 COMPILER V5.60.0,  Pid                                                                15/03/23  18:34:48  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE Pid
+OBJECT MODULE PLACED IN .\Out\Pid.obj
+COMPILER INVOKED BY: C:\Learning\Keil_v5\body\C251\BIN\C251.EXE User\User_c\Pid.c XSMALL INTR2 BROWSE INCDIR(.\Lib\libra
+                    -ries;.\Lib\seekfree_libraries;.\Lib\seekfree_peripheral;.\User\User_h) DEBUG PRINT(.\Listings\Pid.lst) TABS(2) OBJECT(.\
+                    -Out\Pid.obj) 
+
+stmt  level    source
+
+    1          //¸ÃÎÄ¼þÓÃÓÚÊ¹ÓÃ¶æ»úÆ«²î½á¹¹ÌåºÍµç»úÆ«²î½á¹¹Ìå¼ÆËã¶æ»úPIDÊä³öÖµºÍµç»úPIDÔöÁ¿Öµ
+    2          
+    3          #include "Pid.h"
+    4          float constrain_float(float amt, float low, float high)//ÏÞ·ùÓÃ£¬lowºÍhighÎªÉÏÏÂÏÞ
+    5          {
+    6   1         return ((amt)<(low)?(low):((amt)>(high)?(high):(amt)));
+    7   1      }
+    8          
+    9          void Pid_Steering_Calculate(volatile Err_Steering* err_steering , volatile PID_Steering* pid_steering)//¶
+             -æ»úÎ»ÖÃÊ½PIDÊä³öÖµ
+   10          {
+   11   1      
+   12   1          constrain_float(err_steering->Errsum, pid_steering->imax, pid_steering->imin);
+   13   1      //Î»ÖÃÊ½PID»ý·ÖÏîÏÞ·ù
+   14   1        
+   15   1          pid_steering->PID_STEERING_OUT = (pid_steering->p_steering * err_steering-> Err) + (pid_steering->i_s
+             -teering * err_steering-> Errsum) + (pid_steering->d_steering * err_steering-> Errdif);
+   16   1      //Î»ÖÃÊ½PIDÊä³ö¼ÆËã
+   17   1      }
+   18          
+   19          void Pid_Motor_Calculate(Err_Motor* err_motor,PID_Motor* pid_motor)//µç»úÔöÁ¿Ê½PIDÊä³öÔöÁ¿
+   20          {
+   21   1        pid_motor->PID_MOTOR_L_OUT = (pid_motor->p_motor * err_motor->err_derivative_L_m) + (pid_motor->i_motor 
+             -* err_motor->err_L_m) + (pid_motor->d_motor * err_motor->err_derivative2_L_m);
+   22   1        pid_motor->PID_MOTOR_R_OUT = (pid_motor->p_motor * err_motor->err_derivative_R_m) + (pid_motor->i_motor 
+             -* err_motor->err_R_m) + (pid_motor->d_motor * err_motor->err_derivative2_R_m);
+   23   1        
+   24   1      }
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =       359     ------
+  ecode size           =    ------     ------
+  data size            =    ------     ------
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =    ------     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------          8
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =    ------     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

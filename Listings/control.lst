@@ -1,0 +1,88 @@
+C251 COMPILER V5.60.0,  control                                                            15/03/23  18:34:48  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE control
+OBJECT MODULE PLACED IN .\Out\control.obj
+COMPILER INVOKED BY: C:\Learning\Keil_v5\body\C251\BIN\C251.EXE User\User_c\control.c XSMALL INTR2 BROWSE INCDIR(.\Lib\l
+                    -ibraries;.\Lib\seekfree_libraries;.\Lib\seekfree_peripheral;.\User\User_h) DEBUG PRINT(.\Listings\control.lst) TABS(2) O
+                    -BJECT(.\Out\control.obj) 
+
+stmt  level    source
+
+    1          #include "control.h"
+    2          
+    3          void STEERING_Control(PID_Steering *pid_steering)
+    4          {
+    5   1        pid_steering->PID_STEERING_OUT = constrain_float(pid_steering->PID_STEERING_OUT, PWM_Steering_Min, PWM_S
+             -teering_Max);//Çı¶¯ÏŞ·ù
+    6   1        pwm_duty(STEERING,(pid_steering->PID_STEERING_OUT+750));//¶æ»úÇı¶¯
+    7   1      }
+    8          
+    9          void MOTOR_Control(PID_Motor *pid_motor)
+   10          {
+   11   1        pid_motor->PID_MOTOR_L_OUT = pid_motor->PID_MOTOR_L_OUT+PWM_Motor_L_now;
+   12   1        pid_motor->PID_MOTOR_R_OUT = pid_motor->PID_MOTOR_R_OUT+PWM_Motor_R_now;
+   13   1        
+   14   1        pid_motor->PID_MOTOR_L_OUT = constrain_float(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max);/
+             -/Çı¶¯ÏŞ·ù
+   15   1        pid_motor->PID_MOTOR_R_OUT = constrain_float(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
+   16   1        
+   17   1        //pwm_duty(MOTOR1_P,pid_motor->PID_MOTOR_L_OUT);//×óµç»úÇı¶¯
+   18   1        //pwm_duty(MOTOR1_N,pid_motor->PID_MOTOR_L_OUT);
+   19   1        pwm_duty(PWMA_CH1P_P60,(uint32)0);//×óµç»úÇı¶¯
+   20   1        pwm_duty(PWMA_CH2P_P62,pid_motor->PID_MOTOR_L_OUT/4);
+   21   1        PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT;//×óµç»úPWM¸üĞÂ
+   22   1        
+   23   1        pwm_duty(PWMA_CH3P_P64,(uint32)0);//ÓÒµç»úÇı¶¯
+   24   1        pwm_duty(PWMA_CH4P_P66,pid_motor->PID_MOTOR_R_OUT/4);
+   25   1        //pwm_duty(MOTOR2_P,pid_motor->PID_MOTOR_R_OUT);//ÓÒµç»úÇı¶¯
+   26   1        //pwm_duty(MOTOR2_N,pid_motor->PID_MOTOR_R_OUT);
+   27   1        PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT;//ÓÒµç»úPWM¸üĞÂ
+   28   1        
+   29   1      }
+   30          
+   31          void Control_All()
+   32          {
+   33   1        //ÒÔÏÂÎªµÀÂ·ÅĞ¶Ï²¿·Ö
+   34   1        road = road_judge(&dg_state);//¸ù¾İµÀÂ·×´¿ö·µ»ØµÀÂ·½á¹¹Ìå
+   35   1        
+   36   1        //ÒÔÏÂÎª¶æ»úÇı¶¯²¿·Ö
+   37   1        calculate_s(&dg_state,&err_steering);//¼ÆËãÆ«²îÖµ£¬Ğ´ÈëÊµ²Î£¨ÔÚallinitÊ±µç¸ĞÒÑ¾­¿ªÊ¼²É¼¯adcĞÅºÅ£©
+   38   1        Pid_Steering_Calculate(&err_steering , &pid_steering);//¼ÆËãpidÊä³öÖµ£¬²¢Ğ´ÈëÊµ²Î
+   39   1        STEERING_Control(&pid_steering);//´ÓpidÊä³öµ½Êµ¼Ê¶æ»úÇı¶¯
+   40   1        
+   41   1        //ÒÔÏÂÎªµç»úÇı¶¯²¿·Ö
+   42   1        speedout(road,&speed_now,&speed_state);//¸ù¾İµÀÂ·Çé¿ö½«ËÙ¶È×´Ì¬½á¹¹ÌåÖĞµÄÒ»×éÉè¶¨Öµ¸³¸øµ±Ç°ËÙ¶È½á¹¹ÌåÖĞµ
+             -ÄÄ¿±êÖµ
+   43   1        speed_cal(&speed_now);//¸ù¾İ±àÂëÆ÷Êı¾İ¼ÆËãËÙ¶ÈÖµ£¬²¢½«Æä¸³¸øµ±Ç°ËÙ¶È½á¹¹ÌåÖĞµÄµ±Ç°ËÙ¶ÈÖµ
+   44   1        calculate_err_m(&speed_now,&err_motor);//¸ù¾İ±àÂëÆ÷ÊıÖµ¼ÆËãÆ«²îÖµ£¬²¢¸üĞÂÆ«²îÖµ½á¹¹ÌåÖĞlastÁ¿,½á¹û±£´æÔÚ
+             -µç»úÆ«²îÖµ½á¹¹ÌåÖĞ
+   45   1        Pid_Motor_Calculate(&err_motor,&pid_motor);//ÓÉµç»úÆ«²î£¨ÓÉ±àÂëÆ÷·´Ó¦£©½á¹¹Ìå¼ÆËãµç»úPIDÊä³öÔöÁ¿
+   46   1        MOTOR_Control(&pid_motor);//´ÓpidÊä³öµ½Êµ¼Êµç»úÇı¶¯
+   47   1      }
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =       437     ------
+  ecode size           =    ------     ------
+  data size            =    ------     ------
+C251 COMPILER V5.60.0,  control                                                            15/03/23  18:34:48  PAGE 2   
+
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =    ------     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------     ------
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =    ------     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

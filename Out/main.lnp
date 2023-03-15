@@ -32,7 +32,15 @@
 ".\Out\SEEKFREE_WIRELESS.obj",
 ".\Out\SEEKFREE_WIRELESS_CH573.obj",
 ".\Out\main.obj",
-".\Out\isr.obj" 
+".\Out\isr.obj",
+".\Out\adc.obj",
+".\Out\Allinit.obj",
+".\Out\control.obj",
+".\Out\encoder.obj",
+".\Out\Pid.obj",
+".\Out\road.obj",
+".\Out\ui.obj",
+".\Out\Variable.obj" 
 TO ".\Out\main" 
 PRINT(".\Listings\main.map") CASE DISABLEWARNING (16,57) 
 REMOVEUNUSED 

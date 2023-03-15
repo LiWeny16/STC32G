@@ -1,0 +1,45 @@
+C251 COMPILER V5.60.0,  road                                                               15/03/23  18:34:48  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE road
+OBJECT MODULE PLACED IN .\Out\road.obj
+COMPILER INVOKED BY: C:\Learning\Keil_v5\body\C251\BIN\C251.EXE User\User_c\road.c XSMALL INTR2 BROWSE INCDIR(.\Lib\libr
+                    -aries;.\Lib\seekfree_libraries;.\Lib\seekfree_peripheral;.\User\User_h) DEBUG PRINT(.\Listings\road.lst) TABS(2) OBJECT(
+                    -.\Out\road.obj) 
+
+stmt  level    source
+
+    1          //该文件用于对道路情况进行判断，并将相应标志位赋值
+    2          
+    3          
+    4          #include "road.h"
+    5          Road road_judge(DG_State* dg_sta)
+    6          {
+    7   1        if(1)
+    8   1        return Straight;
+    9   1      }
+*** WARNING C47 IN LINE 5 OF User\User_c\road.c: 'dg_sta': unreferenced parameter
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =         5     ------
+  ecode size           =    ------     ------
+  data size            =    ------     ------
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =    ------     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------     ------
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =    ------     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

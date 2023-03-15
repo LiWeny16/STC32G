@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  zf_adc                                                             15/03/23  16:03:46  PAGE 1   
+C251 COMPILER V5.60.0,  zf_adc                                                             15/03/23  18:34:44  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE zf_adc
@@ -32,7 +32,7 @@ stmt  level    source
    19          
    20          
    21          #include "zf_adc.h"
-   22          #include "intrins.h"
+   22          // #include "intrins.h"
    23          
    24          
    25          //-------------------------------------------------------------------------------------------------------
@@ -66,7 +66,7 @@ stmt  level    source
    50   2        }
    51   1      
    52   1        ADCCFG |= speed&0x0F;     //ADC时钟频率SYSclk/2/speed&0x0F;
-C251 COMPILER V5.60.0,  zf_adc                                                             15/03/23  16:03:46  PAGE 2   
+C251 COMPILER V5.60.0,  zf_adc                                                             15/03/23  18:34:44  PAGE 2   
 
    53   1        
    54   1        ADCCFG |= 1<<5;         //转换结果右对齐。 ADC_RES 保存结果的高 2 位， ADC_RESL 保存结果的低 8 位。
@@ -106,18 +106,46 @@ stmt  level    source
    86   1      
    87   1        return adc_value;
    88   1      }
+   89          
+   90          
+   91          /*************************************************************************
+   92          *  函数名称：unsigned short ADC_ReadAverage(ADCN_enum  adcn,unsigned char count,ADCRES_enum resolution)
+   93          *  功能说明：ADC多次采集取平均值
+   94          *  参数说明：adcn    : ADC通道
+   95          *  参数说明：count  : 采集次数
+   96             参数说明：resolution  : 分辨率
+   97          *  函数返回：ADC数值
+   98          *  备    注：
+   99          *************************************************************************/
+  100          unsigned short ADC_ReadAverage(ADCN_enum  adcn,unsigned char count,ADCRES_enum resolution)
+  101          {
+  102   1        unsigned short i = 0;
+  103   1        unsigned long sum = 0;
+  104   1        unsigned long dianga,dian_min=0,dian_max=0;
+  105   1        for(i = 0; i < count; i++)
+  106   1        {
+  107   2            dianga=adc_once(adcn,resolution);
+  108   2          sum += dianga;
+  109   2          if(dian_min==0) dian_min=dianga;
+  110   2          if(dian_min>=dianga) dian_min=dianga;
+  111   2          if(dianga>=dian_max) dian_max=dianga;
+  112   2        }
+  113   1        return  (unsigned short)((sum-dian_max-dian_min)/(count-2));//返回转换结果
+  114   1      }
 
+
+C251 COMPILER V5.60.0,  zf_adc                                                             15/03/23  18:34:44  PAGE 3   
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       140     ------
+  code size            =       297     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
   xdata size           =    ------     ------
   xdata-const size     =    ------     ------
-  edata size           =    ------     ------
+  edata size           =    ------         19
   bit size             =    ------     ------
   ebit size            =    ------     ------
   bitaddressable size  =    ------     ------

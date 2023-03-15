@@ -1,0 +1,60 @@
+C251 COMPILER V5.60.0,  Variable                                                           15/03/23  18:34:49  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE Variable
+OBJECT MODULE PLACED IN .\Out\Variable.obj
+COMPILER INVOKED BY: C:\Learning\Keil_v5\body\C251\BIN\C251.EXE User\User_c\Variable.c XSMALL INTR2 BROWSE INCDIR(.\Lib\
+                    -libraries;.\Lib\seekfree_libraries;.\Lib\seekfree_peripheral;.\User\User_h) DEBUG PRINT(.\Listings\Variable.lst) TABS(2)
+                    - OBJECT(.\Out\Variable.obj) 
+
+stmt  level    source
+
+    1          //该文件用于对各个需要用到的变量进行赋值
+    2          
+    3          
+    4          #include "Variable.h"
+    5          
+    6          volatile Err_Steering err_steering;//舵机偏差结构体（实参）
+    7          volatile DG_State dg_state;//电感状态结构体（实参）
+    8          volatile PID_Steering pid_steering;//舵机PID结构体（实参）
+    9          volatile uint16  PWM_Steering_now;//当前舵机占空比
+   10          volatile uint16  PWM_Steering_Max;//舵机最大占空比
+   11          volatile uint16  PWM_Steering_Min;//舵机最小占空比
+   12          
+   13          
+   14          
+   15          volatile SPEED_state speed_state;//电机速度状态结构体，用于存放不同路况时的目标速度（实参）
+   16          volatile SPEED_now speed_now;//电机当前速度结构体，用于存放左右轮目标速度和当前速度（实参）
+   17          volatile Err_Motor err_motor;//电机偏差结构体（实参）
+   18          volatile PID_Motor pid_motor;//电机PID结构体（实参）
+   19          volatile uint16  PWM_Motor_Max;//电机最大占空比
+   20          volatile uint16  PWM_Motor_Min;//电机最小占空比
+   21          volatile uint16  PWM_Motor_L_now;//当前左电机占空比
+   22          volatile uint16  PWM_Motor_R_now;//当前右电机占空比
+   23          
+   24          
+   25          volatile Road road;//道路判断结构体
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =    ------     ------
+  ecode size           =    ------     ------
+  data size            =    ------     ------
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =    ------     ------
+  xdata-const size     =    ------     ------
+  edata size           =       312     ------
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =    ------     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

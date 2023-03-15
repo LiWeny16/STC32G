@@ -19,7 +19,7 @@
 
 
 #include "zf_adc.h"
-#include "intrins.h"
+// #include "intrins.h"
 
 
 //-------------------------------------------------------------------------------------------------------------------
@@ -85,4 +85,30 @@ uint16 adc_once(ADCN_enum adcn,ADCRES_enum resolution)
 	
 
 	return adc_value;
+}
+
+
+/*************************************************************************
+*  函数名称：unsigned short ADC_ReadAverage(ADCN_enum  adcn,unsigned char count,ADCRES_enum resolution)
+*  功能说明：ADC多次采集取平均值
+*  参数说明：adcn    : ADC通道
+*  参数说明：count  : 采集次数
+   参数说明：resolution  : 分辨率
+*  函数返回：ADC数值
+*  备    注：
+*************************************************************************/
+unsigned short ADC_ReadAverage(ADCN_enum  adcn,unsigned char count,ADCRES_enum resolution)
+{
+	unsigned short i = 0;
+	unsigned long sum = 0;
+	unsigned long dianga,dian_min=0,dian_max=0;
+	for(i = 0; i < count; i++)
+	{
+	    dianga=adc_once(adcn,resolution);
+		sum += dianga;
+		if(dian_min==0) dian_min=dianga;
+		if(dian_min>=dianga) dian_min=dianga;
+		if(dianga>=dian_max) dian_max=dianga;
+	}
+	return 	(unsigned short)((sum-dian_max-dian_min)/(count-2));//返回转换结果
 }

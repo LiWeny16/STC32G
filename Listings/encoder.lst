@@ -1,0 +1,129 @@
+C251 COMPILER V5.60.0,  encoder                                                            15/03/23  18:34:48  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE encoder
+OBJECT MODULE PLACED IN .\Out\encoder.obj
+COMPILER INVOKED BY: C:\Learning\Keil_v5\body\C251\BIN\C251.EXE User\User_c\encoder.c XSMALL INTR2 BROWSE INCDIR(.\Lib\l
+                    -ibraries;.\Lib\seekfree_libraries;.\Lib\seekfree_peripheral;.\User\User_h) DEBUG PRINT(.\Listings\encoder.lst) TABS(2) O
+                    -BJECT(.\Out\encoder.obj) 
+
+stmt  level    source
+
+    1          //¸ÃÎÄ¼þÓÃÓÚ½«Ê¹ÓÃ±àÂëÆ÷²É¼¯µ½µÄÊý¾Ý×ª»¯ÎªËÙ¶È£¬²¢ÓëÆÚÍûËÙ¶È½øÐÐ±È½Ï£¬¼ÆËãµç»úÆ«²îÖµ£¬²¢½«ÏàÓ¦Êý¾ÝÂ¼Èëµç»
+             -úÆ«²î½á¹¹ÌåÖÐ
+    2          
+    3          #include "encoder.h"
+    4          
+    5          void speedout(Road road,SPEED_now* speed_now,SPEED_state* speed_state)//¸ù¾ÝÂ·¿öÑ¡ÔñÄ¿±êËÙ¶È²¢½«Æä¸³¸øµ±Ç
+             -°ËÙ¶È½á¹¹Ìå
+    6          {
+    7   1        switch(road)
+    8   1        {
+    9   2          case(Straight)://Ö±µÀ
+   10   2          speed_now-> speed_L_ai = speed_state->Strai_speed_L_ai;
+   11   2          speed_now-> speed_R_ai = speed_state->Strai_speed_R_ai;
+   12   2          break;
+   13   2          
+   14   2          case(Curve)://ÍäµÀ
+   15   2          speed_now-> speed_L_ai = speed_state->Cur_speed_L_ai;
+   16   2          speed_now-> speed_R_ai = speed_state->Cur_speed_R_ai;
+   17   2          break;
+   18   2          
+   19   2          default://±ðµÄ
+   20   2          speed_now-> speed_L_ai = speed_state->Strai_speed_L_ai;
+   21   2          speed_now-> speed_R_ai = speed_state->Strai_speed_R_ai;
+   22   2          break;
+   23   2        }
+   24   1      }
+   25          
+   26          void speed_cal(SPEED_now* speed_now)//Í¨¹ý±àÂëÆ÷µÄÊý¾Ý¼ÆËãËÙ¶È£¬²¢½«ÆäÐ´Èëµ±Ç°ËÙ¶È½á¹¹Ìå
+   27          {
+   28   1        uint32 Speed_L = 0;
+   29   1        uint32 Speed_R = 0;
+   30   1        uint32 dat_L = 0 ;
+   31   1        uint32 dat_R = 0 ;
+   32   1        if(DIR_L == 1)//×óÂÖËÙ¶È
+   33   1          {
+   34   2            dat_L = ctimer_count_read(Encoder_L);
+   35   2            Speed_L = MFBL*(dat_L/(CONTROL_T*DECO));//ÓÃ±àÂëÆ÷ÔÚÖÐ¶Ï¼ä¸ôÖ®ÄÚµÄ¶ÁÊý³ýÒÔÖ´ÐÐ³ÌÐòµÄÖÐ¶Ï¼ä¸ô¼°Ò»Ã×¶ÔÓ¦
+             -µÄÂö³åÊýÀ´±íÊ¾µ±Ç°ËÙ¶È(m/s),ÒÑ³ËPID·Ö±æÂÊ
+   36   2            //Speed_L = dat_L;
+   37   2          }
+   38   1          else
+   39   1          {
+   40   2            dat_L = ctimer_count_read(Encoder_L) * -1;
+   41   2          //  Speed_L = (MFBL*(dat_L/(CONTROL_T*DECO))) * -1;//ÓÃ±àÂëÆ÷ÔÚÖÐ¶Ï¼ä¸ôÖ®ÄÚµÄ¶ÁÊý³ýÒÔÖ´ÐÐ³ÌÐòµÄÖÐ¶Ï¼ä¸ô¼
+             -°Ò»Ã×¶ÔÓ¦µÄÂö³åÊýÀ´±íÊ¾µ±Ç°ËÙ¶È(m/s),ÒÑ³ËPID·Ö±æÂÊ
+   42   2            Speed_L = dat_L;
+   43   2          }
+   44   1      
+   45   1          speed_now->speed_L = Speed_L;
+   46   1          
+   47   1          
+   48   1        if(DIR_R == 0)//ÓÒÂÖËÙ¶È
+   49   1          {
+   50   2            dat_R = ctimer_count_read(Encoder_R);
+   51   2          //  Speed_R = MFBL*(dat_R/(CONTROL_T*DECO));//ÓÃ±àÂëÆ÷ÔÚÖÐ¶Ï¼ä¸ôÖ®ÄÚµÄ¶ÁÊý³ýÒÔÖ´ÐÐ³ÌÐòµÄÖÐ¶Ï¼ä¸ô¼°Ò»Ã×¶Ô
+             -Ó¦µÄÂö³åÊýÀ´±íÊ¾µ±Ç°ËÙ¶È(m/s),ÒÑ³ËPID·Ö±æÂÊ
+   52   2            Speed_R = dat_R;
+C251 COMPILER V5.60.0,  encoder                                                            15/03/23  18:34:48  PAGE 2   
+
+   53   2          }
+   54   1          else
+   55   1          {
+   56   2            dat_R = ctimer_count_read(Encoder_R) * -1;
+   57   2            Speed_R = (MFBL*(dat_R/(CONTROL_T*DECO))) * -1;//ÓÃ±àÂëÆ÷ÔÚÖÐ¶Ï¼ä¸ôÖ®ÄÚµÄ¶ÁÊý³ýÒÔÖ´ÐÐ³ÌÐòµÄÖÐ¶Ï¼ä¸ô¼°Ò
+             -»Ã×¶ÔÓ¦µÄÂö³åÊýÀ´±íÊ¾µ±Ç°ËÙ¶È(m/s),ÒÑ³ËPID·Ö±æÂÊ
+   58   2            //Speed_R = dat_R;
+   59   2          }
+   60   1      
+   61   1          speed_now->speed_R = Speed_R;
+   62   1          ctimer_count_clean(Encoder_R);
+   63   1          ctimer_count_clean(Encoder_L);
+   64   1      }
+   65          
+   66          
+   67          void calculate_err_m(SPEED_now* speed_now,Err_Motor* err_Mot)//Í¨¹ý×óÂÖºÍÓÒÂÖËÙ¶È¼ÆËãËùÐèµÄÔöÁ¿Ê½PIDÎó²îÖ
+             -µ£¬½«ÆäÐ´Èëµç»úÎó²î½á¹¹Ìå£¬²¢¸üÐÂÏàÓ¦µÄËùÐèÎó²îÖµ
+   68          {
+   69   1        err_Mot->err_L_m = speed_now->speed_L_ai - speed_now->speed_L;
+   70   1        err_Mot->err_R_m = speed_now->speed_R_ai - speed_now->speed_R;
+   71   1        
+   72   1        err_Mot->err_derivative_L_m = err_Mot->err_L_m - err_Mot->err_last_L_m;//±¾´ÎÎó²îÓëÉÏ´ÎÎó²îÖ®²î
+   73   1        err_Mot->err_derivative_R_m = err_Mot->err_R_m - err_Mot->err_last_R_m;
+   74   1        
+   75   1        err_Mot->err_derivative2_L_m = err_Mot->err_last_L_m - err_Mot->err_past_L_m;//ÉÏ´ÎÎó²îºÍÉÏÉÏ´ÎÎó²îÖ®²î
+   76   1        err_Mot->err_derivative2_R_m = err_Mot->err_last_R_m - err_Mot->err_past_R_m;
+   77   1        
+   78   1        err_Mot->err_past_L_m = err_Mot->err_last_L_m;
+   79   1        err_Mot->err_last_L_m = err_Mot->err_L_m;//×óÂÖÊý¾Ý¸üÐÂ
+   80   1        
+   81   1        err_Mot->err_past_R_m = err_Mot->err_last_R_m;
+   82   1        err_Mot->err_last_R_m = err_Mot->err_R_m;//ÓÒÂÖÊý¾Ý¸üÐÂ
+   83   1        
+   84   1      }
+   85          
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =       506     ------
+  ecode size           =    ------     ------
+  data size            =    ------     ------
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =    ------     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------         20
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =    ------     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

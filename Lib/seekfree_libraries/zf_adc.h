@@ -80,6 +80,7 @@ typedef enum    // Ã¶¾ÙADCÍ¨µÀ
 
 void adc_init(ADCN_enum adcn,ADC_SPEED_enum speed);
 uint16 adc_once(ADCN_enum adcn,ADCRES_enum resolution);
+unsigned short ADC_ReadAverage(ADCN_enum  adcn,unsigned char count,ADCRES_enum resolution);
 //uint16 adc_mean_filter(ADCN_enum adcn, uint8 count);
 
 

@@ -689,6 +689,46 @@
               <FileType>1</FileType>
               <FilePath>.\User\User_c\isr.c</FilePath>
             </File>
+            <File>
+              <FileName>adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\User_c\adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>Allinit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\User_c\Allinit.c</FilePath>
+            </File>
+            <File>
+              <FileName>control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\User_c\control.c</FilePath>
+            </File>
+            <File>
+              <FileName>encoder.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\User_c\encoder.c</FilePath>
+            </File>
+            <File>
+              <FileName>Pid.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\User_c\Pid.c</FilePath>
+            </File>
+            <File>
+              <FileName>road.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\User_c\road.c</FilePath>
+            </File>
+            <File>
+              <FileName>ui.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\User_c\ui.c</FilePath>
+            </File>
+            <File>
+              <FileName>Variable.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\User_c\Variable.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -698,6 +738,46 @@
               <FileName>isr.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\User_h\isr.h</FilePath>
+            </File>
+            <File>
+              <FileName>adc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\User_h\adc.h</FilePath>
+            </File>
+            <File>
+              <FileName>Allinit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\User_h\Allinit.h</FilePath>
+            </File>
+            <File>
+              <FileName>control.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\User_h\control.h</FilePath>
+            </File>
+            <File>
+              <FileName>encoder.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\User_h\encoder.h</FilePath>
+            </File>
+            <File>
+              <FileName>Pid.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\User_h\Pid.h</FilePath>
+            </File>
+            <File>
+              <FileName>road.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\User_h\road.h</FilePath>
+            </File>
+            <File>
+              <FileName>ui.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\User_h\ui.h</FilePath>
+            </File>
+            <File>
+              <FileName>Variable.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\User_h\Variable.h</FilePath>
             </File>
           </Files>
         </Group>

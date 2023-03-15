@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  16:03:51  PAGE 1   
+C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  18:34:46  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE SEEKFREE_IMU963RA
@@ -66,7 +66,7 @@ stmt  level    source
    48          *                   // 软件 IIC 引脚
    49          *                   SCL/SPC             查看 zf_device_imu963ra.h 中 IMU963RA_SCL_PIN 宏定义
    50          *                   SDA/DSI             查看 zf_device_imu963ra.h 中 IMU963RA_SDA_PIN 宏定义
-C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  16:03:51  PAGE 2   
+C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  18:34:46  PAGE 2   
 
    51          *                   VCC                 3.3V电源
    52          *                   GND                 电源地
@@ -134,7 +134,7 @@ stmt  level    source
                  IMU963RA_SDA_LOW();
                  IMU963RA_SCL_LOW();
                  imu963ra_simiic_delay();
-C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  16:03:51  PAGE 3   
+C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  18:34:46  PAGE 3   
 
                  IMU963RA_SCL_HIGH();
                  imu963ra_simiic_delay();
@@ -202,7 +202,7 @@ stmt  level    source
                
                //字节接收程序
                //接收器件传来的数据，此程序应配合|主应答函数|使用
-C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  16:03:51  PAGE 4   
+C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  18:34:46  PAGE 4   
 
                //内部使用，用户无需调用
                static uint8 imu963ra_read_ch(uint8 ack_x)
@@ -270,7 +270,7 @@ stmt  level    source
                //  Sample usage:       
                //-------------------------------------------------------------------------------------------------------
              -------------
-C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  16:03:51  PAGE 5   
+C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  18:34:46  PAGE 5   
 
                //static uint8 imu963ra_simiic_read_reg(uint8 dev_add, uint8 reg)
                //{
@@ -338,7 +338,7 @@ stmt  level    source
                  
                  imu963ra_simiic_start();
                  imu963ra_send_ch( (dev_add<<1) | 0x01);  //发送器件地址加读位
-C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  16:03:51  PAGE 6   
+C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  18:34:46  PAGE 6   
 
                    while(--num)
                    {
@@ -406,7 +406,7 @@ stmt  level    source
   357          //  @return     uint8       return 返回status状态
   358          //  @since      v1.0
   359          //  Sample usage:
-C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  16:03:51  PAGE 7   
+C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  18:34:46  PAGE 7   
 
   360          //-------------------------------------------------------------------------------------------------------
              -------------
@@ -474,7 +474,7 @@ stmt  level    source
   417          //  @brief      读取cmd所对应的寄存器地址
   418          //  @param      cmd         命令字
   419          //  @param      *val        存储读取的数据地址
-C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  16:03:51  PAGE 8   
+C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  18:34:46  PAGE 8   
 
   420          //  @since      v1.0
   421          //  Sample usage:
@@ -542,7 +542,7 @@ stmt  level    source
              -------------
   477          static uint8 imu963ra_read_acc_gyro_register(uint8 reg)
   478          {
-C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  16:03:51  PAGE 9   
+C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  18:34:46  PAGE 9   
 
   479   1          uint8 dat = 0;
   480   1          IMU963RA_CS(0);
@@ -610,7 +610,7 @@ stmt  level    source
   535   1          return return_state;
   536   1      }
   537          
-C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  16:03:51  PAGE 10  
+C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  18:34:46  PAGE 10  
 
   538          //-------------------------------------------------------------------------------------------------------
              -------------
@@ -678,7 +678,7 @@ stmt  level    source
   589          // 函数简介     IMU963RA 六轴自检 内部调用
   590          // 参数说明     void
   591          // 返回参数     uint8           1-自检失败 0-自检成功
-C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  16:03:51  PAGE 11  
+C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  18:34:46  PAGE 11  
 
   592          // 使用示例     imu963ra_acc_gyro_self_check();
   593          // 备注信息     内部调用
@@ -746,7 +746,7 @@ stmt  level    source
   650   1      
   651   1          imu963ra_read_acc_gyro_registers(IMU963RA_OUTX_L_A, dat, 6);
   652   1          imu963ra_acc_x = (int16)(((uint16)dat[1]<<8 | dat[0]));
-C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  16:03:51  PAGE 12  
+C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  18:34:46  PAGE 12  
 
   653   1          imu963ra_acc_y = (int16)(((uint16)dat[3]<<8 | dat[2]));
   654   1          imu963ra_acc_z = (int16)(((uint16)dat[5]<<8 | dat[4]));
@@ -814,7 +814,7 @@ stmt  level    source
   710   1          switch(IMU963RA_ACC_SAMPLE)
   711   1          {
   712   2              case 0x30: acc_dat = (float)acc_value / 16393; break;                  // 0x30 加速度量程为
-C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  16:03:51  PAGE 13  
+C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  18:34:46  PAGE 13  
 
              -:±2G      获取到的加速度计数据 除以 16393 ，可以转化为带物理单位的数据，单位：g(m/s^2)
   713   2              case 0x38: acc_dat = (float)acc_value / 8197;  break;                  // 0x38 加速度量程为
@@ -882,7 +882,7 @@ stmt  level    source
   760   1          return mag_dat;
   761   1      }
   762          
-C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  16:03:51  PAGE 14  
+C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  18:34:46  PAGE 14  
 
   763          //-------------------------------------------------------------------------------------------------------
              -------------
@@ -950,7 +950,7 @@ stmt  level    source
   812   2              // 设置为:0x50 陀螺仪量程为:±250dps  获取到的陀螺仪数据除以114.3，   可以
              -转化为带物理单位的数据，单位为：°/s
   813   2              // 设置为:0x54 陀螺仪量程为:±500dps  获取到的陀螺仪数据除以57.1，    可以
-C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  16:03:51  PAGE 15  
+C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  18:34:46  PAGE 15  
 
              -转化为带物理单位的数据，单位为：°/s
   814   2              // 设置为:0x58 陀螺仪量程为:±1000dps 获取到的陀螺仪数据除以28.6，    可以
@@ -1018,7 +1018,7 @@ stmt  level    source
   862   1          return return_state;
   863   1      }
 
-C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  16:03:51  PAGE 16  
+C251 COMPILER V5.60.0,  SEEKFREE_IMU963RA                                                  15/03/23  18:34:46  PAGE 16  
 
 
 Module Information          Static   Overlayable
