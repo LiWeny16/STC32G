@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  encoder                                                            15/03/23  18:34:48  PAGE 1   
+C251 COMPILER V5.60.0,  encoder                                                            17/03/23  22:09:04  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE encoder
@@ -66,7 +66,7 @@ stmt  level    source
    51   2          //  Speed_R = MFBL*(dat_R/(CONTROL_T*DECO));//用编码器在中断间隔之内的读数除以执行程序的中断间隔及一米对
              -应的脉冲数来表示当前速度(m/s),已乘PID分辨率
    52   2            Speed_R = dat_R;
-C251 COMPILER V5.60.0,  encoder                                                            15/03/23  18:34:48  PAGE 2   
+C251 COMPILER V5.60.0,  encoder                                                            17/03/23  22:09:04  PAGE 2   
 
    53   2          }
    54   1          else

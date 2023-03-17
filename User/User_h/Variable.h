@@ -16,8 +16,8 @@ extern volatile Err_Steering err_steering;//舵机偏差结构体（实参）
 extern volatile DG_State dg_state;//电感状态结构体（实参）
 extern volatile PID_Steering pid_steering;//舵机PID结构体（实参）
 extern volatile uint16  PWM_Steering_now;//当前舵机占空比
-extern volatile uint16  PWM_Steering_Max;//舵机最大占空比
-extern volatile uint16  PWM_Steering_Min;//舵机最小占空比
+extern volatile uint32  PWM_Steering_Max;//舵机最大占空比
+extern volatile uint32  PWM_Steering_Min;//舵机最小占空比
 
 
 
@@ -30,6 +30,7 @@ extern volatile uint16  PWM_Motor_Min;//电机最小占空比
 extern volatile uint16  PWM_Motor_L_now;//当前左电机占空比
 extern volatile uint16  PWM_Motor_R_now;//当前右电机占空比
 
+extern volatile float temp;
 
 extern volatile Road road;//道路判断结构体
 

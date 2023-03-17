@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  Variable                                                           15/03/23  18:34:49  PAGE 1   
+C251 COMPILER V5.60.0,  Variable                                                           17/03/23  22:09:05  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE Variable
@@ -18,8 +18,8 @@ stmt  level    source
     7          volatile DG_State dg_state;//电感状态结构体（实参）
     8          volatile PID_Steering pid_steering;//舵机PID结构体（实参）
     9          volatile uint16  PWM_Steering_now;//当前舵机占空比
-   10          volatile uint16  PWM_Steering_Max;//舵机最大占空比
-   11          volatile uint16  PWM_Steering_Min;//舵机最小占空比
+   10          volatile uint32  PWM_Steering_Max;//舵机最大占空比
+   11          volatile uint32  PWM_Steering_Min;//舵机最小占空比
    12          
    13          
    14          
@@ -32,8 +32,9 @@ stmt  level    source
    21          volatile uint16  PWM_Motor_L_now;//当前左电机占空比
    22          volatile uint16  PWM_Motor_R_now;//当前右电机占空比
    23          
-   24          
-   25          volatile Road road;//道路判断结构体
+   24          volatile float temp;
+   25          
+   26          volatile Road road;//道路判断结构体
 
 
 Module Information          Static   Overlayable
@@ -45,7 +46,7 @@ Module Information          Static   Overlayable
   pdata size           =    ------     ------
   xdata size           =    ------     ------
   xdata-const size     =    ------     ------
-  edata size           =       312     ------
+  edata size           =       328     ------
   bit size             =    ------     ------
   ebit size            =    ------     ------
   bitaddressable size  =    ------     ------

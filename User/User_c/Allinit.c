@@ -28,12 +28,18 @@ void ADC_all_init(void)
 	dg_state.L_yh_real = 0;
 	dg_state.L_yx_real = 0;
 
-	dg_state.L_zx_max = 33; // 检测到的最大值
-	dg_state.L_zh_max = 2183;
-	dg_state.L_zs_max = 0;
-	dg_state.L_ys_max = 0;
-	dg_state.L_yh_max = 1831;
-	dg_state.L_yx_max = 1700;
+	// dg_state.L_zx_max = 33; // 检测到的最大值
+	// dg_state.L_zh_max = 2183;
+	// dg_state.L_zs_max = 0;
+	// dg_state.L_ys_max = 0;
+	// dg_state.L_yh_max = 1831;
+	// dg_state.L_yx_max = 1700;
+	dg_state.L_zx_max = 4096.0; // 检测到的最大值
+	dg_state.L_zh_max = 4096.0;
+//	dg_state.L_zs_max = 0;
+//	dg_state.L_ys_max = 0;
+	dg_state.L_yh_max = 4096.0;
+	dg_state.L_yx_max = 4096.0;
 
 	dg_state.L_zx_once = 0; // 一次归一化后
 	dg_state.L_zh_once = 0;
@@ -81,8 +87,8 @@ void PWM_SMB_init(void)
 	// 以上两组为电机2，需要互反的PWM驱动
 	pwm_init(BUZZER, 2000, 0); // 使用引脚P6.3  输出PWM频率2000HZ   占空比为（0/10000），即百分之0的PWM
 	// 以上为蜂鸣器，初始化输出2000Hz频率。占空比为0
-	pwm_init(STEERING, 50, 750); // 使用引脚P7.4  输出PWM频率50HZ   占空比为（750/10000），即百分之7.5（高电平时间为1.5ms）的PWM，舵机归中
-	// 以上为舵机，舵机需要频率一定的PWM驱动，靠高电平时间对应其角度
+	pwm_init(STEERING, 50, 725); // 使用引脚P7.4  输出PWM频率50HZ   占空比为（750/10000），即百分之7.5（高电平时间为1.5ms）的PWM，舵机归中
+								 // 以上为舵机，舵机需要频率一定的PWM驱动，靠高电平时间对应其角度
 }
 
 // 4.定时中断（用于主程序运行）初始化
@@ -95,12 +101,13 @@ void PIT_init(void)
 void PID_init(void)
 {
 
-	pid_steering.p_steering = 5;
-	pid_steering.i_steering = 5;
-	pid_steering.d_steering = 5;
-	pid_steering.imax = 5;
-	pid_steering.imin = -5;
-	pid_steering.PID_STEERING_OUT = 750;
+	pid_steering.p_steering = 30.5;
+	pid_steering.i_steering = 2.5;
+	pid_steering.d_steering = 0.0;
+	pid_steering.imax = 1;
+	pid_steering.imin = -1;
+	pid_steering.PID_STEERING_OUT = 725;
+	pid_steering.STEERING_OUT_temp = 0.0;
 
 	pid_motor.p_motor = 2;		   // 用于存放比例系数p
 	pid_motor.i_motor = 0.5;	   // 用于存放积分系数i
@@ -112,8 +119,8 @@ void PID_init(void)
 // 6.舵机初始化
 void Steering_init(void)
 {
-	PWM_Steering_now = 750;
-	PWM_Steering_Max = 850; // 最大最小值为实测参数
+	PWM_Steering_now = 730;
+	PWM_Steering_Max = 805; // 最大最小值为实测参数
 	PWM_Steering_Min = 650;
 }
 
@@ -191,6 +198,9 @@ void WIRELESS_init(void)
 {
 	// seekfree_wireless_init();
 }
+void temp_init(void){
+	temp = 0.0;
+}
 
 // 11.总体初始化
 void ALL_init(void)
@@ -205,6 +215,9 @@ void ALL_init(void)
 	Motor_init();
 	Encoder_init();
 	FLAG_init();
-//	seekfree_wireless_init();
+	
+	//wireless_ch573_init();
+	temp_init();
+	//	seekfree_wireless_init();
 	// WIRELESS_init();
 }

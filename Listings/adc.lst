@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  adc                                                                15/03/23  18:34:48  PAGE 1   
+C251 COMPILER V5.60.0,  adc                                                                17/03/23  22:09:03  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE adc
@@ -16,63 +16,86 @@ stmt  level    source
     5          void calculate_s(DG_State *dg, Err_Steering *Err_Ste) // ¸ù¾Ýµç¸Ð×´Ì¬¼ÆËãÆ«²îÖµ£¬²¢¸üÐÂÆ«²îÖµ½á¹¹ÌåÖÐlast
              -Á¿£¬½á¹û±£´æÔÚ¶æ»úÆ«²îÖµ½á¹¹ÌåÖÐ
     6          {
-    7   1        dg->L_zx_real = (ADC_ReadAverage(ZX, count_dg, RE));
-    8   1        dg->L_zh_real = (ADC_ReadAverage(ZH, count_dg, RE));
-    9   1      
-   10   1      //  dg->L_zs_real = (ADC_ReadAverage(ZS, count_dg, RE));//Ã»ÓÃ
-   11   1      //  dg->L_ys_real = (ADC_ReadAverage(YS, count_dg, RE));//Ã»ÓÃ
-   12   1        
-   13   1        dg->L_yh_real = (ADC_ReadAverage(YH, count_dg, RE));
-   14   1        dg->L_yx_real = (ADC_ReadAverage(YX, count_dg, RE));
-   15   1        // ÇóÈ¡10´Î²ÉÑùÆ½¾ùÖµ×÷ÎªÕæÊµÖµ
-   16   1      
-   17   1        dg->L_zx_real = dg->L_zx_real >= 1 ? dg->L_zx_real : 1;
-   18   1        dg->L_zh_real = dg->L_zh_real >= 1 ? dg->L_zh_real : 1;
-   19   1        dg->L_zs_real = dg->L_zs_real >= 1 ? dg->L_zs_real : 1;
-   20   1        dg->L_ys_real = dg->L_ys_real >= 1 ? dg->L_ys_real : 1;
-   21   1        dg->L_yh_real = dg->L_yh_real >= 1 ? dg->L_yh_real : 1;
-   22   1        dg->L_yx_real = dg->L_yx_real >= 1 ? dg->L_yx_real : 1;
-   23   1        // Ê¹²ÉÑù×îÐ¡ÖµÎª1
-   24   1      
-   25   1        dg->L_zx_once = (sqrt(((float)dg->L_zx_real) / (dg->L_zx_max)));
-   26   1        dg->L_zh_once = (sqrt(((float)dg->L_zh_real) / (dg->L_zh_max)));
-   27   1        dg->L_zs_once = (sqrt(((float)dg->L_zs_real) / (dg->L_zs_max)));//Ã»ÓÃ
-   28   1        dg->L_ys_once = (sqrt(((float)dg->L_ys_real) / (dg->L_ys_max)));//Ã»ÓÃ
-   29   1        dg->L_yh_once = (sqrt(((float)dg->L_yh_real) / (dg->L_yh_max)));
-   30   1        dg->L_yx_once = (sqrt(((float)dg->L_yx_real) / (dg->L_yx_max)));
-   31   1        // µÚÒ»´Î¹éÒ»»¯£¬Ê¹µÃµç¸Ð¾àÀëµç¸Ð×î´óÖµ´¦µÄÎÇºÏ¶ÈÓÃ°Ù·Ö±È±íÊ¾£¬²¢¿ª·½Ê¹µÃÆ«²îºÍÐ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³Éµ¥µ÷
+    7   1        //
+    8   1        dg->L_yx_max = 4096.0;
+    9   1        dg->L_yh_max = 4096.0;
+   10   1        dg->L_zx_max = 4096.0;
+   11   1        dg->L_zh_max = 4096.0;
+   12   1        //
+   13   1        dg->L_zx_real = (ADC_ReadAverage(ZX, count_dg, RE));
+   14   1        dg->L_zh_real = (ADC_ReadAverage(ZH, count_dg, RE)); // ×î´óÖµ255
+   15   1      
+   16   1        //  dg->L_zs_real = (ADC_ReadAverage(ZS, count_dg, RE));//Ã»ÓÃ
+   17   1        //  dg->L_ys_real = (ADC_ReadAverage(YS, count_dg, RE));//Ã»ÓÃ
+   18   1      
+   19   1        dg->L_yh_real = (ADC_ReadAverage(YH, count_dg, RE)); // ×î´óÖµ255
+   20   1        dg->L_yx_real = (ADC_ReadAverage(YX, count_dg, RE));
+   21   1        // ÇóÈ¡10´Î²ÉÑùÆ½¾ùÖµ×÷ÎªÕæÊµÖµ
+   22   1      
+   23   1        dg->L_zx_real = dg->L_zx_real >= 1 ? dg->L_zx_real : 1;
+   24   1        dg->L_zh_real = dg->L_zh_real >= 1 ? dg->L_zh_real : 1;
+   25   1        // dg->L_zs_real = dg->L_zs_real >= 1 ? dg->L_zs_real : 1;//Ã»ÓÃ
+   26   1        // dg->L_ys_real = dg->L_ys_real >= 1 ? dg->L_ys_real : 1;//Ã»ÓÃ
+   27   1        dg->L_yh_real = dg->L_yh_real >= 1 ? dg->L_yh_real : 1;
+   28   1        dg->L_yx_real = dg->L_yx_real >= 1 ? dg->L_yx_real : 1;
+   29   1        // Ê¹²ÉÑù×îÐ¡ÖµÎª1
+   30   1      
+   31   1        // dg->L_zx_once = (sqrt((()dg->L_zx_real) / (dg->L_zx_max)));
+   32   1        // dg->L_zh_once = (sqrt((()dg->L_zh_real) / (dg->L_zh_max)));
+   33   1        // dg->L_zs_once = (sqrt((()dg->L_zs_real) / (dg->L_zs_max)));//Ã»ÓÃ
+   34   1        // dg->L_ys_once = (sqrt((()dg->L_ys_real) / (dg->L_ys_max)));//Ã»ÓÃ
+   35   1        // dg->L_yh_once = (sqrt((()dg->L_yh_real) / (dg->L_yh_max)));
+   36   1        // dg->L_yx_once = (sqrt((()dg->L_yx_real) / (dg->L_yx_max)));
+   37   1        dg->L_zx_once = (((float)dg->L_zx_real) / (dg->L_zx_max));
+   38   1        dg->L_zh_once = (((float)dg->L_zh_real) / (dg->L_zh_max));
+   39   1        dg->L_yh_once = (((float)dg->L_yh_real) / (dg->L_yh_max));
+   40   1        dg->L_yx_once = (((float)dg->L_yx_real) / (dg->L_yx_max));
+   41   1        // µÚÒ»´Î¹éÒ»»¯£¬Ê¹µÃµç¸Ð¾àÀëµç¸Ð×î´óÖµ´¦µÄÎÇºÏ¶ÈÓÃ°Ù·Ö±È±íÊ¾£¬²¢¿ª·½Ê¹µÃÆ«²îºÍÐ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³Éµ¥µ÷
              -¹ØÏµ£¨¼´Ïû³ý¼«µã£©£¬Ê¹µÃ¶ªÏß¸üºÃÅÐ¶Ï
-   32   1      
-   33   1        dg->L_zx_twice = (dg->L_zx_once) / (dg->L_zx_once * dg->L_zx_once + dg->L_yx_once * dg->L_yx_once + dg-
-             ->L_zh_once * dg->L_zh_once + dg->L_yh_once * dg->L_yh_once);
-   34   1        dg->L_zh_twice = (dg->L_zh_once) / (dg->L_zx_once * dg->L_zx_once + dg->L_yx_once * dg->L_yx_once + dg-
-             ->L_zh_once * dg->L_zh_once + dg->L_yh_once * dg->L_yh_once);
-   35   1        dg->L_yh_twice = (dg->L_yh_once) / (dg->L_zx_once * dg->L_zx_once + dg->L_yx_once * dg->L_yx_once + dg-
-             ->L_zh_once * dg->L_zh_once + dg->L_yh_once * dg->L_yh_once);
-   36   1        dg->L_yx_twice = (dg->L_yx_once) / (dg->L_zx_once * dg->L_zx_once + dg->L_yx_once * dg->L_yx_once + dg-
-             ->L_zh_once * dg->L_zh_once + dg->L_yh_once * dg->L_yh_once);
-   37   1        // µÚ¶þ´Î¹éÒ»»¯£¬ÇóÈ¡ºáµç¸ÐºÍÐ±µç¸ÐÆ«²îÖµÕ¼×ÜµÄ°Ù·Ö±È
-   38   1      
-   39   1        Err_Ste->Err_x = dg->L_zx_twice - dg->L_yx_twice;
-   40   1        Err_Ste->Err_h = dg->L_zh_twice - dg->L_yh_twice;
-   41   1        Err_Ste->Err = (-0.6151 * (Err_Ste->Err_x)) + (3.3868 * (Err_Ste->Err_h));
-   42   1        // ÒÔÉÏÏµÊýÊ¹ÓÃmatlabÄâºÏ£¬Ê¹µÃÆ«²îºÍÐ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³ÉÏßÐÔ¹ØÏµ£¬ÖÁ´Ë£¬Æ«²îºÍÐ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³Éµ¥µ÷
-             -ÏßÐÔ¹ØÏµ
-   43   1        Err_Ste->Errsum += Err_Ste->Err;
-   44   1        Err_Ste->Errdif = Err_Ste->Err - Err_Ste->Err_last;
-   45   1        // Î»ÖÃÊ½PID»ý·ÖºÍ²î·ÖÔËËã
-   46   1        Err_Ste->Err_x_last = Err_Ste->Err_x;
-   47   1        Err_Ste->Err_h_last = Err_Ste->Err_h;
-   48   1        Err_Ste->Err_last = Err_Ste->Err;
-   49   1        // Æ«²îÖµ¸üÐÂ
-   50   1      }
-C251 COMPILER V5.60.0,  adc                                                                15/03/23  18:34:48  PAGE 2   
+   42   1      
+   43   1        // dg->L_zx_twice = (dg->L_zx_once) / (dg->L_zx_once * dg->L_zx_once + dg->L_yx_once * dg->L_yx_once + 
+             -dg->L_zh_once * dg->L_zh_once + dg->L_yh_once * dg->L_yh_once);
+   44   1        // dg->L_zh_twice = (dg->L_zh_once) / (dg->L_zx_once * dg->L_zx_once + dg->L_yx_once * dg->L_yx_once + 
+             -dg->L_zh_once * dg->L_zh_once + dg->L_yh_once * dg->L_yh_once);
+   45   1        // dg->L_yh_twice = (dg->L_yh_once) / (dg->L_zx_once * dg->L_zx_once + dg->L_yx_once * dg->L_yx_once + 
+             -dg->L_zh_once * dg->L_zh_once + dg->L_yh_once * dg->L_yh_once);
+   46   1        // dg->L_yx_twice = (dg->L_yx_once) / (dg->L_zx_once * dg->L_zx_once + dg->L_yx_once * dg->L_yx_once + 
+             -dg->L_zh_once * dg->L_zh_once + dg->L_yh_once * dg->L_yh_once);
+   47   1        // µÚ¶þ´Î¹éÒ»»¯£¬ÇóÈ¡ºáµç¸ÐºÍÐ±µç¸ÐÆ«²îÖµÕ¼×ÜµÄ°Ù·Ö±È
+   48   1      
+   49   1        // Err_Ste->Err_x = dg->L_zx_twice - dg->L_yx_twice;
+   50   1        // Err_Ste->Err_h = dg->L_zh_twice - dg->L_yh_twice;
+   51   1        // Err_Ste->Err = (-0.6151 * (Err_Ste->Err_x)) + (3.3868 * (Err_Ste->Err_h));
+C251 COMPILER V5.60.0,  adc                                                                17/03/23  22:09:03  PAGE 2   
 
+   52   1        // // ÒÔÉÏÏµÊýÊ¹ÓÃmatlabÄâºÏ£¬Ê¹µÃÆ«²îºÍÐ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³ÉÏßÐÔ¹ØÏµ£¬ÖÁ´Ë£¬Æ«²îºÍÐ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³Éµ
+             -¥µ÷ÏßÐÔ¹ØÏµ
+   53   1        // Err_Ste->Errsum += Err_Ste->Err;
+   54   1        // Err_Ste->Errdif = Err_Ste->Err - Err_Ste->Err_last;
+   55   1        // // Î»ÖÃÊ½PID»ý·ÖºÍ²î·ÖÔËËã
+   56   1        // Err_Ste->Err_x_last = Err_Ste->Err_x;
+   57   1        // Err_Ste->Err_h_last = Err_Ste->Err_h;
+   58   1        // Err_Ste->Err_last = Err_Ste->Err;
+   59   1      
+   60   1        Err_Ste->Err_x = (dg->L_zx_once - dg->L_yx_once);
+   61   1        Err_Ste->Err_h = (dg->L_zh_once - dg->L_yh_once);
+   62   1        Err_Ste->Err = (2.9151 * (Err_Ste->Err_x)) + (2.3868 * (Err_Ste->Err_h));
+   63   1        // ÒÔÉÏÏµÊýÊ¹ÓÃmatlabÄâºÏ£¬Ê¹µÃÆ«²îºÍÐ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³ÉÏßÐÔ¹ØÏµ£¬ÖÁ´Ë£¬Æ«²îºÍÐ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³Éµ¥µ÷
+             -ÏßÐÔ¹ØÏµ
+   64   1        Err_Ste->Errsum = Err_Ste->Err;
+   65   1        Err_Ste->Errdif = Err_Ste->Err - Err_Ste->Err_last;
+   66   1        // Î»ÖÃÊ½PID»ý·ÖºÍ²î·ÖÔËËã
+   67   1        Err_Ste->Err_x_last = Err_Ste->Err_x;
+   68   1        Err_Ste->Err_h_last = Err_Ste->Err_h;
+   69   1        Err_Ste->Err_last = Err_Ste->Err;
+   70   1      
+   71   1        // Æ«²îÖµ¸üÐÂ
+   72   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =      1012     ------
+  code size            =       537     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

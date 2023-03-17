@@ -47,5 +47,6 @@ void FLAG_init(void);//路况判断标志位初始化
 void WIRELESS_init(void);//无线串口初始化
 void ALL_init(void);//总体初始化
 
+void temp_init(void);
 
 #endif

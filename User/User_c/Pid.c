@@ -6,14 +6,20 @@ float constrain_float(float amt, float low, float high)//限幅用，low和high为上下
 	 return ((amt)<(low)?(low):((amt)>(high)?(high):(amt)));
 }
 
+uint32 constrain_uint32(uint32 amt, uint32 low, uint32 high)//限幅用，low和high为上下限
+{
+	 return ((amt)<(low)?(low):((amt)>(high)?(high):(amt)));
+}
+
 void Pid_Steering_Calculate(volatile Err_Steering* err_steering , volatile PID_Steering* pid_steering)//舵机位置式PID输出值
 {
 
-    constrain_float(err_steering->Errsum, pid_steering->imax, pid_steering->imin);
+ //   constrain_float(err_steering->Errsum, pid_steering->imax, pid_steering->imin);
 //位置式PID积分项限幅
-	
-    pid_steering->PID_STEERING_OUT = (pid_steering->p_steering * err_steering-> Err) + (pid_steering->i_steering * err_steering-> Errsum) + (pid_steering->d_steering * err_steering-> Errdif);
-//位置式PID输出计算
+	   pid_steering->STEERING_OUT_temp = (float)(((pid_steering->p_steering * err_steering-> Err) + (pid_steering->i_steering * err_steering-> Errsum) + (pid_steering->d_steering * err_steering-> Errdif)));
+    //pid_steering->PID_STEERING_OUT = (float)(((pid_steering->p_steering * err_steering-> Err*(-1.0)) + (pid_steering->i_steering * err_steering-> Errsum*0) + (pid_steering->d_steering * err_steering-> Errdif)*0));
+	//	temp =   pid_steering->PID_STEERING_OUT
+		//位置式PID输出计算
 }
 
 void Pid_Motor_Calculate(Err_Motor* err_motor,PID_Motor* pid_motor)//电机增量式PID输出增量

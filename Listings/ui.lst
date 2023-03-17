@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  ui                                                                 15/03/23  18:34:49  PAGE 1   
+C251 COMPILER V5.60.0,  ui                                                                 17/03/23  22:09:05  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE ui
@@ -9,41 +9,39 @@ COMPILER INVOKED BY: C:\Learning\Keil_v5\body\C251\BIN\C251.EXE User\User_c\ui.c
 
 stmt  level    source
 
-    1          //该文件用于编写UI使用到的函数，UI包括按键和OLED，使用的函数包括但不限于ADC扫描，参数调整，
+    1          // 该文件用于编写UI使用到的函数，UI包括按键和OLED，使用的函数包括但不限于ADC扫描，参数调整，
     2          #include "ui.h"
     3          
-    4          
-    5          void find_mm_adc(DG_State* dg)
-    6          {
-    7   1        unsigned short ZXM,ZHM,ZSM,YXM,YHM,YSM;//用于读取的中间变量
-    8   1        ZXM = adc_once(ZX,RE);
-    9   1        ZHM = adc_once(ZH,RE);
-   10   1      //  ZSM = adc_once(ZS,RE);
-   11   1        //YSM = adc_once(YS,RE);
-   12   1        YHM = adc_once(YH,RE);
-   13   1        YXM = adc_once(YX,RE);//读取
-   14   1        
-   15   1        if(ZXM>=dg->L_zx_max) dg->L_zx_max=ZXM;
-   16   1        if(ZHM>=dg->L_zh_max) dg->L_zh_max=ZHM;
-   17   1        if(ZSM>=dg->L_zs_max) dg->L_zs_max=ZSM;
-   18   1        if(YSM>=dg->L_ys_max) dg->L_ys_max=YSM;
-   19   1        if(YHM>=dg->L_yh_max) dg->L_yh_max=YHM;
-   20   1        if(YXM>=dg->L_yx_max) dg->L_yx_max=YXM;//找最大值
-   21   1      
-   22   1      
-   23   1      }
+    4          void find_mm_adc(DG_State *dg)
+    5          {
+    6   1        //  unsigned short ZXM,ZHM,ZSM,YXM,YHM,YSM;//用于读取的中间变量
+    7   1        //  ZXM = adc_once(ZX,RE);
+    8   1        //  ZHM = adc_once(ZH,RE);
+    9   1        //  ZSM = adc_once(ZS,RE);
+   10   1        // YSM = adc_once(YS,RE);
+   11   1        // YHM = adc_once(YH,RE);
+   12   1        // YXM = adc_once(YX,RE);//读取
+   13   1      
+   14   1        // if(ZXM>=dg->L_zx_max) dg->L_zx_max=ZXM;
+   15   1        // if(ZHM>=dg->L_zh_max) dg->L_zh_max=ZHM;
+   16   1        //  if(ZSM>=dg->L_zs_max) dg->L_zs_max=ZSM;
+   17   1        //  if(YSM>=dg->L_ys_max) dg->L_ys_max=YSM;
+   18   1        // if(YHM>=dg->L_yh_max) dg->L_yh_max=YHM;
+   19   1        // if(YXM>=dg->L_yx_max) dg->L_yx_max=YXM;//找最大值
+   20   1      }
+*** WARNING C47 IN LINE 4 OF User\User_c\ui.c: 'dg': unreferenced parameter
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       165     ------
+  code size            =         1     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
   xdata size           =    ------     ------
   xdata-const size     =    ------     ------
-  edata size           =    ------         10
+  edata size           =    ------     ------
   bit size             =    ------     ------
   ebit size            =    ------     ------
   bitaddressable size  =    ------     ------
@@ -55,4 +53,4 @@ Module Information          Static   Overlayable
 End of Module Information.
 
 
-C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
+C251 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
