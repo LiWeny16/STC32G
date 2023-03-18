@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  control                                                            17/03/23  22:09:04  PAGE 1   
+C251 COMPILER V5.60.0,  control                                                            18/03/23  21:42:18  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE control
@@ -34,44 +34,51 @@ stmt  level    source
    21   1        
    22   1        //pwm_duty(MOTOR1_P,pid_motor->PID_MOTOR_L_OUT);//×óµç»úÇı¶¯
    23   1        //pwm_duty(MOTOR1_N,pid_motor->PID_MOTOR_L_OUT);
-   24   1        pwm_duty(PWMA_CH1P_P60,(uint32)0);//×óµç»úÇı¶¯
-   25   1        pwm_duty(PWMA_CH2P_P62,pid_motor->PID_MOTOR_L_OUT/5);
-   26   1        PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT;//×óµç»úPWM¸üĞÂ
-   27   1        
-   28   1        pwm_duty(PWMA_CH3P_P64,(uint32)0);//ÓÒµç»úÇı¶¯
-   29   1        pwm_duty(PWMA_CH4P_P66,pid_motor->PID_MOTOR_R_OUT/5);
-   30   1        //pwm_duty(MOTOR2_P,pid_motor->PID_MOTOR_R_OUT);//ÓÒµç»úÇı¶¯
-   31   1        //pwm_duty(MOTOR2_N,pid_motor->PID_MOTOR_R_OUT);
-   32   1        PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT;//ÓÒµç»úPWM¸üĞÂ
+   24   1        //pwm_duty(PWMA_CH1P_P60,(uint32)0);//×óµç»úÇı¶¯
+   25   1        //pwm_duty(PWMA_CH2P_P62,pid_motor->PID_MOTOR_L_OUT/5);
+   26   1        
+   27   1          pwm_duty(PWMA_CH1P_P60,1400);//×óµç»úÇı¶¯
+   28   1          pwm_duty(PWMA_CH2P_P62,1400); // µ¥¶ÀËüÒ»¸öÓĞÊıÖµ£¬·´×ª
+   29   1          
+   30   1          pwm_duty(PWMA_CH3P_P64,1400); //ÓÒµç»úÇı¶¯
+   31   1          pwm_duty(PWMA_CH4P_P66,1400);
+   32   1        PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT;//×óµç»úPWM¸üĞÂ
    33   1        
-   34   1      }
-   35          
-   36          void Control_All()
-   37          {
-   38   1        //ÒÔÏÂÎªµÀÂ·ÅĞ¶Ï²¿·Ö
-   39   1        road = road_judge(&dg_state);//¸ù¾İµÀÂ·×´¿ö·µ»ØµÀÂ·½á¹¹Ìå
+   34   1        //pwm_duty(PWMA_CH3P_P64,(uint32)0);//ÓÒµç»úÇı¶¯
+   35   1        //pwm_duty(PWMA_CH4P_P66,pid_motor->PID_MOTOR_R_OUT/5);
+   36   1        
+   37   1        //pwm_duty(MOTOR2_P,pid_motor->PID_MOTOR_R_OUT);//ÓÒµç»úÇı¶¯
+   38   1        //pwm_duty(MOTOR2_N,pid_motor->PID_MOTOR_R_OUT);
+   39   1        PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT;//ÓÒµç»úPWM¸üĞÂ
    40   1        
-   41   1        //ÒÔÏÂÎª¶æ»úÇı¶¯²¿·Ö
-   42   1        calculate_s(&dg_state,&err_steering);//¼ÆËãÆ«²îÖµ£¬Ğ´ÈëÊµ²Î£¨ÔÚallinitÊ±µç¸ĞÒÑ¾­¿ªÊ¼²É¼¯adcĞÅºÅ£©
-   43   1        Pid_Steering_Calculate(&err_steering , &pid_steering);//¼ÆËãpidÊä³öÖµ£¬²¢Ğ´ÈëÊµ²Î
-   44   1        STEERING_Control(&pid_steering);//´ÓpidÊä³öµ½Êµ¼Ê¶æ»úÇı¶¯
-   45   1        
-   46   1        //ÒÔÏÂÎªµç»úÇı¶¯²¿·Ö
-   47   1        speedout(road,&speed_now,&speed_state);//¸ù¾İµÀÂ·Çé¿ö½«ËÙ¶È×´Ì¬½á¹¹ÌåÖĞµÄÒ»×éÉè¶¨Öµ¸³¸øµ±Ç°ËÙ¶È½á¹¹ÌåÖĞµ
+   41   1      }
+   42          
+   43          void Control_All()
+   44          {
+   45   1        //ÒÔÏÂÎªµÀÂ·ÅĞ¶Ï²¿·Ö
+   46   1        road = road_judge(&dg_state);//¸ù¾İµÀÂ·×´¿ö·µ»ØµÀÂ·½á¹¹Ìå
+   47   1        
+   48   1        //ÒÔÏÂÎª¶æ»úÇı¶¯²¿·Ö
+   49   1        calculate_s(&dg_state,&err_steering);//¼ÆËãÆ«²îÖµ£¬Ğ´ÈëÊµ²Î£¨ÔÚallinitÊ±µç¸ĞÒÑ¾­¿ªÊ¼²É¼¯adcĞÅºÅ£©
+   50   1        Pid_Steering_Calculate(&err_steering , &pid_steering);//¼ÆËãpidÊä³öÖµ£¬²¢Ğ´ÈëÊµ²Î
+   51   1        STEERING_Control(&pid_steering);//´ÓpidÊä³öµ½Êµ¼Ê¶æ»úÇı¶¯
+   52   1        
+   53   1        //ÒÔÏÂÎªµç»úÇı¶¯²¿·Ö
+   54   1        speedout(road,&speed_now,&speed_state);//¸ù¾İµÀÂ·Çé¿ö½«ËÙ¶È×´Ì¬½á¹¹ÌåÖĞµÄÒ»×éÉè¶¨Öµ¸³¸øµ±Ç°ËÙ¶È½á¹¹ÌåÖĞµ
              -ÄÄ¿±êÖµ
-   48   1        speed_cal(&speed_now);//¸ù¾İ±àÂëÆ÷Êı¾İ¼ÆËãËÙ¶ÈÖµ£¬²¢½«Æä¸³¸øµ±Ç°ËÙ¶È½á¹¹ÌåÖĞµÄµ±Ç°ËÙ¶ÈÖµ
-   49   1        calculate_err_m(&speed_now,&err_motor);//¸ù¾İ±àÂëÆ÷ÊıÖµ¼ÆËãÆ«²îÖµ£¬²¢¸üĞÂÆ«²îÖµ½á¹¹ÌåÖĞlastÁ¿,½á¹û±£´æÔÚ
-             -µç»úÆ«²îÖµ½á¹¹ÌåÖĞ
-   50   1        Pid_Motor_Calculate(&err_motor,&pid_motor);//ÓÉµç»úÆ«²î£¨ÓÉ±àÂëÆ÷·´Ó¦£©½á¹¹Ìå¼ÆËãµç»úPIDÊä³öÔöÁ¿
-   51   1        MOTOR_Control(&pid_motor);//´ÓpidÊä³öµ½Êµ¼Êµç»úÇı¶¯
-   52   1      }
+C251 COMPILER V5.60.0,  control                                                            18/03/23  21:42:18  PAGE 2   
 
-C251 COMPILER V5.60.0,  control                                                            17/03/23  22:09:04  PAGE 2   
+   55   1        speed_cal(&speed_now);//¸ù¾İ±àÂëÆ÷Êı¾İ¼ÆËãËÙ¶ÈÖµ£¬²¢½«Æä¸³¸øµ±Ç°ËÙ¶È½á¹¹ÌåÖĞµÄµ±Ç°ËÙ¶ÈÖµ
+   56   1        calculate_err_m(&speed_now,&err_motor);//¸ù¾İ±àÂëÆ÷ÊıÖµ¼ÆËãÆ«²îÖµ£¬²¢¸üĞÂÆ«²îÖµ½á¹¹ÌåÖĞlastÁ¿,½á¹û±£´æÔÚ
+             -µç»úÆ«²îÖµ½á¹¹ÌåÖĞ
+   57   1        Pid_Motor_Calculate(&err_motor,&pid_motor);//ÓÉµç»úÆ«²î£¨ÓÉ±àÂëÆ÷·´Ó¦£©½á¹¹Ìå¼ÆËãµç»úPIDÊä³öÔöÁ¿
+   58   1        MOTOR_Control(&pid_motor);//´ÓpidÊä³öµ½Êµ¼Êµç»úÇı¶¯
+   59   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       441     ------
+  code size            =       407     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

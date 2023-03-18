@@ -33,13 +33,13 @@ void speed_cal(SPEED_now* speed_now)//通过编码器的数据计算速度，并将其写入当前速
 		{
 			dat_L = ctimer_count_read(Encoder_L);
 			Speed_L = MFBL*(dat_L/(CONTROL_T*DECO));//用编码器在中断间隔之内的读数除以执行程序的中断间隔及一米对应的脉冲数来表示当前速度(m/s),已乘PID分辨率
-			//Speed_L = dat_L;
+			//Speed_L = dat_L; //测试用
 		}
 		else
 		{
 			dat_L = ctimer_count_read(Encoder_L) * -1;
-		//	Speed_L = (MFBL*(dat_L/(CONTROL_T*DECO))) * -1;//用编码器在中断间隔之内的读数除以执行程序的中断间隔及一米对应的脉冲数来表示当前速度(m/s),已乘PID分辨率
-			Speed_L = dat_L;
+		  Speed_L = (MFBL*(dat_L/(CONTROL_T*DECO))) * -1;//用编码器在中断间隔之内的读数除以执行程序的中断间隔及一米对应的脉冲数来表示当前速度(m/s),已乘PID分辨率
+			//Speed_L = dat_L;
 		}
 
 		speed_now->speed_L = Speed_L;
@@ -48,8 +48,8 @@ void speed_cal(SPEED_now* speed_now)//通过编码器的数据计算速度，并将其写入当前速
 	if(DIR_R == 0)//右轮速度
 		{
 			dat_R = ctimer_count_read(Encoder_R);
-		//	Speed_R = MFBL*(dat_R/(CONTROL_T*DECO));//用编码器在中断间隔之内的读数除以执行程序的中断间隔及一米对应的脉冲数来表示当前速度(m/s),已乘PID分辨率
-			Speed_R = dat_R;
+			Speed_R = MFBL*(dat_R/(CONTROL_T*DECO));//用编码器在中断间隔之内的读数除以执行程序的中断间隔及一米对应的脉冲数来表示当前速度(m/s),已乘PID分辨率
+			//Speed_R = dat_R;
 		}
 		else
 		{

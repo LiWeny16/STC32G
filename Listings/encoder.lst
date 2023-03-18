@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  encoder                                                            17/03/23  22:09:04  PAGE 1   
+C251 COMPILER V5.60.0,  encoder                                                            18/03/23  21:42:18  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE encoder
@@ -47,14 +47,14 @@ stmt  level    source
    34   2            dat_L = ctimer_count_read(Encoder_L);
    35   2            Speed_L = MFBL*(dat_L/(CONTROL_T*DECO));//ÓÃ±àÂëÆ÷ÔÚÖĞ¶Ï¼ä¸ôÖ®ÄÚµÄ¶ÁÊı³ıÒÔÖ´ĞĞ³ÌĞòµÄÖĞ¶Ï¼ä¸ô¼°Ò»Ã×¶ÔÓ¦
              -µÄÂö³åÊıÀ´±íÊ¾µ±Ç°ËÙ¶È(m/s),ÒÑ³ËPID·Ö±æÂÊ
-   36   2            //Speed_L = dat_L;
+   36   2            //Speed_L = dat_L; //²âÊÔÓÃ
    37   2          }
    38   1          else
    39   1          {
    40   2            dat_L = ctimer_count_read(Encoder_L) * -1;
-   41   2          //  Speed_L = (MFBL*(dat_L/(CONTROL_T*DECO))) * -1;//ÓÃ±àÂëÆ÷ÔÚÖĞ¶Ï¼ä¸ôÖ®ÄÚµÄ¶ÁÊı³ıÒÔÖ´ĞĞ³ÌĞòµÄÖĞ¶Ï¼ä¸ô¼
-             -°Ò»Ã×¶ÔÓ¦µÄÂö³åÊıÀ´±íÊ¾µ±Ç°ËÙ¶È(m/s),ÒÑ³ËPID·Ö±æÂÊ
-   42   2            Speed_L = dat_L;
+   41   2            Speed_L = (MFBL*(dat_L/(CONTROL_T*DECO))) * -1;//ÓÃ±àÂëÆ÷ÔÚÖĞ¶Ï¼ä¸ôÖ®ÄÚµÄ¶ÁÊı³ıÒÔÖ´ĞĞ³ÌĞòµÄÖĞ¶Ï¼ä¸ô¼°
+             -Ò»Ã×¶ÔÓ¦µÄÂö³åÊıÀ´±íÊ¾µ±Ç°ËÙ¶È(m/s),ÒÑ³ËPID·Ö±æÂÊ
+   42   2            //Speed_L = dat_L;
    43   2          }
    44   1      
    45   1          speed_now->speed_L = Speed_L;
@@ -63,10 +63,10 @@ stmt  level    source
    48   1        if(DIR_R == 0)//ÓÒÂÖËÙ¶È
    49   1          {
    50   2            dat_R = ctimer_count_read(Encoder_R);
-   51   2          //  Speed_R = MFBL*(dat_R/(CONTROL_T*DECO));//ÓÃ±àÂëÆ÷ÔÚÖĞ¶Ï¼ä¸ôÖ®ÄÚµÄ¶ÁÊı³ıÒÔÖ´ĞĞ³ÌĞòµÄÖĞ¶Ï¼ä¸ô¼°Ò»Ã×¶Ô
-             -Ó¦µÄÂö³åÊıÀ´±íÊ¾µ±Ç°ËÙ¶È(m/s),ÒÑ³ËPID·Ö±æÂÊ
-   52   2            Speed_R = dat_R;
-C251 COMPILER V5.60.0,  encoder                                                            17/03/23  22:09:04  PAGE 2   
+   51   2            Speed_R = MFBL*(dat_R/(CONTROL_T*DECO));//ÓÃ±àÂëÆ÷ÔÚÖĞ¶Ï¼ä¸ôÖ®ÄÚµÄ¶ÁÊı³ıÒÔÖ´ĞĞ³ÌĞòµÄÖĞ¶Ï¼ä¸ô¼°Ò»Ã×¶ÔÓ¦
+             -µÄÂö³åÊıÀ´±íÊ¾µ±Ç°ËÙ¶È(m/s),ÒÑ³ËPID·Ö±æÂÊ
+   52   2            //Speed_R = dat_R;
+C251 COMPILER V5.60.0,  encoder                                                            18/03/23  21:42:18  PAGE 2   
 
    53   2          }
    54   1          else
@@ -107,7 +107,7 @@ stmt  level    source
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       506     ------
+  code size            =       561     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

@@ -5,6 +5,7 @@
 void calculate_s(DG_State *dg, Err_Steering *Err_Ste) // ¸ù¾İµç¸Ğ×´Ì¬¼ÆËãÆ«²îÖµ£¬²¢¸üĞÂÆ«²îÖµ½á¹¹ÌåÖĞlastÁ¿£¬½á¹û±£´æÔÚ¶æ»úÆ«²îÖµ½á¹¹ÌåÖĞ
 {
   //
+	
   dg->L_yx_max = 4096.0;
   dg->L_yh_max = 4096.0;
   dg->L_zx_max = 4096.0;
@@ -59,13 +60,18 @@ void calculate_s(DG_State *dg, Err_Steering *Err_Ste) // ¸ù¾İµç¸Ğ×´Ì¬¼ÆËãÆ«²îÖµ£
 
   Err_Ste->Err_x = (dg->L_zx_once - dg->L_yx_once);
   Err_Ste->Err_h = (dg->L_zh_once - dg->L_yh_once);
-  Err_Ste->Err = (2.9151 * (Err_Ste->Err_x)) + (2.3868 * (Err_Ste->Err_h));
+	Err_Ste->Err_x=  Err_Ste->Err_x>1?1: Err_Ste->Err_x;
+	Err_Ste->Err_h=  Err_Ste->Err_h>1?1: Err_Ste->Err_h;
+	Err_Ste->Err_x=  Err_Ste->Err_x<(-1)?(-1): Err_Ste->Err_x;
+	Err_Ste->Err_h=  Err_Ste->Err_h<(-1)?(-1): Err_Ste->Err_h;
+	
+  Err_Ste->Err = (1.1151 * (Err_Ste->Err_x)) + (3.9868 * (Err_Ste->Err_h));
   // ÒÔÉÏÏµÊıÊ¹ÓÃmatlabÄâºÏ£¬Ê¹µÃÆ«²îºÍĞ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³ÉÏßĞÔ¹ØÏµ£¬ÖÁ´Ë£¬Æ«²îºÍĞ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³Éµ¥µ÷ÏßĞÔ¹ØÏµ
-  Err_Ste->Errsum = Err_Ste->Err;
+  //Err_Ste->Errsum = Err_Ste->Err;
   Err_Ste->Errdif = Err_Ste->Err - Err_Ste->Err_last;
   // Î»ÖÃÊ½PID»ı·ÖºÍ²î·ÖÔËËã
-  Err_Ste->Err_x_last = Err_Ste->Err_x;
-  Err_Ste->Err_h_last = Err_Ste->Err_h;
+ // Err_Ste->Err_x_last = Err_Ste->Err_x;
+ // Err_Ste->Err_h_last = Err_Ste->Err_h;
   Err_Ste->Err_last = Err_Ste->Err;
 
   // Æ«²îÖµ¸üĞÂ

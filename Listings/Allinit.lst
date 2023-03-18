@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  Allinit                                                            17/03/23  22:09:04  PAGE 1   
+C251 COMPILER V5.60.0,  Allinit                                                            18/03/23  21:42:17  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE Allinit
@@ -34,8 +34,8 @@ stmt  level    source
    23   1      
    24   1        dg_state.L_zx_real = 0; // µç¸Ð×´Ì¬½á¹¹Ìå£¨Êµ²Î£©
    25   1        dg_state.L_zh_real = 0;
-   26   1        dg_state.L_zs_real = 0;
-   27   1        dg_state.L_ys_real = 0;
+   26   1      //  dg_state.L_zs_real = 0;
+   27   1        //dg_state.L_ys_real = 0;
    28   1        dg_state.L_yh_real = 0;
    29   1        dg_state.L_yx_real = 0;
    30   1      
@@ -66,7 +66,7 @@ stmt  level    source
    55   1        dg_state.L_yh_twice = 0;
    56   1        dg_state.L_yx_twice = 0;
    57   1      
-C251 COMPILER V5.60.0,  Allinit                                                            17/03/23  22:09:04  PAGE 2   
+C251 COMPILER V5.60.0,  Allinit                                                            18/03/23  21:42:17  PAGE 2   
 
    58   1        /*
    59   1        adc_init(ADC_P14,ADC_SYSclk_DIV_2);
@@ -91,15 +91,15 @@ stmt  level    source
    77   1        // pwm_init(MOTOR1_N, 17000, 5000);     //Ê¹ÓÃÒý½ÅP6.1  Êä³öPWMÆµÂÊ17000HZ   Õ¼¿Õ±ÈÎª£¨5000/10000£©£¬¼´°
              -Ù·ÖÖ®50%µÄPWM
    78   1        // MOTOR1_My_a
-   79   1        pwm_init(PWMA_CH1P_P60, 17000, 5000);
-   80   1        pwm_init(PWMA_CH2P_P62, 17000, 5000);
+   79   1        pwm_init(PWMA_CH1P_P60, 17000, 1000);
+   80   1        pwm_init(PWMA_CH2P_P62, 17000, 0);
    81   1        // ÒÔÉÏÁ½×éÎªµç»ú1£¬ÐèÒª»¥·´µÄPWMÇý¶¯
    82   1        // pwm_init(MOTOR2_P, 17000, 5000);     //Ê¹ÓÃÒý½ÅP6.4  Êä³öPWMÆµÂÊ17000HZ   Õ¼¿Õ±ÈÎª£¨5000/10000£©£¬¼´°
              -Ù·ÖÖ®50%µÄPWM
    83   1        // pwm_init(MOTOR2_N, 17000, 5000);     //Ê¹ÓÃÒý½ÅP6.5  Êä³öPWMÆµÂÊ17000HZ   Õ¼¿Õ±ÈÎª£¨5000/10000£©£¬¼´°
              -Ù·ÖÖ®50%µÄPWM
-   84   1        pwm_init(PWMA_CH3P_P64, 17000, 5000);
-   85   1        pwm_init(PWMA_CH4P_P66, 17000, 5000);
+   84   1        pwm_init(PWMA_CH3P_P64, 17000, 0);
+   85   1        pwm_init(PWMA_CH4P_P66, 17000, 0);
    86   1      
    87   1        // ÒÔÉÏÁ½×éÎªµç»ú2£¬ÐèÒª»¥·´µÄPWMÇý¶¯
    88   1        pwm_init(BUZZER, 2000, 0); // Ê¹ÓÃÒý½ÅP6.3  Êä³öPWMÆµÂÊ2000HZ   Õ¼¿Õ±ÈÎª£¨0/10000£©£¬¼´°Ù·ÖÖ®0µÄPWM
@@ -119,9 +119,9 @@ stmt  level    source
   101          void PID_init(void)
   102          {
   103   1      
-  104   1        pid_steering.p_steering = 30.5;
-  105   1        pid_steering.i_steering = 2.5;
-  106   1        pid_steering.d_steering = 0.0;
+  104   1        pid_steering.p_steering = 25.5;
+  105   1        pid_steering.i_steering = 0.0;
+  106   1        pid_steering.d_steering = 5.5;
   107   1        pid_steering.imax = 1;
   108   1        pid_steering.imin = -1;
   109   1        pid_steering.PID_STEERING_OUT = 725;
@@ -134,7 +134,7 @@ stmt  level    source
   116   1        pid_motor.PID_MOTOR_R_OUT = 0; // ÓÃÓÚ´æ·Å×îÖÕÊä³ö¸øµç»úµÄÓÒÂÖPWMÔöÁ¿Öµ
   117   1      }
   118          
-C251 COMPILER V5.60.0,  Allinit                                                            17/03/23  22:09:04  PAGE 3   
+C251 COMPILER V5.60.0,  Allinit                                                            18/03/23  21:42:17  PAGE 3   
 
   119          // 6.¶æ»ú³õÊ¼»¯
   120          void Steering_init(void)
@@ -202,7 +202,7 @@ stmt  level    source
   182   1        err_motor.err_derivative_L_m = 0;  // ÓÃÓÚ´æ·Å×óÂÖ±¾´ÎÆ«²îÓëÉÏ´ÎÆ«²îÖ®²î
   183   1        err_motor.err_derivative2_L_m = 0; // ÓÃÓÚ´æ·Å×óÂÖÉÏ´ÎÆ«²îÓëÉÏÉÏ´ÎÆ«²îÖ®²î
   184   1      
-C251 COMPILER V5.60.0,  Allinit                                                            17/03/23  22:09:04  PAGE 4   
+C251 COMPILER V5.60.0,  Allinit                                                            18/03/23  21:42:17  PAGE 4   
 
   185   1        err_motor.err_R_m = 0;         // ¸ù¾Ýµ±Ç°½âÂëÆ÷Êä³ö¼ÆËã³öµÄÓÒÂÖÆ«²îÖµ
   186   1        err_motor.err_last_R_m = 0;      // ÓÃÓÚ´æ·ÅÉÏÒ»´Î¼ÆËã³öµÄÓÒÂÖÆ«²îÖµ
@@ -220,34 +220,37 @@ stmt  level    source
   198          {
   199   1        // seekfree_wireless_init();
   200   1      }
-  201          void temp_init(void){
-  202   1        temp = 0.0;
-  203   1      }
-  204          
-  205          // 11.×ÜÌå³õÊ¼»¯
-  206          void ALL_init(void)
-  207          {
-  208   1      
-  209   1        ADC_all_init();
-  210   1        GPIO_init();
-  211   1        PWM_SMB_init();
-  212   1        PIT_init();
-  213   1        PID_init();
-  214   1        Steering_init();
-  215   1        Motor_init();
-  216   1        Encoder_init();
-  217   1        FLAG_init();
-  218   1        
-  219   1        //wireless_ch573_init();
-  220   1        temp_init();
-  221   1        //  seekfree_wireless_init();
-  222   1        // WIRELESS_init();
-  223   1      }
+  201          // 11.µ÷ÊÔ±äÁ¿³õÊ¼»¯
+  202          void temp_init(void){
+  203   1        temp = 0.0;
+  204   1        tempVar = 0.0;
+  205   1      }
+  206          
+  207          // 11.×ÜÌå³õÊ¼»¯
+  208          void ALL_init(void)
+  209          {
+  210   1      
+  211   1        ADC_all_init();
+  212   1        GPIO_init();
+  213   1        PWM_SMB_init();
+  214   1        PIT_init();
+  215   1        PID_init();
+  216   1        Steering_init();
+  217   1        Motor_init();
+  218   1        Encoder_init();
+  219   1        FLAG_init();
+  220   1        
+  221   1        wireless_uart_init();
+  222   1        //wireless_ch573_init();
+  223   1        temp_init();
+  224   1        //  seekfree_wireless_init();
+  225   1        // WIRELESS_init();
+  226   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       649     ------
+  code size            =       642     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

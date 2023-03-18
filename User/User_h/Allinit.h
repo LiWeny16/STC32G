@@ -20,8 +20,8 @@
 #define BUZZER  PWMA_CH2N_P63
 
 //编码器串口声明
-#define Encoder_L CTIM0_P34
-#define Encoder_R CTIM3_P04
+#define Encoder_L CTIM0_P34 //左轮
+#define Encoder_R CTIM3_P04 //右轮
 
 #include "common.h"
 #include "zf_adc.h"
@@ -34,7 +34,7 @@
 #include "road.h"
 #include "encoder.h"
 #include "Variable.h"
-
+#include "TempVar.h"
 
 void ADC_all_init(void);//电感ADC模块初始化
 void GPIO_init(void);//IO口初始化

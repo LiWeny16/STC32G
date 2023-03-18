@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  SEEKFREE_WIRELESS_CH573                                            17/03/23  22:09:03  PAGE 1   
+C251 COMPILER V5.60.0,  SEEKFREE_WIRELESS_CH573                                            18/03/23  21:42:16  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE SEEKFREE_WIRELESS_CH573
@@ -66,7 +66,7 @@ stmt  level    source
    50          //  @brief      573转串口模块 发送函数
    51          //  @param      buff        需要发送的数据地址
    52          //  @param      len         发送长度
-C251 COMPILER V5.60.0,  SEEKFREE_WIRELESS_CH573                                            17/03/23  22:09:03  PAGE 2   
+C251 COMPILER V5.60.0,  SEEKFREE_WIRELESS_CH573                                            18/03/23  21:42:16  PAGE 2   
 
    53          //  @return     uint32      剩余未发送的字节数   
    54          //  @since      v1.0
@@ -134,7 +134,7 @@ stmt  level    source
   110          void wireless_ch573_init(void)
   111          {
   112   1          WIRELESS_CH573_RTS_PIN = 0;
-C251 COMPILER V5.60.0,  SEEKFREE_WIRELESS_CH573                                            17/03/23  22:09:03  PAGE 3   
+C251 COMPILER V5.60.0,  SEEKFREE_WIRELESS_CH573                                            18/03/23  21:42:16  PAGE 3   
 
   113   1          wireless_type = WIRELESS_CH573;
   114   1          //本函数使用的波特率为115200，为573转串口模块的默认波特率，如需其他波特率请自行配置模块并修改串口的波

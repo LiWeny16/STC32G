@@ -23,8 +23,8 @@ void ADC_all_init(void)
 
 	dg_state.L_zx_real = 0; // 电感状态结构体（实参）
 	dg_state.L_zh_real = 0;
-	dg_state.L_zs_real = 0;
-	dg_state.L_ys_real = 0;
+//	dg_state.L_zs_real = 0;
+	//dg_state.L_ys_real = 0;
 	dg_state.L_yh_real = 0;
 	dg_state.L_yx_real = 0;
 
@@ -76,13 +76,13 @@ void PWM_SMB_init(void)
 	// pwm_init(MOTOR1_P, 17000, 5000);     //使用引脚P6.0  输出PWM频率17000HZ   占空比为（5000/10000），即百分之50%的PWM
 	// pwm_init(MOTOR1_N, 17000, 5000);     //使用引脚P6.1  输出PWM频率17000HZ   占空比为（5000/10000），即百分之50%的PWM
 	// MOTOR1_My_a
-	pwm_init(PWMA_CH1P_P60, 17000, 5000);
-	pwm_init(PWMA_CH2P_P62, 17000, 5000);
+	pwm_init(PWMA_CH1P_P60, 17000, 1000);
+	pwm_init(PWMA_CH2P_P62, 17000, 0);
 	// 以上两组为电机1，需要互反的PWM驱动
 	// pwm_init(MOTOR2_P, 17000, 5000);     //使用引脚P6.4  输出PWM频率17000HZ   占空比为（5000/10000），即百分之50%的PWM
 	// pwm_init(MOTOR2_N, 17000, 5000);     //使用引脚P6.5  输出PWM频率17000HZ   占空比为（5000/10000），即百分之50%的PWM
-	pwm_init(PWMA_CH3P_P64, 17000, 5000);
-	pwm_init(PWMA_CH4P_P66, 17000, 5000);
+	pwm_init(PWMA_CH3P_P64, 17000, 0);
+	pwm_init(PWMA_CH4P_P66, 17000, 0);
 
 	// 以上两组为电机2，需要互反的PWM驱动
 	pwm_init(BUZZER, 2000, 0); // 使用引脚P6.3  输出PWM频率2000HZ   占空比为（0/10000），即百分之0的PWM
@@ -101,9 +101,9 @@ void PIT_init(void)
 void PID_init(void)
 {
 
-	pid_steering.p_steering = 30.5;
-	pid_steering.i_steering = 2.5;
-	pid_steering.d_steering = 0.0;
+	pid_steering.p_steering = 25.5;
+	pid_steering.i_steering = 0.0;
+	pid_steering.d_steering = 5.5;
 	pid_steering.imax = 1;
 	pid_steering.imin = -1;
 	pid_steering.PID_STEERING_OUT = 725;
@@ -198,8 +198,10 @@ void WIRELESS_init(void)
 {
 	// seekfree_wireless_init();
 }
+// 11.调试变量初始化
 void temp_init(void){
 	temp = 0.0;
+	tempVar = 0.0;
 }
 
 // 11.总体初始化
@@ -216,6 +218,7 @@ void ALL_init(void)
 	Encoder_init();
 	FLAG_init();
 	
+	wireless_uart_init();
 	//wireless_ch573_init();
 	temp_init();
 	//	seekfree_wireless_init();

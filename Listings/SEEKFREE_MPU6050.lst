@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  SEEKFREE_MPU6050                                                   17/03/23  22:09:02  PAGE 1   
+C251 COMPILER V5.60.0,  SEEKFREE_MPU6050                                                   18/03/23  21:42:15  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE SEEKFREE_MPU6050
@@ -66,7 +66,7 @@ stmt  level    source
              -------------
    52          static void mpu6050_simiic_delay(void)
    53          {
-C251 COMPILER V5.60.0,  SEEKFREE_MPU6050                                                   17/03/23  22:09:02  PAGE 2   
+C251 COMPILER V5.60.0,  SEEKFREE_MPU6050                                                   18/03/23  21:42:15  PAGE 2   
 
    54   1          uint16 j=MPU6050_IIC_DELAY;   
    55   1        while(j--);
@@ -134,7 +134,7 @@ stmt  level    source
   117          
   118          //字节发送程序
   119          //发送c(可以是数据也可是地址)，送完后接收从应答
-C251 COMPILER V5.60.0,  SEEKFREE_MPU6050                                                   17/03/23  22:09:02  PAGE 3   
+C251 COMPILER V5.60.0,  SEEKFREE_MPU6050                                                   18/03/23  21:42:15  PAGE 3   
 
   120          //不考虑从应答位
   121          //内部使用，用户无需调用
@@ -202,7 +202,7 @@ stmt  level    source
              -------------
   182          static void mpu6050_simiic_write_reg(uint8 dev_add, uint8 reg, uint8 dat)
   183          {
-C251 COMPILER V5.60.0,  SEEKFREE_MPU6050                                                   17/03/23  22:09:02  PAGE 4   
+C251 COMPILER V5.60.0,  SEEKFREE_MPU6050                                                   18/03/23  21:42:15  PAGE 4   
 
   184   1        mpu6050_simiic_start();
   185   1          mpu6050_send_ch( (dev_add<<1) | 0x00);   //发送器件地址加写位
@@ -270,7 +270,7 @@ stmt  level    source
   243   1      }
   244          
   245          //-------------------------------------------------------------------------------------------------------
-C251 COMPILER V5.60.0,  SEEKFREE_MPU6050                                                   17/03/23  22:09:02  PAGE 5   
+C251 COMPILER V5.60.0,  SEEKFREE_MPU6050                                                   18/03/23  21:42:15  PAGE 5   
 
              -------------
   246          //  @brief      MPU6050自检函数
@@ -338,7 +338,7 @@ stmt  level    source
   304          //  Sample usage:       执行该函数后，直接查看对应的变量即可
   305          //-------------------------------------------------------------------------------------------------------
              -------------
-C251 COMPILER V5.60.0,  SEEKFREE_MPU6050                                                   17/03/23  22:09:02  PAGE 6   
+C251 COMPILER V5.60.0,  SEEKFREE_MPU6050                                                   18/03/23  21:42:15  PAGE 6   
 
   306          void mpu6050_get_accdata(void)
   307          {

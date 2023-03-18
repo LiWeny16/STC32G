@@ -8,8 +8,8 @@
 #include "road.h"
 #include "headfile.h"
 
-#define DIR_L P35
-#define DIR_R P36
+#define DIR_L P35 //方向
+#define DIR_R P53 
 #define Encoder_L CTIM0_P34
 #define Encoder_R CTIM3_P04
 #define CONTROL_T 0.02  //该值需保持为浮点数

@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  Pid                                                                17/03/23  22:09:04  PAGE 1   
+C251 COMPILER V5.60.0,  Pid                                                                18/03/23  21:42:18  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE Pid
@@ -28,27 +28,29 @@ stmt  level    source
    16   1      
    17   1       //   constrain_float(err_steering->Errsum, pid_steering->imax, pid_steering->imin);
    18   1      //位置式PID积分项限幅
-   19   1           pid_steering->STEERING_OUT_temp = (float)(((pid_steering->p_steering * err_steering-> Err) + (pid_ste
-             -ering->i_steering * err_steering-> Errsum) + (pid_steering->d_steering * err_steering-> Errdif)));
-   20   1          //pid_steering->PID_STEERING_OUT = (float)(((pid_steering->p_steering * err_steering-> Err*(-1.0)) + 
-             -(pid_steering->i_steering * err_steering-> Errsum*0) + (pid_steering->d_steering * err_steering-> Errdif)*0));
-   21   1        //  temp =   pid_steering->PID_STEERING_OUT
-   22   1          //位置式PID输出计算
-   23   1      }
-   24          
-   25          void Pid_Motor_Calculate(Err_Motor* err_motor,PID_Motor* pid_motor)//电机增量式PID输出增量
-   26          {
-   27   1        pid_motor->PID_MOTOR_L_OUT = (pid_motor->p_motor * err_motor->err_derivative_L_m) + (pid_motor->i_motor 
+   19   1           pid_steering->STEERING_OUT_temp = (float)((pid_steering->p_steering * err_steering-> Err) + (pid_stee
+             -ring->i_steering * err_steering-> Errsum) + (pid_steering->d_steering * err_steering-> Errdif));
+   20   1           tempVar =(float)((pid_steering->p_steering * err_steering-> Err) + (pid_steering->i_steering * err_s
+             -teering-> Errsum) + (pid_steering->d_steering * err_steering-> Errdif));
+   21   1        //pid_steering->PID_STEERING_OUT = (f)(((pid_steering->p_steering * err_steering-> Err*(-1.0)) + (pid_st
+             -eering->i_steering * err_steering-> Errsum*0) + (pid_steering->d_steering * err_steering-> Errdif)*0));
+   22   1        //  temp =   pid_steering->PID_STEERING_OUT
+   23   1          //位置式PID输出计算
+   24   1      }
+   25          
+   26          void Pid_Motor_Calculate(Err_Motor* err_motor,PID_Motor* pid_motor)//电机增量式PID输出增量
+   27          {
+   28   1        pid_motor->PID_MOTOR_L_OUT = (pid_motor->p_motor * err_motor->err_derivative_L_m) + (pid_motor->i_motor 
              -* err_motor->err_L_m) + (pid_motor->d_motor * err_motor->err_derivative2_L_m);
-   28   1        pid_motor->PID_MOTOR_R_OUT = (pid_motor->p_motor * err_motor->err_derivative_R_m) + (pid_motor->i_motor 
+   29   1        pid_motor->PID_MOTOR_R_OUT = (pid_motor->p_motor * err_motor->err_derivative_R_m) + (pid_motor->i_motor 
              -* err_motor->err_R_m) + (pid_motor->d_motor * err_motor->err_derivative2_R_m);
-   29   1        
-   30   1      }
+   30   1        
+   31   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       339     ------
+  code size            =       413     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
@@ -65,6 +67,8 @@ Module Information          Static   Overlayable
   const size           =    ------     ------
   hconst size          =    ------     ------
 End of Module Information.
+
+C251 COMPILER V5.60.0,  Pid                                                                18/03/23  21:42:18  PAGE 2   
 
 
 C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

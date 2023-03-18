@@ -7,6 +7,7 @@
 #include "adc.h"
 #include "encoder.h"
 //
+#include "TempVar.h"
 
 //#include "headfile.h"
 

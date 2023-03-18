@@ -729,6 +729,11 @@
               <FileType>1</FileType>
               <FilePath>.\User\User_c\Variable.c</FilePath>
             </File>
+            <File>
+              <FileName>TempVar.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\TempVar.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -778,6 +783,11 @@
               <FileName>Variable.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\User_h\Variable.h</FilePath>
+            </File>
+            <File>
+              <FileName>TempVar.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\TempVar.h</FilePath>
             </File>
           </Files>
         </Group>

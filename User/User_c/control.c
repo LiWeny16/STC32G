@@ -21,12 +21,19 @@ void MOTOR_Control(PID_Motor *pid_motor)
 	
 	//pwm_duty(MOTOR1_P,pid_motor->PID_MOTOR_L_OUT);//左电机驱动
 	//pwm_duty(MOTOR1_N,pid_motor->PID_MOTOR_L_OUT);
-	pwm_duty(PWMA_CH1P_P60,(uint32)0);//左电机驱动
-	pwm_duty(PWMA_CH2P_P62,pid_motor->PID_MOTOR_L_OUT/5);
+	//pwm_duty(PWMA_CH1P_P60,(uint32)0);//左电机驱动
+	//pwm_duty(PWMA_CH2P_P62,pid_motor->PID_MOTOR_L_OUT/5);
+	
+		pwm_duty(PWMA_CH1P_P60,1400);//左电机驱动
+		pwm_duty(PWMA_CH2P_P62,1400); // 单独它一个有数值，反转
+		
+		pwm_duty(PWMA_CH3P_P64,1400); //右电机驱动
+		pwm_duty(PWMA_CH4P_P66,1400);
 	PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT;//左电机PWM更新
 	
-	pwm_duty(PWMA_CH3P_P64,(uint32)0);//右电机驱动
-	pwm_duty(PWMA_CH4P_P66,pid_motor->PID_MOTOR_R_OUT/5);
+	//pwm_duty(PWMA_CH3P_P64,(uint32)0);//右电机驱动
+	//pwm_duty(PWMA_CH4P_P66,pid_motor->PID_MOTOR_R_OUT/5);
+	
 	//pwm_duty(MOTOR2_P,pid_motor->PID_MOTOR_R_OUT);//右电机驱动
 	//pwm_duty(MOTOR2_N,pid_motor->PID_MOTOR_R_OUT);
 	PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT;//右电机PWM更新
