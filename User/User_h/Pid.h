@@ -37,6 +37,6 @@ typedef struct // 增量式PID（电机用）结构体
 
 uint32 constrain_uint32(uint32 amt, uint32 low, uint32 high);
 float constrain_float(float amt, float low, float high);                             // 位置式PID积分项限幅及PWM输出限幅用
-void Pid_Steering_Calculate(Err_Steering *err_steering, PID_Steering *pid_steering); // 由舵机偏差（由电感反应）结构体计算舵机PID输出值
+void Pid_Steering_Calculate(Road road, Err_Steering *err_steering, PID_Steering *pid_steering); // 由舵机偏差（由电感反应）结构体计算舵机PID输出值
 void Pid_Motor_Calculate(Err_Motor *err_motor, PID_Motor *pid_motor);                // 由电机偏差（由编码器反应）结构体计算电机PID输出增量
 #endif

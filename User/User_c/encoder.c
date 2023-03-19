@@ -11,11 +11,15 @@ void speedout(Road road,SPEED_now* speed_now,SPEED_state* speed_state)//根据路况
 		speed_now-> speed_R_ai = speed_state->Strai_speed_R_ai;
 		break;
 		
-		case(Curve)://弯道
-		speed_now-> speed_L_ai = speed_state->Cur_speed_L_ai;
-		speed_now-> speed_R_ai = speed_state->Cur_speed_R_ai;
+		case(Curve_Left)://左弯道
+		speed_now-> speed_L_ai = speed_state->Cur_L_speed_L_ai;
+		speed_now-> speed_R_ai = speed_state->Cur_L_speed_R_ai;
 		break;
 		
+		case(Curve_Right)://右弯道
+		speed_now-> speed_L_ai = speed_state->Cur_R_speed_L_ai;
+		speed_now-> speed_R_ai = speed_state->Cur_R_speed_R_ai;
+		break;
 		case(Stop):
 		speed_now-> speed_L_ai =0;
 		speed_now-> speed_R_ai =0;

@@ -29,8 +29,11 @@ typedef struct//速度状态结构体（以速度表示）
         uint32 Strai_speed_L_ai;//直道左
         uint32 Strai_speed_R_ai;//直道右
 	
-        uint32 Cur_speed_L_ai;//弯道左
-        uint32 Cur_speed_R_ai;//弯道右
+	      uint32 Cur_L_speed_L_ai;//左转 左右轮
+        uint32 Cur_L_speed_R_ai;//
+	
+        uint32 Cur_R_speed_L_ai;//右转 左右轮
+        uint32 Cur_R_speed_R_ai;//
 	
         uint32 Cross_speed_L_ai;//十字左
         uint32 Cross_speed_R_ai;//十字右

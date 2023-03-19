@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  encoder                                                            19/03/23  18:33:24  PAGE 1   
+C251 COMPILER V5.60.0,  encoder                                                            19/03/23  22:47:38  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE encoder
@@ -24,98 +24,102 @@ stmt  level    source
    11   2          speed_now-> speed_R_ai = speed_state->Strai_speed_R_ai;
    12   2          break;
    13   2          
-   14   2          case(Curve)://ÍäµÀ
-   15   2          speed_now-> speed_L_ai = speed_state->Cur_speed_L_ai;
-   16   2          speed_now-> speed_R_ai = speed_state->Cur_speed_R_ai;
+   14   2          case(Curve_Left)://×óÍäµÀ
+   15   2          speed_now-> speed_L_ai = speed_state->Cur_L_speed_L_ai;
+   16   2          speed_now-> speed_R_ai = speed_state->Cur_L_speed_R_ai;
    17   2          break;
    18   2          
-   19   2          case(Stop):
-   20   2          speed_now-> speed_L_ai =0;
-   21   2          speed_now-> speed_R_ai =0;
-   22   2          default://±ðµÄ
-   23   2          speed_now-> speed_L_ai = speed_state->Strai_speed_L_ai;
-   24   2          speed_now-> speed_R_ai = speed_state->Strai_speed_R_ai;
-   25   2          break;
-   26   2        }
-   27   1      }
-   28          
-   29          void speed_cal(SPEED_now* speed_now)//Í¨¹ý±àÂëÆ÷µÄÊý¾Ý¼ÆËãËÙ¶È£¬²¢½«ÆäÐ´Èëµ±Ç°ËÙ¶È½á¹¹Ìå
-   30          {
-   31   1        uint32 Speed_L = 0;
-   32   1        uint32 Speed_R = 0;
-   33   1        uint32 dat_L = 0 ;
-   34   1        uint32 dat_R = 0 ;
-   35   1        if(DIR_L == 1)//×óÂÖËÙ¶È
-   36   1          {
-   37   2            dat_L = ctimer_count_read(Encoder_L);
-   38   2            Speed_L= MFBL*(dat_L/(CONTROL_T*DECO));//ÓÃ±àÂëÆ÷ÔÚÖÐ¶Ï¼ä¸ôÖ®ÄÚµÄ¶ÁÊý³ýÒÔÖ´ÐÐ³ÌÐòµÄÖÐ¶Ï¼ä¸ô¼°Ò»Ã×¶ÔÓ¦µ
+   19   2          case(Curve_Right)://ÓÒÍäµÀ
+   20   2          speed_now-> speed_L_ai = speed_state->Cur_R_speed_L_ai;
+   21   2          speed_now-> speed_R_ai = speed_state->Cur_R_speed_R_ai;
+   22   2          break;
+   23   2          case(Stop):
+   24   2          speed_now-> speed_L_ai =0;
+   25   2          speed_now-> speed_R_ai =0;
+   26   2          default://±ðµÄ
+   27   2          speed_now-> speed_L_ai = speed_state->Strai_speed_L_ai;
+   28   2          speed_now-> speed_R_ai = speed_state->Strai_speed_R_ai;
+   29   2          break;
+   30   2        }
+   31   1      }
+   32          
+   33          void speed_cal(SPEED_now* speed_now)//Í¨¹ý±àÂëÆ÷µÄÊý¾Ý¼ÆËãËÙ¶È£¬²¢½«ÆäÐ´Èëµ±Ç°ËÙ¶È½á¹¹Ìå
+   34          {
+   35   1        uint32 Speed_L = 0;
+   36   1        uint32 Speed_R = 0;
+   37   1        uint32 dat_L = 0 ;
+   38   1        uint32 dat_R = 0 ;
+   39   1        if(DIR_L == 1)//×óÂÖËÙ¶È
+   40   1          {
+   41   2            dat_L = ctimer_count_read(Encoder_L);
+   42   2            Speed_L= MFBL*(dat_L/(CONTROL_T*DECO));//ÓÃ±àÂëÆ÷ÔÚÖÐ¶Ï¼ä¸ôÖ®ÄÚµÄ¶ÁÊý³ýÒÔÖ´ÐÐ³ÌÐòµÄÖÐ¶Ï¼ä¸ô¼°Ò»Ã×¶ÔÓ¦µ
              -ÄÂö³åÊýÀ´±íÊ¾µ±Ç°ËÙ¶È(m/s),ÒÑ³ËPID·Ö±æÂÊ
-   39   2            //Speed_L = dat_L; //²âÊÔÓÃ
-   40   2            //ÂË²¨
-   41   2            Speed_L = Speed_L>1?Speed_L:1;
-   42   2          }
-   43   1          else
-   44   1          {
-   45   2            dat_L = ctimer_count_read(Encoder_L) * -1;
-   46   2            Speed_L = (MFBL*(dat_L/(CONTROL_T*DECO))) * -1;//ÓÃ±àÂëÆ÷ÔÚÖÐ¶Ï¼ä¸ôÖ®ÄÚµÄ¶ÁÊý³ýÒÔÖ´ÐÐ³ÌÐòµÄÖÐ¶Ï¼ä¸ô¼°
+   43   2            //Speed_L = dat_L; //²âÊÔÓÃ
+   44   2            //ÂË²¨
+   45   2            Speed_L = Speed_L>1?Speed_L:1;
+   46   2          }
+   47   1          else
+   48   1          {
+   49   2            dat_L = ctimer_count_read(Encoder_L) * -1;
+   50   2            Speed_L = (MFBL*(dat_L/(CONTROL_T*DECO))) * -1;//ÓÃ±àÂëÆ÷ÔÚÖÐ¶Ï¼ä¸ôÖ®ÄÚµÄ¶ÁÊý³ýÒÔÖ´ÐÐ³ÌÐòµÄÖÐ¶Ï¼ä¸ô¼°
              -Ò»Ã×¶ÔÓ¦µÄÂö³åÊýÀ´±íÊ¾µ±Ç°ËÙ¶È(m/s),ÒÑ³ËPID·Ö±æÂÊ
-   47   2            //Speed_L = dat_L;
-   48   2            Speed_L = Speed_L>1?Speed_L:1;
-   49   2          }
-   50   1      
-   51   1          speed_now->speed_L = Speed_L;
-   52   1          
-   53   1          
-C251 COMPILER V5.60.0,  encoder                                                            19/03/23  18:33:24  PAGE 2   
+   51   2            //Speed_L = dat_L;
+   52   2            Speed_L = Speed_L>1?Speed_L:1;
+   53   2          }
+C251 COMPILER V5.60.0,  encoder                                                            19/03/23  22:47:38  PAGE 2   
 
-   54   1        if(DIR_R == 0)//ÓÒÂÖËÙ¶È
-   55   1          {
-   56   2            dat_R = ctimer_count_read(Encoder_R);
-   57   2            Speed_R = MFBL*(dat_R/(CONTROL_T*DECO));//ÓÃ±àÂëÆ÷ÔÚÖÐ¶Ï¼ä¸ôÖ®ÄÚµÄ¶ÁÊý³ýÒÔÖ´ÐÐ³ÌÐòµÄÖÐ¶Ï¼ä¸ô¼°Ò»Ã×¶ÔÓ¦
+   54   1      
+   55   1          speed_now->speed_L = Speed_L;
+   56   1          
+   57   1          
+   58   1        if(DIR_R == 0)//ÓÒÂÖËÙ¶È
+   59   1          {
+   60   2            dat_R = ctimer_count_read(Encoder_R);
+   61   2            Speed_R = MFBL*(dat_R/(CONTROL_T*DECO));//ÓÃ±àÂëÆ÷ÔÚÖÐ¶Ï¼ä¸ôÖ®ÄÚµÄ¶ÁÊý³ýÒÔÖ´ÐÐ³ÌÐòµÄÖÐ¶Ï¼ä¸ô¼°Ò»Ã×¶ÔÓ¦
              -µÄÂö³åÊýÀ´±íÊ¾µ±Ç°ËÙ¶È(m/s),ÒÑ³ËPID·Ö±æÂÊ
-   58   2            //Speed_R = dat_R;
-   59   2            Speed_R = Speed_R>1?Speed_R:1;
-   60   2          }
-   61   1          else
-   62   1          {
-   63   2            dat_R = ctimer_count_read(Encoder_R) * -1;
-   64   2            Speed_R = (MFBL*(dat_R/(CONTROL_T*DECO))) * -1;//ÓÃ±àÂëÆ÷ÔÚÖÐ¶Ï¼ä¸ôÖ®ÄÚµÄ¶ÁÊý³ýÒÔÖ´ÐÐ³ÌÐòµÄÖÐ¶Ï¼ä¸ô¼°Ò
+   62   2            //Speed_R = dat_R;
+   63   2            Speed_R = Speed_R>1?Speed_R:1;
+   64   2          }
+   65   1          else
+   66   1          {
+   67   2            dat_R = ctimer_count_read(Encoder_R) * -1;
+   68   2            Speed_R = (MFBL*(dat_R/(CONTROL_T*DECO))) * -1;//ÓÃ±àÂëÆ÷ÔÚÖÐ¶Ï¼ä¸ôÖ®ÄÚµÄ¶ÁÊý³ýÒÔÖ´ÐÐ³ÌÐòµÄÖÐ¶Ï¼ä¸ô¼°Ò
              -»Ã×¶ÔÓ¦µÄÂö³åÊýÀ´±íÊ¾µ±Ç°ËÙ¶È(m/s),ÒÑ³ËPID·Ö±æÂÊ
-   65   2            //Speed_R = dat_R;
-   66   2            Speed_R = Speed_R>1?Speed_R:1;
-   67   2          }
-   68   1      
-   69   1          speed_now->speed_R = Speed_R;
-   70   1          ctimer_count_clean(Encoder_R);
-   71   1          ctimer_count_clean(Encoder_L);
-   72   1      }
-   73          
-   74          
-   75          void calculate_err_m(SPEED_now* speed_now,Err_Motor* err_Mot)//Í¨¹ý×óÂÖºÍÓÒÂÖËÙ¶È¼ÆËãËùÐèµÄÔöÁ¿Ê½PIDÎó²îÖ
+   69   2            //Speed_R = dat_R;
+   70   2            Speed_R = Speed_R>1?Speed_R:1;
+   71   2          }
+   72   1      
+   73   1          speed_now->speed_R = Speed_R;
+   74   1          ctimer_count_clean(Encoder_R);
+   75   1          ctimer_count_clean(Encoder_L);
+   76   1      }
+   77          
+   78          
+   79          void calculate_err_m(SPEED_now* speed_now,Err_Motor* err_Mot)//Í¨¹ý×óÂÖºÍÓÒÂÖËÙ¶È¼ÆËãËùÐèµÄÔöÁ¿Ê½PIDÎó²îÖ
              -µ£¬½«ÆäÐ´Èëµç»úÎó²î½á¹¹Ìå£¬²¢¸üÐÂÏàÓ¦µÄËùÐèÎó²îÖµ
-   76          {
-   77   1        err_Mot->err_L_m = speed_now->speed_L_ai - speed_now->speed_L;
-   78   1        err_Mot->err_R_m = speed_now->speed_R_ai - speed_now->speed_R;
-   79   1        
-   80   1        err_Mot->err_derivative_L_m = err_Mot->err_L_m - err_Mot->err_last_L_m;//±¾´ÎÎó²îÓëÉÏ´ÎÎó²îÖ®²î
-   81   1        err_Mot->err_derivative_R_m = err_Mot->err_R_m - err_Mot->err_last_R_m;
-   82   1        
-   83   1        err_Mot->err_derivative2_L_m = err_Mot->err_last_L_m - err_Mot->err_past_L_m;//ÉÏ´ÎÎó²îºÍÉÏÉÏ´ÎÎó²îÖ®²î
-   84   1        err_Mot->err_derivative2_R_m = err_Mot->err_last_R_m - err_Mot->err_past_R_m;
-   85   1        
-   86   1        err_Mot->err_past_L_m = err_Mot->err_last_L_m;
-   87   1        err_Mot->err_last_L_m = err_Mot->err_L_m;//×óÂÖÊý¾Ý¸üÐÂ
-   88   1        
-   89   1        err_Mot->err_past_R_m = err_Mot->err_last_R_m;
-   90   1        err_Mot->err_last_R_m = err_Mot->err_R_m;//ÓÒÂÖÊý¾Ý¸üÐÂ
-   91   1        
-   92   1      }
-   93          
+   80          {
+   81   1        err_Mot->err_L_m = speed_now->speed_L_ai - speed_now->speed_L;
+   82   1        err_Mot->err_R_m = speed_now->speed_R_ai - speed_now->speed_R;
+   83   1        
+   84   1        err_Mot->err_derivative_L_m = err_Mot->err_L_m - err_Mot->err_last_L_m;//±¾´ÎÎó²îÓëÉÏ´ÎÎó²îÖ®²î
+   85   1        err_Mot->err_derivative_R_m = err_Mot->err_R_m - err_Mot->err_last_R_m;
+   86   1        
+   87   1        err_Mot->err_derivative2_L_m = err_Mot->err_last_L_m - err_Mot->err_past_L_m;//ÉÏ´ÎÎó²îºÍÉÏÉÏ´ÎÎó²îÖ®²î
+   88   1        err_Mot->err_derivative2_R_m = err_Mot->err_last_R_m - err_Mot->err_past_R_m;
+   89   1        
+   90   1        err_Mot->err_past_L_m = err_Mot->err_last_L_m;
+   91   1        err_Mot->err_last_L_m = err_Mot->err_L_m;//×óÂÖÊý¾Ý¸üÐÂ
+   92   1        
+   93   1        err_Mot->err_past_R_m = err_Mot->err_last_R_m;
+   94   1        err_Mot->err_last_R_m = err_Mot->err_R_m;//ÓÒÂÖÊý¾Ý¸üÐÂ
+   95   1        
+   96   1      }
+   97          
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       675     ------
+  code size            =       713     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
@@ -131,6 +135,8 @@ Module Information          Static   Overlayable
   huge data size       =    ------     ------
   const size           =    ------     ------
   hconst size          =    ------     ------
+C251 COMPILER V5.60.0,  encoder                                                            19/03/23  22:47:38  PAGE 3   
+
 End of Module Information.
 
 

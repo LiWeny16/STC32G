@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  Variable                                                           19/03/23  18:33:25  PAGE 1   
+C251 COMPILER V5.60.0,  Variable                                                           19/03/23  22:47:39  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE Variable
@@ -46,7 +46,7 @@ Module Information          Static   Overlayable
   pdata size           =    ------     ------
   xdata size           =    ------     ------
   xdata-const size     =    ------     ------
-  edata size           =       332     ------
+  edata size           =       340     ------
   bit size             =    ------     ------
   ebit size            =    ------     ------
   bitaddressable size  =    ------     ------

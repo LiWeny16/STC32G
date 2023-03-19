@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  control                                                            19/03/23  18:33:24  PAGE 1   
+C251 COMPILER V5.60.0,  control                                                            19/03/23  22:47:38  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE control
@@ -11,132 +11,138 @@ stmt  level    source
 
     1          #include "control.h"
     2          
-    3          
-    4          void Control_All()
-    5          {
-    6   1      
-    7   1        // 以下为舵机驱动部分
-    8   1        calculate_s(&dg_state, &err_steering); // 计算偏差值，写电感
-    9   1      
-   10   1        road = road_judge(&dg_state); // 根据电感结构体判断道路状况返回道路结构体
-   11   1      
-   12   1        Pid_Steering_Calculate(&err_steering, &pid_steering); // 计算pid输出值，并写入实参
-   13   1        STEERING_Control(road, &pid_steering);          // 从pid输出到实际舵机驱动,判断道路结构体，并做出响应
-   14   1      
-   15   1        // 以下为电机驱动部分
-   16   1        // 速度选择
-   17   1        speedout(road, &speed_now, &speed_state);  // 根据道路情况将速度状态结构体中的一组设定值赋给当前速度结构
+    3          void Control_All()
+    4          {
+    5   1      
+    6   1        // 以下为舵机驱动部分
+    7   1        calculate_s(&dg_state, &err_steering); // 计算偏差值，写电感
+    8   1      
+    9   1        road = road_judge(&dg_state); // 根据电感结构体判断道路状况返回道路结构体
+   10   1      
+   11   1        Pid_Steering_Calculate(road, &err_steering, &pid_steering); // 计算pid输出值，并写入实参
+   12   1        STEERING_Control(road, &pid_steering);            // 从pid输出到实际舵机驱动,判断道路结构体，并做出响应
+   13   1      
+   14   1        // 以下为电机驱动部分
+   15   1        // 速度选择
+   16   1        speedout(road, &speed_now, &speed_state);  // 根据道路情况将速度状态结构体中的一组设定值赋给当前速度结构
              -体中的目标值
-   18   1        speed_cal(&speed_now);             // 根据编码器数据计算速度值，并将其赋给当前速度结构体中的当前速度值
-   19   1        calculate_err_m(&speed_now, &err_motor);   // 根据编码器数值计算偏差值，并更新偏差值结构体中last量,结果保
+   17   1        speed_cal(&speed_now);             // 根据编码器数据计算速度值，并将其赋给当前速度结构体中的当前速度值
+   18   1        calculate_err_m(&speed_now, &err_motor);   // 根据编码器数值计算偏差值，并更新偏差值结构体中last量,结果保
              -存在电机偏差值结构体中
-   20   1        Pid_Motor_Calculate(&err_motor, &pid_motor); // 由电机偏差（由编码器反应）结构体计算电机PID输出增量
-   21   1        MOTOR_Control(road, &pid_motor);       // 从pid输出到实际电机驱动
-   22   1      }
-   23          
-   24          void STEERING_Control(Road road, PID_Steering *pid_steering)
-   25          {
-   26   1        // temp = pid_steering->PID_STEERING_OUT;
-   27   1        // pid_steering->PID_STEERING_OUT=(pid_steering->PID_STEERING_OUT+725.0); //之前有正负
-   28   1        switch (road)
-   29   1        {
-   30   2        case (Straight): // 直道
-   31   2          pid_steering->STEERING_OUT_temp = pid_steering->STEERING_OUT_temp + 725.0;
-   32   2          // temp=(temp+725.0); //之前有正负，是PID权重后的值
-   33   2          pid_steering->PID_STEERING_OUT = constrain_uint32((uint32)pid_steering->STEERING_OUT_temp, PWM_Steering
+   19   1        Pid_Motor_Calculate(&err_motor, &pid_motor); // 由电机偏差（由编码器反应）结构体计算电机PID输出增量
+   20   1        MOTOR_Control(road, &pid_motor);       // 从pid输出到实际电机驱动
+   21   1      }
+   22          
+   23          void STEERING_Control(Road road, PID_Steering *pid_steering)
+   24          {
+   25   1        // temp = pid_steering->PID_STEERING_OUT;
+   26   1        // pid_steering->PID_STEERING_OUT=(pid_steering->PID_STEERING_OUT+725.0); //之前有正负
+   27   1        switch (road)
+   28   1        {
+   29   2        case (Straight): // 直道
+   30   2          pid_steering->STEERING_OUT_temp = pid_steering->STEERING_OUT_temp + 725.0;
+   31   2          // temp=(temp+725.0); //之前有正负，是PID权重后的值
+   32   2          pid_steering->PID_STEERING_OUT = constrain_uint32((uint32)pid_steering->STEERING_OUT_temp, PWM_Steering
              -_Min, PWM_Steering_Max); // 驱动限幅
-   34   2          pwm_duty(STEERING, (pid_steering->PID_STEERING_OUT));                                     // 舵机驱动
-   35   2          break;
-   36   2      
-   37   2        case (Stop): // 停下
-   38   2          pwm_duty(STEERING, 725);
+   33   2          pwm_duty(STEERING, (pid_steering->PID_STEERING_OUT));                                     // 舵机驱动
+   34   2          break;
+   35   2        case (Curve_Left):
+   36   2          //pid_steering->STEERING_OUT_temp = pid_steering->STEERING_OUT_temp + 725.0;
+   37   2          //pid_steering->PID_STEERING_OUT = constrain_uint32((uint32)pid_steering->STEERING_OUT_temp, PWM_Steeri
+             -ng_Min, PWM_Steering_Max); // 驱动限幅
+   38   2          pwm_duty(STEERING, (pid_steering->PID_STEERING_OUT));
    39   2          break;
-   40   2      
-   41   2        default: // 别的
-   42   2      
-   43   2          break;
-   44   2        }
-   45   1      }
-   46          
-   47          void MOTOR_Control(Road road, PID_Motor *pid_motor)
-   48          {
-   49   1        switch (road)
-   50   1        {
-   51   2        case (Straight): // 直道
-   52   2          pid_motor->PID_MOTOR_L_OUT = pid_motor->PID_MOTOR_L_OUT + PWM_Motor_L_now;
-   53   2          pid_motor->PID_MOTOR_R_OUT = pid_motor->PID_MOTOR_R_OUT + PWM_Motor_R_now;
-   54   2      
-C251 COMPILER V5.60.0,  control                                                            19/03/23  18:33:24  PAGE 2   
+   40   2        case (Curve_Right):
+   41   2          pid_steering->STEERING_OUT_temp = pid_steering->STEERING_OUT_temp + 725.0;
+   42   2          pid_steering->PID_STEERING_OUT = constrain_uint32((uint32)pid_steering->STEERING_OUT_temp, PWM_Steering
+             -_Min, PWM_Steering_Max); // 驱动限幅
+   43   2          pwm_duty(STEERING, (pid_steering->PID_STEERING_OUT));
+   44   2          break;
+   45   2      
+   46   2        case (Ring_In):
+   47   2          pwm_duty(STEERING, 800); //左转打死
+   48   2          break;
+   49   2        case (Ring_Out):
+   50   2          pwm_duty(STEERING, 800); //左转打死
+   51   2          break;
+   52   2        case (Stop): // 停下
+C251 COMPILER V5.60.0,  control                                                            19/03/23  22:47:38  PAGE 2   
 
-   55   2          pid_motor->PID_MOTOR_L_OUT = constrain_float(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max);
+   53   2          pwm_duty(STEERING, 725);
+   54   2          break;
+   55   2      
+   56   2        default: // 别的
+   57   2          pid_steering->STEERING_OUT_temp = pid_steering->STEERING_OUT_temp + 725.0;
+   58   2          pid_steering->PID_STEERING_OUT = constrain_uint32((uint32)pid_steering->STEERING_OUT_temp, PWM_Steering
+             -_Min, PWM_Steering_Max); // 驱动限幅
+   59   2          pwm_duty(STEERING, (pid_steering->PID_STEERING_OUT));   
+   60   2          break;
+   61   2        }
+   62   1      }
+   63          
+   64          void MOTOR_Control(Road road, PID_Motor *pid_motor)
+   65          {
+   66   1        switch (road)
+   67   1        {
+   68   2        case (Straight): // 直道
+   69   2          pid_motor->PID_MOTOR_L_OUT = pid_motor->PID_MOTOR_L_OUT + PWM_Motor_L_now;
+   70   2          pid_motor->PID_MOTOR_R_OUT = pid_motor->PID_MOTOR_R_OUT + PWM_Motor_R_now;
+   71   2      
+   72   2          pid_motor->PID_MOTOR_L_OUT = constrain_float(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max);
              - // 驱动限幅
-   56   2          pid_motor->PID_MOTOR_R_OUT = constrain_float(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
-   57   2      
-   58   2          // pwm_duty(MOTOR1_P,pid_motor->PID_MOTOR_L_OUT);//左电机驱动
-   59   2          // pwm_duty(MOTOR1_N,pid_motor->PID_MOTOR_L_OUT);
-   60   2          // pwm_duty(PWMA_CH1P_P60,(uint32)0);//左电机驱动
-   61   2          // pwm_duty(PWMA_CH2P_P62,pid_motor->PID_MOTOR_L_OUT/5);
-   62   2          // 15000 对应占空比1400
-   63   2          pwm_duty(PWMA_CH1P_P60, pid_motor->PID_MOTOR_L_OUT); // 左电机驱动
-   64   2          pwm_duty(PWMA_CH2P_P62, pid_motor->PID_MOTOR_L_OUT); // 单独它一个有数值，反转
-   65   2      
-   66   2          pwm_duty(PWMA_CH3P_P64, pid_motor->PID_MOTOR_R_OUT); // 右电机驱动
-   67   2          pwm_duty(PWMA_CH4P_P66, pid_motor->PID_MOTOR_R_OUT);
-   68   2          PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT; // 左电机PWM更新
-   69   2      
-   70   2          // pwm_duty(PWMA_CH3P_P64,(uint32)0);//右电机驱动
-   71   2          // pwm_duty(PWMA_CH4P_P66,pid_motor->PID_MOTOR_R_OUT/5);
-   72   2      
-   73   2          // pwm_duty(MOTOR2_P,pid_motor->PID_MOTOR_R_OUT);//右电机驱动
-   74   2          // pwm_duty(MOTOR2_N,pid_motor->PID_MOTOR_R_OUT);
-   75   2          PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT; // 右电机PWM更新
-   76   2          break;
-   77   2      
-   78   2        case (Stop): // 停下
-   79   2          pwm_duty(PWMA_CH1P_P60,0); // 左电机驱动
-   80   2          pwm_duty(PWMA_CH2P_P62,0); // 单独它一个有数值，反转
-   81   2      
-   82   2          pwm_duty(PWMA_CH3P_P64,0); // 右电机驱动
-   83   2          pwm_duty(PWMA_CH4P_P66,0);
-   84   2          break;
-   85   2      
-   86   2        default: // 别的
-   87   2          pid_motor->PID_MOTOR_L_OUT = pid_motor->PID_MOTOR_L_OUT + PWM_Motor_L_now;
-   88   2          pid_motor->PID_MOTOR_R_OUT = pid_motor->PID_MOTOR_R_OUT + PWM_Motor_R_now;
-   89   2      
-   90   2          pid_motor->PID_MOTOR_L_OUT = constrain_float(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max);
-             - // 驱动限幅
-   91   2          pid_motor->PID_MOTOR_R_OUT = constrain_float(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
-   92   2      
-   93   2          // pwm_duty(MOTOR1_P,pid_motor->PID_MOTOR_L_OUT);//左电机驱动
-   94   2          // pwm_duty(MOTOR1_N,pid_motor->PID_MOTOR_L_OUT);
-   95   2          // pwm_duty(PWMA_CH1P_P60,(uint32)0);//左电机驱动
-   96   2          // pwm_duty(PWMA_CH2P_P62,pid_motor->PID_MOTOR_L_OUT/5);
-   97   2          // 15000 对应占空比1400
-   98   2          pwm_duty(PWMA_CH1P_P60, pid_motor->PID_MOTOR_L_OUT); // 左电机驱动
-   99   2          pwm_duty(PWMA_CH2P_P62, pid_motor->PID_MOTOR_L_OUT); // 单独它一个有数值，反转
+   73   2          pid_motor->PID_MOTOR_R_OUT = constrain_float(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
+   74   2      
+   75   2          // pwm_duty(MOTOR1_P,pid_motor->PID_MOTOR_L_OUT);//左电机驱动
+   76   2          // pwm_duty(MOTOR1_N,pid_motor->PID_MOTOR_L_OUT);
+   77   2          // pwm_duty(PWMA_CH1P_P60,(uint32)0);//左电机驱动
+   78   2          // pwm_duty(PWMA_CH2P_P62,pid_motor->PID_MOTOR_L_OUT/5);
+   79   2          // 15000 对应占空比1400
+   80   2          pwm_duty(PWMA_CH1P_P60, pid_motor->PID_MOTOR_L_OUT); // 左电机驱动
+   81   2          pwm_duty(PWMA_CH2P_P62, pid_motor->PID_MOTOR_L_OUT); // 单独它一个有数值，反转
+   82   2      
+   83   2          pwm_duty(PWMA_CH3P_P64, pid_motor->PID_MOTOR_R_OUT); // 右电机驱动
+   84   2          pwm_duty(PWMA_CH4P_P66, pid_motor->PID_MOTOR_R_OUT);
+   85   2          PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT; // 左电机PWM更新
+   86   2          PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT; // 右电机PWM更新
+   87   2          break;
+   88   2      
+   89   2        case (Curve_Left):
+   90   2          break;
+   91   2        case (Curve_Right):
+   92   2          break;
+   93   2        case (Stop):          // 停下
+   94   2          pwm_duty(PWMA_CH1P_P60, 0); // 左电机驱动
+   95   2          pwm_duty(PWMA_CH2P_P62, 0); // 单独它一个有数值，反转
+   96   2      
+   97   2          pwm_duty(PWMA_CH3P_P64, 0); // 右电机驱动
+   98   2          pwm_duty(PWMA_CH4P_P66, 0);
+   99   2          break;
   100   2      
-  101   2          pwm_duty(PWMA_CH3P_P64, pid_motor->PID_MOTOR_R_OUT); // 右电机驱动
-  102   2          pwm_duty(PWMA_CH4P_P66, pid_motor->PID_MOTOR_R_OUT);
-  103   2          PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT; // 左电机PWM更新
+  101   2        default: // 别的
+  102   2          pid_motor->PID_MOTOR_L_OUT = pid_motor->PID_MOTOR_L_OUT + PWM_Motor_L_now;
+  103   2          pid_motor->PID_MOTOR_R_OUT = pid_motor->PID_MOTOR_R_OUT + PWM_Motor_R_now;
   104   2      
-  105   2          // pwm_duty(PWMA_CH3P_P64,(uint32)0);//右电机驱动
-  106   2          // pwm_duty(PWMA_CH4P_P66,pid_motor->PID_MOTOR_R_OUT/5);
+  105   2          pid_motor->PID_MOTOR_L_OUT = constrain_float(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max);
+             - // 驱动限幅
+  106   2          pid_motor->PID_MOTOR_R_OUT = constrain_float(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
   107   2      
-  108   2          // pwm_duty(MOTOR2_P,pid_motor->PID_MOTOR_R_OUT);//右电机驱动
-  109   2          // pwm_duty(MOTOR2_N,pid_motor->PID_MOTOR_R_OUT);
-  110   2          PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT; // 右电机PWM更新
-  111   2          break;
-  112   2        }
-  113   1      }
-  114          
+  108   2          pwm_duty(PWMA_CH1P_P60, pid_motor->PID_MOTOR_L_OUT); // 左电机驱动
+  109   2          pwm_duty(PWMA_CH2P_P62, pid_motor->PID_MOTOR_L_OUT); // 单独它一个有数值，反转
+  110   2      
+  111   2          pwm_duty(PWMA_CH3P_P64, pid_motor->PID_MOTOR_R_OUT); // 右电机驱动
+  112   2          pwm_duty(PWMA_CH4P_P66, pid_motor->PID_MOTOR_R_OUT);
+  113   2          PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT; // 左电机PWM更新
+  114   2          PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT; // 右电机PWM更新
+  115   2          break;
+C251 COMPILER V5.60.0,  control                                                            19/03/23  22:47:38  PAGE 3   
+
+  116   2        }
+  117   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       504     ------
-C251 COMPILER V5.60.0,  control                                                            19/03/23  18:33:24  PAGE 3   
-
+  code size            =       622     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  adc                                                                19/03/23  18:33:23  PAGE 1   
+C251 COMPILER V5.60.0,  adc                                                                19/03/23  22:47:37  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE adc
@@ -66,7 +66,7 @@ stmt  level    source
    49   1      
    50   1        // Err_Ste->Err_x = dg->L_zx_twice - dg->L_yx_twice;
    51   1        // Err_Ste->Err_h = dg->L_zh_twice - dg->L_yh_twice;
-C251 COMPILER V5.60.0,  adc                                                                19/03/23  18:33:23  PAGE 2   
+C251 COMPILER V5.60.0,  adc                                                                19/03/23  22:47:37  PAGE 2   
 
    52   1        // Err_Ste->Err = (-0.6151 * (Err_Ste->Err_x)) + (3.3868 * (Err_Ste->Err_h));
    53   1        // // าิษฯฯตสýสนำรmatlabฤโบฯฃฌสนตรฦซฒ๎บอะกณตฦซภ๋ศüตภตฤพเภ๋ณษฯ฿ะินุฯตฃฌึมดหฃฌฦซฒ๎บอะกณตฦซภ๋ศüตภตฤพเภ๋ณษต

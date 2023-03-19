@@ -69,19 +69,19 @@ void main()
 
 		// Err; // 根据当前电感输出计算出的总偏差值
 		// Err_last;
-		
+
 		// 舵机
-		// printf("DG_State.L_yx_real = %d\r\n", dg_state.L_yx_real);
-		// printf("DG_State.L_zx_real = %d\r\n", dg_state.L_zx_real);
+		printf("DG_State.L_yx_real = %d\r\n", dg_state.L_yx_real);
+		printf("DG_State.L_zx_real = %d\r\n", dg_state.L_zx_real);
 
-		// printf("DG_State.L_yh_real = %d\r\n", dg_state.L_yh_real);
-		// printf("DG_State.L_zh_real = %d\r\n", dg_state.L_zh_real);
+		printf("DG_State.L_yh_real = %d\r\n", dg_state.L_yh_real);
+		printf("DG_State.L_zh_real = %d\r\n", dg_state.L_zh_real);
 
-		// printf("DG_State.L_zx_once = %f\r\n", dg_state.L_zx_once);
-		// printf("DG_State.L_zh_once = %f\r\n", dg_state.L_zh_once);
+		printf("DG_State.L_zx_once = %f\r\n", dg_state.L_zx_once);
+		printf("DG_State.L_zh_once = %f\r\n", dg_state.L_zh_once);
 
-		// printf("DG_State.L_yx_once = %f\r\n", dg_state.L_yx_once);
-		// printf("DG_State.L_yh_once = %f\r\n", dg_state.L_yh_once);
+		printf("DG_State.L_yx_once = %f\r\n", dg_state.L_yx_once);
+		printf("DG_State.L_yh_once = %f\r\n", dg_state.L_yh_once);
 
 		// printf("dg_state.L_zx_max = %f\r\n", dg_state.L_zx_max);
 		// printf("dg_state.L_zh_max = %f\r\n", dg_state.L_zh_max);
@@ -89,15 +89,15 @@ void main()
 		// printf("dg_state.L_yh_max = %f\r\n", dg_state.L_yh_max);
 		// printf("dg_state.L_yx_max = %f\r\n", dg_state.L_yx_max);
 
-		// printf("err_steering.Err_x = %f\r\n", err_steering.Err_x);
-		// printf("err_steering.Err_h = %f\r\n", err_steering.Err_h);
+		printf("err_steering.Err_x = %f\r\n", err_steering.Err_x);
+		printf("err_steering.Err_h = %f\r\n", err_steering.Err_h);
 
 		// printf("pid_steering.p_steering = %f\r\n", pid_steering.p_steering);
 		// printf("pid_steering.i_steering= %f\r\n", pid_steering.i_steering);
 		// printf("pid_steering.d_steering= %f\r\n", pid_steering.d_steering);
 		// printf("pid_steering.imax= %f\r\n", pid_steering.imax);
-		//  printf("err_steering.Err_x = %d\r\n", err_steering.Err_x);
-		//  printf("err_steering.Err_h = %d\r\n", err_steering.Err_h);
+		// printf("err_steering.Err_x = %d\r\n", err_steering.Err_x);
+		// printf("err_steering.Err_h = %d\r\n", err_steering.Err_h);
 
 		printf("err_steering.Err = %f\r\n", err_steering.Err);
 		printf("err_steering.Err_last = %f\r\n", err_steering.Err_last);
@@ -108,7 +108,7 @@ void main()
 
 		// wireless_uart_send_buff((uint8*)temp,1);
 		printf("pid_steering.PID_STEERING_OUT=%d \r\n", pid_steering.PID_STEERING_OUT);
-		//printf("tempVar = %f", tempVar);
+		printf("tempVar = %d", tempVar);
 		delay_ms(1000);
 
 		// printf("SP_R = %d\r\n", speed_now.speed_R);				// 当前
@@ -116,16 +116,17 @@ void main()
 		// printf("pwm = %d\r\n\r\n", PWM_Motor_R_now);
 
 		// 电机
-		printf("\r\n\r\n");
-		printf("PWM_L = %d \r\n\r\n", PWM_Motor_L_now);
-		printf("PWM_R = %d \r\n\r\n", PWM_Motor_R_now);
-		printf("speed_R = %d\r\n", speed_now.speed_R); // 当前
-		printf("speed_L = %d\r\n", speed_now.speed_L); // 当前
-		printf("speed_state.Strai_speed_L_ai = %d\r\n",speed_state.Strai_speed_L_ai);
-		printf("speed_state.Strai_speed_R_ai = %d\r\n",speed_state.Strai_speed_R_ai);
+		// printf("\r\n\r\n");
+		// printf("PWM_L = %d \r\n\r\n", PWM_Motor_L_now);
+		// printf("PWM_R = %d \r\n\r\n", PWM_Motor_R_now);
+		// printf("speed_R = %d\r\n", speed_now.speed_R); // 当前
+		// printf("speed_L = %d\r\n", speed_now.speed_L); // 当前
+		// printf("speed_state.Strai_speed_L_ai = %d\r\n",speed_state.Strai_speed_L_ai);
+		// printf("speed_state.Strai_speed_R_ai = %d\r\n",speed_state.Strai_speed_R_ai);
 
-		printf("err_motor.err_L_m = %d\r\n",err_motor.err_L_m);
-		printf("err_motor.err_R_m = %d\r\n",err_motor.err_R_m);
+		// printf("err_motor.err_L_m = %d\r\n",err_motor.err_L_m);
+		// printf("err_motor.err_R_m = %d\r\n",err_motor.err_R_m);
+
 		// send_data_sw((err_steering.Err)*1000,(err_steering.Errsum)*1000,(err_steering.Errdif)*1000,0,0xf1);
 		//	printf("P = %f\r\n", pid_motor.p_motor);
 		//	printf("I = %f\r\n", pid_motor.i_motor);

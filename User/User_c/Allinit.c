@@ -101,7 +101,7 @@ void PIT_init(void)
 void PID_init(void)
 {
 
-	pid_steering.p_steering = 25.5;
+	pid_steering.p_steering = 22.5;
 	pid_steering.i_steering = 0.0;
 	pid_steering.d_steering = 5.5;
 	pid_steering.imax = 1;
@@ -132,11 +132,14 @@ void Motor_init(void)
 	speed_state.Outgar_speed_L_ai = 0; // 出库左
 	speed_state.Outgar_speed_R_ai = 0; // 出库右
 
-	speed_state.Strai_speed_L_ai = 9000; // 直道左  //全是uint32
-	speed_state.Strai_speed_R_ai = 9000; // 直道右
+	speed_state.Strai_speed_L_ai = 12000; // 直道左  //全是uint32
+	speed_state.Strai_speed_R_ai = 12000; // 直道右
 
-	speed_state.Cur_speed_L_ai = 0; // 弯道左
-	speed_state.Cur_speed_R_ai = 0; // 弯道右
+	speed_state.Cur_L_speed_L_ai = 9000; // 左转！
+	speed_state.Cur_L_speed_R_ai = 11000; // 
+	
+	speed_state.Cur_R_speed_L_ai = 11000; // 右转！
+	speed_state.Cur_R_speed_R_ai = 9000; // 
 
 	speed_state.Cross_speed_L_ai = 0; // 十字左
 	speed_state.Cross_speed_R_ai = 0; // 十字右
@@ -204,6 +207,7 @@ void WIRELESS_init(void)
 void temp_init(void){
 	temp = 0.0;
 	tempVar = 0.0;
+	ringInFlag = 0;
 }
 
 // 11.总体初始化

@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  SEEKFREE_PRINTF                                                    19/03/23  18:33:22  PAGE 1   
+C251 COMPILER V5.60.0,  SEEKFREE_PRINTF                                                    19/03/23  22:47:36  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE SEEKFREE_PRINTF
@@ -66,7 +66,7 @@ stmt  level    source
    52   3                  if(10 <= temp_data) temp_data += 'A'-10;
    53   3                  else                temp_data += '0';
    54   3                  
-C251 COMPILER V5.60.0,  SEEKFREE_PRINTF                                                    19/03/23  18:33:22  PAGE 2   
+C251 COMPILER V5.60.0,  SEEKFREE_PRINTF                                                    19/03/23  22:47:36  PAGE 2   
 
    55   3                  *p = temp_data;
    56   3                  
@@ -134,7 +134,7 @@ stmt  level    source
   118          //                
   119          //                case 'f':// 浮点数，输出小数点后六位  不能指定输出精度
   120          //                case 'F':// 浮点数，输出小数点后六位  不能指定输出精度
-C251 COMPILER V5.60.0,  SEEKFREE_PRINTF                                                    19/03/23  18:33:22  PAGE 3   
+C251 COMPILER V5.60.0,  SEEKFREE_PRINTF                                                    19/03/23  22:47:36  PAGE 3   
 
   121          //                {
   122          //                    int8 vstr[33];
@@ -202,7 +202,7 @@ stmt  level    source
   184          //                    int8 vstr[33];
   185          //                    uint32 ival = (uint32)va_arg(arg, uint32);
   186          //                    uint8 vlen = number_conversion_ascii(ival, vstr, 0, 16);
-C251 COMPILER V5.60.0,  SEEKFREE_PRINTF                                                    19/03/23  18:33:22  PAGE 4   
+C251 COMPILER V5.60.0,  SEEKFREE_PRINTF                                                    19/03/23  22:47:36  PAGE 4   
 
   187          //                    printf_reverse_order(vstr,8);
   188          //                    uart_putbuff(DEBUG_UART, (uint8 *)vstr,8);
@@ -270,7 +270,7 @@ stmt  level    source
   250   5                          {
   251   6                              vstr[vlen] = '-';
   252   6                              vlen++;
-C251 COMPILER V5.60.0,  SEEKFREE_PRINTF                                                    19/03/23  18:33:22  PAGE 5   
+C251 COMPILER V5.60.0,  SEEKFREE_PRINTF                                                    19/03/23  22:47:36  PAGE 5   
 
   253   6                          }
   254   5                          printf_reverse_order(vstr,vlen);
@@ -338,7 +338,7 @@ stmt  level    source
   316   5                      }break;
   317   4                      
   318   4                      case 'o':// 无符号八进制整数 
-C251 COMPILER V5.60.0,  SEEKFREE_PRINTF                                                    19/03/23  18:33:22  PAGE 6   
+C251 COMPILER V5.60.0,  SEEKFREE_PRINTF                                                    19/03/23  22:47:36  PAGE 6   
 
   319   4                      {
   320   5                          int8 vstr[33];
@@ -406,7 +406,7 @@ stmt  level    source
   382   2          else
   383   2          {
   384   3                  *buff = (int8)(*format);
-C251 COMPILER V5.60.0,  SEEKFREE_PRINTF                                                    19/03/23  18:33:22  PAGE 7   
+C251 COMPILER V5.60.0,  SEEKFREE_PRINTF                                                    19/03/23  22:47:36  PAGE 7   
 
   385   3                  buff++;
   386   3                  buff_len++;

@@ -5,11 +5,17 @@
 
 #include "common.h"
 #include "adc.h"
+#include "TempVar.h"
 
 typedef enum
 {
   Need_judge,
 	Stop,
+	Curve_Left,
+	Curve_Right,
+	Ring_In,
+	Ring_Out,
+	
   No_road,      //严重冲出跑道且无法校正则停车
   Out_of_way,   //已经冲出跑道
   Lose_left,    //丢线

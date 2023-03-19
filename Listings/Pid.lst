@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  Pid                                                                19/03/23  18:33:24  PAGE 1   
+C251 COMPILER V5.60.0,  Pid                                                                19/03/23  22:47:38  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE Pid
@@ -9,55 +9,94 @@ COMPILER INVOKED BY: C:\Learning\Keil_v5\body\C251\BIN\C251.EXE User\User_c\Pid.
 
 stmt  level    source
 
-    1          //¸ÃÎÄ¼şÓÃÓÚÊ¹ÓÃ¶æ»úÆ«²î½á¹¹ÌåºÍµç»úÆ«²î½á¹¹Ìå¼ÆËã¶æ»úPIDÊä³öÖµºÍµç»úPIDÔöÁ¿Öµ
+    1          // ¸ÃÎÄ¼şÓÃÓÚÊ¹ÓÃ¶æ»úÆ«²î½á¹¹ÌåºÍµç»úÆ«²î½á¹¹Ìå¼ÆËã¶æ»úPIDÊä³öÖµºÍµç»úPIDÔöÁ¿Öµ
     2          
     3          #include "Pid.h"
-    4          float constrain_float(float amt, float low, float high)//ÏŞ·ùÓÃ£¬lowºÍhighÎªÉÏÏÂÏŞ
+    4          float constrain_float(float amt, float low, float high) // ÏŞ·ùÓÃ£¬lowºÍhighÎªÉÏÏÂÏŞ
     5          {
-    6   1         return ((amt)<(low)?(low):((amt)>(high)?(high):(amt)));
+    6   1        return ((amt) < (low) ? (low) : ((amt) > (high) ? (high) : (amt)));
     7   1      }
     8          
-    9          uint32 constrain_uint32(uint32 amt, uint32 low, uint32 high)//ÏŞ·ùÓÃ£¬lowºÍhighÎªÉÏÏÂÏŞ
+    9          uint32 constrain_uint32(uint32 amt, uint32 low, uint32 high) // ÏŞ·ùÓÃ£¬lowºÍhighÎªÉÏÏÂÏŞ
    10          {
-   11   1         return ((amt)<(low)?(low):((amt)>(high)?(high):(amt)));
+   11   1        return ((amt) < (low) ? (low) : ((amt) > (high) ? (high) : (amt)));
    12   1      }
    13          
-   14          void Pid_Steering_Calculate(volatile Err_Steering* err_steering , volatile PID_Steering* pid_steering)//¶
-             -æ»úÎ»ÖÃÊ½PIDÊä³öÖµ
+   14          void Pid_Steering_Calculate(Road road, volatile Err_Steering *err_steering, volatile PID_Steering *pid_st
+             -eering) // ¶æ»úÎ»ÖÃÊ½PIDÊä³öÖµ
    15          {
    16   1      
-   17   1       //   constrain_float(err_steering->Errsum, pid_steering->imax, pid_steering->imin);
-   18   1      //Î»ÖÃÊ½PID»ı·ÖÏîÏŞ·ù
-   19   1           pid_steering->STEERING_OUT_temp = (float)((pid_steering->p_steering * err_steering-> Err) + (pid_stee
-             -ring->i_steering * err_steering-> Errsum) + (pid_steering->d_steering * err_steering-> Errdif));
-   20   1          // tempVar =(float)((pid_steering->p_steering * err_steering-> Err) + (pid_steering->i_steering * err
-             -_steering-> Errsum) + (pid_steering->d_steering * err_steering-> Errdif));
-   21   1        //pid_steering->PID_STEERING_OUT = (f)(((pid_steering->p_steering * err_steering-> Err*(-1.0)) + (pid_st
-             -eering->i_steering * err_steering-> Errsum*0) + (pid_steering->d_steering * err_steering-> Errdif)*0));
-   22   1        //  temp =   pid_steering->PID_STEERING_OUT
-   23   1          //Î»ÖÃÊ½PIDÊä³ö¼ÆËã
-   24   1      }
-   25          
-   26          void Pid_Motor_Calculate(Err_Motor* err_motor,PID_Motor* pid_motor)//µç»úÔöÁ¿Ê½PIDÊä³öÔöÁ¿
-   27          {
-   28   1        pid_motor->PID_MOTOR_L_OUT = (pid_motor->p_motor * err_motor->err_derivative_L_m) + (pid_motor->i_motor 
+   17   1        //   constrain_float(err_steering->Errsum, pid_steering->imax, pid_steering->imin);
+   18   1        // Î»ÖÃÊ½PID»ı·ÖÏîÏŞ·ù
+   19   1        float p_Curve_L;
+   20   1        float i_Curve_L;
+   21   1        float d_Curve_L;
+   22   1      
+   23   1        float p_Curve_R;
+   24   1        float i_Curve_R;
+   25   1        float d_Curve_R;
+   26   1        
+   27   1        p_Curve_L = 25.5;
+   28   1        i_Curve_L = 0;
+   29   1        d_Curve_L = 5.5;
+   30   1      
+   31   1        p_Curve_R = 25.5;
+   32   1        i_Curve_R = 0;
+   33   1        d_Curve_R = 5.5;
+   34   1        switch (road)
+   35   1        {
+   36   2        case (Straight): // Ö±µÀ
+   37   2          pid_steering->STEERING_OUT_temp = (float)((pid_steering->p_steering * (err_steering->Err)) + (pid_steer
+             -ing->i_steering * err_steering->Errsum) + (pid_steering->d_steering * err_steering->Errdif));
+   38   2          break;
+   39   2      
+   40   2        case (Curve_Left): // ÍäµÀ
+   41   2          pid_steering->STEERING_OUT_temp = (float)((p_Curve_L * err_steering->Err) + (i_Curve_L * err_steering->
+             -Errsum) + (d_Curve_L * err_steering->Errdif));
+   42   2          break;
+   43   2      
+   44   2        case (Curve_Right): // ÍäµÀ
+   45   2          pid_steering->STEERING_OUT_temp = (float)((p_Curve_R * err_steering->Err) + (i_Curve_R * err_steering->
+             -Errsum) + (d_Curve_R * err_steering->Errdif));
+   46   2          break;
+   47   2      
+   48   2        case (Stop):
+   49   2          pid_steering->STEERING_OUT_temp = 0;
+   50   2        default: // ±ğµÄ
+   51   2          pid_steering->STEERING_OUT_temp = (float)((pid_steering->p_steering * err_steering->Err) + (pid_steerin
+             -g->i_steering * err_steering->Errsum) + (pid_steering->d_steering * err_steering->Errdif));
+   52   2          break;
+C251 COMPILER V5.60.0,  Pid                                                                19/03/23  22:47:38  PAGE 2   
+
+   53   2        }
+   54   1      
+   55   1        // tempVar =(float)((pid_steering->p_steering * err_steering-> Err) + (pid_steering->i_steering * err_st
+             -eering-> Errsum) + (pid_steering->d_steering * err_steering-> Errdif));
+   56   1        // pid_steering->PID_STEERING_OUT = (f)(((pid_steering->p_steering * err_steering-> Err*(-1.0)) + (pid_s
+             -teering->i_steering * err_steering-> Errsum*0) + (pid_steering->d_steering * err_steering-> Errdif)*0));
+   57   1        //  temp =   pid_steering->PID_STEERING_OUT
+   58   1        // Î»ÖÃÊ½PIDÊä³ö¼ÆËã
+   59   1      }
+   60          
+   61          void Pid_Motor_Calculate(Err_Motor *err_motor, PID_Motor *pid_motor) // µç»úÔöÁ¿Ê½PIDÊä³öÔöÁ¿
+   62          {
+   63   1        pid_motor->PID_MOTOR_L_OUT = (pid_motor->p_motor * err_motor->err_derivative_L_m) + (pid_motor->i_motor 
              -* err_motor->err_L_m) + (pid_motor->d_motor * err_motor->err_derivative2_L_m);
-   29   1        pid_motor->PID_MOTOR_R_OUT = (pid_motor->p_motor * err_motor->err_derivative_R_m) + (pid_motor->i_motor 
+   64   1        pid_motor->PID_MOTOR_R_OUT = (pid_motor->p_motor * err_motor->err_derivative_R_m) + (pid_motor->i_motor 
              -* err_motor->err_R_m) + (pid_motor->d_motor * err_motor->err_derivative2_R_m);
-   30   1        
-   31   1      }
+   65   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       339     ------
+  code size            =       431     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
   xdata size           =    ------     ------
   xdata-const size     =    ------     ------
-  edata size           =    ------          8
+  edata size           =    ------         12
   bit size             =    ------     ------
   ebit size            =    ------     ------
   bitaddressable size  =    ------     ------
@@ -67,8 +106,6 @@ Module Information          Static   Overlayable
   const size           =    ------     ------
   hconst size          =    ------     ------
 End of Module Information.
-
-C251 COMPILER V5.60.0,  Pid                                                                19/03/23  18:33:24  PAGE 2   
 
 
 C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
