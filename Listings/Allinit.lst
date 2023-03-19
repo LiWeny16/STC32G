@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  Allinit                                                            18/03/23  21:42:17  PAGE 1   
+C251 COMPILER V5.60.0,  Allinit                                                            19/03/23  18:33:23  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE Allinit
@@ -66,7 +66,7 @@ stmt  level    source
    55   1        dg_state.L_yh_twice = 0;
    56   1        dg_state.L_yx_twice = 0;
    57   1      
-C251 COMPILER V5.60.0,  Allinit                                                            18/03/23  21:42:17  PAGE 2   
+C251 COMPILER V5.60.0,  Allinit                                                            19/03/23  18:33:23  PAGE 2   
 
    58   1        /*
    59   1        adc_init(ADC_P14,ADC_SYSclk_DIV_2);
@@ -127,130 +127,132 @@ stmt  level    source
   109   1        pid_steering.PID_STEERING_OUT = 725;
   110   1        pid_steering.STEERING_OUT_temp = 0.0;
   111   1      
-  112   1        pid_motor.p_motor = 2;       // 用于存放比例系数p
-  113   1        pid_motor.i_motor = 0.5;     // 用于存放积分系数i
-  114   1        pid_motor.d_motor = 1;       // 用于存放微分系数d
+  112   1        pid_motor.p_motor = 0.05;      // 用于存放比例系数p
+  113   1        pid_motor.i_motor = 0.002;     // 用于存放积分系数i
+  114   1        pid_motor.d_motor = 0.01;      // 用于存放微分系数d
   115   1        pid_motor.PID_MOTOR_L_OUT = 0; // 用于存放最终输出给电机的左轮PWM增量值
   116   1        pid_motor.PID_MOTOR_R_OUT = 0; // 用于存放最终输出给电机的右轮PWM增量值
-  117   1      }
-  118          
-C251 COMPILER V5.60.0,  Allinit                                                            18/03/23  21:42:17  PAGE 3   
+  117   1        pid_motor.MOTOR_L_OUT_temp=0.0;
+  118   1        pid_motor.MOTOR_R_OUT_temp=0.0;
+C251 COMPILER V5.60.0,  Allinit                                                            19/03/23  18:33:23  PAGE 3   
 
-  119          // 6.舵机初始化
-  120          void Steering_init(void)
-  121          {
-  122   1        PWM_Steering_now = 730;
-  123   1        PWM_Steering_Max = 805; // 最大最小值为实测参数
-  124   1        PWM_Steering_Min = 650;
-  125   1      }
-  126          
-  127          // 7.电机初始化
-  128          void Motor_init(void)
-  129          {
-  130   1        speed_state.Outgar_speed_L_ai = 0; // 出库左
-  131   1        speed_state.Outgar_speed_R_ai = 0; // 出库右
-  132   1      
-  133   1        speed_state.Strai_speed_L_ai = MFBL * 0.1; // 直道左
-  134   1        speed_state.Strai_speed_R_ai = MFBL * 0.1; // 直道右
-  135   1      
-  136   1        speed_state.Cur_speed_L_ai = 0; // 弯道左
-  137   1        speed_state.Cur_speed_R_ai = 0; // 弯道右
-  138   1      
-  139   1        speed_state.Cross_speed_L_ai = 0; // 十字左
-  140   1        speed_state.Cross_speed_R_ai = 0; // 十字右
-  141   1      
-  142   1        speed_state.Rampin_speed_L_ai = 0; // 上坡道左
-  143   1        speed_state.Rampin_speed_R_ai = 0; // 上坡道右
-  144   1      
-  145   1        speed_state.Ramp_speed_L_ai = 0; // 坡道左
-  146   1        speed_state.Ramp_speed_R_ai = 0; // 坡道右
-  147   1      
-  148   1        speed_state.Ring_speed_L_ai = 0; // 圆环内部左
-  149   1        speed_state.Ring_speed_R_ai = 0; // 圆环内部右
-  150   1      
-  151   1        speed_state.Ringin_speed_L_ai = 0; // 进圆环左
-  152   1        speed_state.Ringin_speed_R_ai = 0; // 进圆环右
-  153   1      
-  154   1        speed_state.Ringout_speed_L_ai = 0; // 出圆环左
-  155   1        speed_state.Ringout_speed_R_ai = 0; // 出圆环右
-  156   1      
-  157   1        speed_state.Three_speed_L_ai = 0; // 三岔左
-  158   1        speed_state.Three_speed_R_ai = 0; // 三岔右
-  159   1      
-  160   1        speed_state.Threein_speed_L_ai = 0; // 进三岔左
-  161   1        speed_state.Threein_speed_R_ai = 0; // 进三岔右
-  162   1      
-  163   1        speed_now.speed_L = 0;    // 左轮当前速度值
-  164   1        speed_now.speed_L_ai = 0; // 左轮目标值
-  165   1        speed_now.speed_R = 0;    // 右轮当前速度值
-  166   1        speed_now.speed_R_ai = 0; // 右轮目标值
-  167   1      
-  168   1        PWM_Motor_Max = 9000;
-  169   1        PWM_Motor_Min = 1000;
-  170   1        PWM_Motor_L_now = 2000;
-  171   1        PWM_Motor_R_now = 2000;
-  172   1      }
-  173          
-  174          // 8.编码器初始化（带串口）
-  175          void Encoder_init(void)
-  176          {
-  177   1        ctimer_count_init(Encoder_L);
-  178   1        ctimer_count_init(Encoder_R);
-  179   1        err_motor.err_L_m = 0;         // 根据当前解码器输出计算出的左轮偏差值
-  180   1        err_motor.err_last_L_m = 0;      // 用于存放上一次计算出的左轮偏差值
-  181   1        err_motor.err_past_L_m = 0;      // 用于存放上上一次计算出的左轮偏差值
-  182   1        err_motor.err_derivative_L_m = 0;  // 用于存放左轮本次偏差与上次偏差之差
-  183   1        err_motor.err_derivative2_L_m = 0; // 用于存放左轮上次偏差与上上次偏差之差
-  184   1      
-C251 COMPILER V5.60.0,  Allinit                                                            18/03/23  21:42:17  PAGE 4   
+  119   1      }
+  120          
+  121          // 6.舵机初始化
+  122          void Steering_init(void)
+  123          {
+  124   1        PWM_Steering_now = 730;
+  125   1        PWM_Steering_Max = 805; // 最大最小值为实测参数
+  126   1        PWM_Steering_Min = 650;
+  127   1      }
+  128          
+  129          // 7.电机初始化
+  130          void Motor_init(void)
+  131          {
+  132   1        speed_state.Outgar_speed_L_ai = 0; // 出库左
+  133   1        speed_state.Outgar_speed_R_ai = 0; // 出库右
+  134   1      
+  135   1        speed_state.Strai_speed_L_ai = 9000; // 直道左  //全是uint32
+  136   1        speed_state.Strai_speed_R_ai = 9000; // 直道右
+  137   1      
+  138   1        speed_state.Cur_speed_L_ai = 0; // 弯道左
+  139   1        speed_state.Cur_speed_R_ai = 0; // 弯道右
+  140   1      
+  141   1        speed_state.Cross_speed_L_ai = 0; // 十字左
+  142   1        speed_state.Cross_speed_R_ai = 0; // 十字右
+  143   1      
+  144   1        speed_state.Rampin_speed_L_ai = 0; // 上坡道左
+  145   1        speed_state.Rampin_speed_R_ai = 0; // 上坡道右
+  146   1      
+  147   1        speed_state.Ramp_speed_L_ai = 0; // 坡道左
+  148   1        speed_state.Ramp_speed_R_ai = 0; // 坡道右
+  149   1      
+  150   1        speed_state.Ring_speed_L_ai = 0; // 圆环内部左
+  151   1        speed_state.Ring_speed_R_ai = 0; // 圆环内部右
+  152   1      
+  153   1        speed_state.Ringin_speed_L_ai = 0; // 进圆环左
+  154   1        speed_state.Ringin_speed_R_ai = 0; // 进圆环右
+  155   1      
+  156   1        speed_state.Ringout_speed_L_ai = 0; // 出圆环左
+  157   1        speed_state.Ringout_speed_R_ai = 0; // 出圆环右
+  158   1      
+  159   1        speed_state.Three_speed_L_ai = 0; // 三岔左
+  160   1        speed_state.Three_speed_R_ai = 0; // 三岔右
+  161   1      
+  162   1        speed_state.Threein_speed_L_ai = 0; // 进三岔左
+  163   1        speed_state.Threein_speed_R_ai = 0; // 进三岔右
+  164   1      
+  165   1        speed_now.speed_L = 0;    // 左轮当前速度值
+  166   1        speed_now.speed_L_ai = 0; // 左轮目标值
+  167   1        speed_now.speed_R = 0;    // 右轮当前速度值
+  168   1        speed_now.speed_R_ai = 0; // 右轮目标值
+  169   1      
+  170   1        PWM_Motor_Max = 3000;
+  171   1        PWM_Motor_Min = 0;
+  172   1        PWM_Motor_L_now = 2000;
+  173   1        PWM_Motor_R_now = 2000;
+  174   1      }
+  175          
+  176          // 8.编码器初始化（带串口）
+  177          void Encoder_init(void)
+  178          {
+  179   1        ctimer_count_init(Encoder_L);
+  180   1        ctimer_count_init(Encoder_R);
+  181   1        err_motor.err_L_m = 0;         // 根据当前解码器输出计算出的左轮偏差值
+  182   1        err_motor.err_last_L_m = 0;      // 用于存放上一次计算出的左轮偏差值
+  183   1        err_motor.err_past_L_m = 0;      // 用于存放上上一次计算出的左轮偏差值
+  184   1        err_motor.err_derivative_L_m = 0;  // 用于存放左轮本次偏差与上次偏差之差
+C251 COMPILER V5.60.0,  Allinit                                                            19/03/23  18:33:23  PAGE 4   
 
-  185   1        err_motor.err_R_m = 0;         // 根据当前解码器输出计算出的右轮偏差值
-  186   1        err_motor.err_last_R_m = 0;      // 用于存放上一次计算出的右轮偏差值
-  187   1        err_motor.err_past_R_m = 0;      // 用于存放上上一次计算出的右轮偏差值
-  188   1        err_motor.err_derivative_R_m = 0;  // 用于存放右轮本次偏差与上次偏差之差
-  189   1        err_motor.err_derivative2_R_m = 0; // 用于存放右轮上次偏差与上上次偏差之差
-  190   1      }
-  191          // 9.路况判断标志位初始化
-  192          void FLAG_init(void)
-  193          {
-  194   1      }
-  195          
-  196          // 10.无线串口初始化
-  197          void WIRELESS_init(void)
-  198          {
-  199   1        // seekfree_wireless_init();
-  200   1      }
-  201          // 11.调试变量初始化
-  202          void temp_init(void){
-  203   1        temp = 0.0;
-  204   1        tempVar = 0.0;
-  205   1      }
-  206          
-  207          // 11.总体初始化
-  208          void ALL_init(void)
-  209          {
-  210   1      
-  211   1        ADC_all_init();
-  212   1        GPIO_init();
-  213   1        PWM_SMB_init();
-  214   1        PIT_init();
-  215   1        PID_init();
-  216   1        Steering_init();
-  217   1        Motor_init();
-  218   1        Encoder_init();
-  219   1        FLAG_init();
-  220   1        
-  221   1        wireless_uart_init();
-  222   1        //wireless_ch573_init();
-  223   1        temp_init();
-  224   1        //  seekfree_wireless_init();
-  225   1        // WIRELESS_init();
-  226   1      }
+  185   1        err_motor.err_derivative2_L_m = 0; // 用于存放左轮上次偏差与上上次偏差之差
+  186   1      
+  187   1        err_motor.err_R_m = 0;         // 根据当前解码器输出计算出的右轮偏差值
+  188   1        err_motor.err_last_R_m = 0;      // 用于存放上一次计算出的右轮偏差值
+  189   1        err_motor.err_past_R_m = 0;      // 用于存放上上一次计算出的右轮偏差值
+  190   1        err_motor.err_derivative_R_m = 0;  // 用于存放右轮本次偏差与上次偏差之差
+  191   1        err_motor.err_derivative2_R_m = 0; // 用于存放右轮上次偏差与上上次偏差之差
+  192   1      }
+  193          // 9.路况判断标志位初始化
+  194          void FLAG_init(void)
+  195          {
+  196   1      }
+  197          
+  198          // 10.无线串口初始化
+  199          void WIRELESS_init(void)
+  200          {
+  201   1        // seekfree_wireless_init();
+  202   1      }
+  203          // 11.调试变量初始化
+  204          void temp_init(void){
+  205   1        temp = 0.0;
+  206   1        tempVar = 0.0;
+  207   1      }
+  208          
+  209          // 11.总体初始化
+  210          void ALL_init(void)
+  211          {
+  212   1      
+  213   1        ADC_all_init();
+  214   1        GPIO_init();
+  215   1        PWM_SMB_init();
+  216   1        PIT_init();
+  217   1        PID_init();
+  218   1        Steering_init();
+  219   1        Motor_init();
+  220   1        Encoder_init();
+  221   1        FLAG_init();
+  222   1        
+  223   1        wireless_uart_init();
+  224   1        //wireless_ch573_init();
+  225   1        temp_init();
+  226   1        //  seekfree_wireless_init();
+  227   1        // WIRELESS_init();
+  228   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       642     ------
+  code size            =       664     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

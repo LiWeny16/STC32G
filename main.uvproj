@@ -732,7 +732,7 @@
             <File>
               <FileName>TempVar.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\TempVar.c</FilePath>
+              <FilePath>.\User\User_c\TempVar.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -787,7 +787,7 @@
             <File>
               <FileName>TempVar.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\TempVar.h</FilePath>
+              <FilePath>.\User\User_h\TempVar.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -16,6 +16,9 @@ void speedout(Road road,SPEED_now* speed_now,SPEED_state* speed_state)//根据路况
 		speed_now-> speed_R_ai = speed_state->Cur_speed_R_ai;
 		break;
 		
+		case(Stop):
+		speed_now-> speed_L_ai =0;
+		speed_now-> speed_R_ai =0;
 		default://别的
 	  speed_now-> speed_L_ai = speed_state->Strai_speed_L_ai;
 		speed_now-> speed_R_ai = speed_state->Strai_speed_R_ai;
@@ -32,14 +35,17 @@ void speed_cal(SPEED_now* speed_now)//通过编码器的数据计算速度，并将其写入当前速
 	if(DIR_L == 1)//左轮速度
 		{
 			dat_L = ctimer_count_read(Encoder_L);
-			Speed_L = MFBL*(dat_L/(CONTROL_T*DECO));//用编码器在中断间隔之内的读数除以执行程序的中断间隔及一米对应的脉冲数来表示当前速度(m/s),已乘PID分辨率
+			Speed_L= MFBL*(dat_L/(CONTROL_T*DECO));//用编码器在中断间隔之内的读数除以执行程序的中断间隔及一米对应的脉冲数来表示当前速度(m/s),已乘PID分辨率
 			//Speed_L = dat_L; //测试用
+			//滤波
+			Speed_L = Speed_L>1?Speed_L:1;
 		}
 		else
 		{
 			dat_L = ctimer_count_read(Encoder_L) * -1;
 		  Speed_L = (MFBL*(dat_L/(CONTROL_T*DECO))) * -1;//用编码器在中断间隔之内的读数除以执行程序的中断间隔及一米对应的脉冲数来表示当前速度(m/s),已乘PID分辨率
 			//Speed_L = dat_L;
+			Speed_L = Speed_L>1?Speed_L:1;
 		}
 
 		speed_now->speed_L = Speed_L;
@@ -50,12 +56,14 @@ void speed_cal(SPEED_now* speed_now)//通过编码器的数据计算速度，并将其写入当前速
 			dat_R = ctimer_count_read(Encoder_R);
 			Speed_R = MFBL*(dat_R/(CONTROL_T*DECO));//用编码器在中断间隔之内的读数除以执行程序的中断间隔及一米对应的脉冲数来表示当前速度(m/s),已乘PID分辨率
 			//Speed_R = dat_R;
+			Speed_R = Speed_R>1?Speed_R:1;
 		}
 		else
 		{
 			dat_R = ctimer_count_read(Encoder_R) * -1;
 			Speed_R = (MFBL*(dat_R/(CONTROL_T*DECO))) * -1;//用编码器在中断间隔之内的读数除以执行程序的中断间隔及一米对应的脉冲数来表示当前速度(m/s),已乘PID分辨率
 			//Speed_R = dat_R;
+			Speed_R = Speed_R>1?Speed_R:1;
 		}
 
 		speed_now->speed_R = Speed_R;

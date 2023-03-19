@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  road                                                               18/03/23  21:42:18  PAGE 1   
+C251 COMPILER V5.60.0,  road                                                               19/03/23  18:33:24  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE road
@@ -13,17 +13,21 @@ stmt  level    source
     2          
     3          
     4          #include "road.h"
-    5          Road road_judge(DG_State* dg_sta)
+    5          Road road_judge(DG_State* dg_state)
     6          {
-    7   1        if(1)
-    8   1        return Straight;
-    9   1      }
-*** WARNING C47 IN LINE 5 OF User\User_c\road.c: 'dg_sta': unreferenced parameter
+    7   1        if(dg_state->L_zh_real>=20 && dg_state->L_yh_real>=20){
+    8   2         return Straight;
+    9   2        }
+   10   1        else{
+   11   2         return Stop;
+   12   2        }
+   13   1      
+   14   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =         5     ------
+  code size            =        30     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
@@ -42,4 +46,4 @@ Module Information          Static   Overlayable
 End of Module Information.
 
 
-C251 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

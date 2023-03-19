@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  control                                                            18/03/23  21:42:18  PAGE 1   
+C251 COMPILER V5.60.0,  control                                                            19/03/23  18:33:24  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE control
@@ -11,74 +11,132 @@ stmt  level    source
 
     1          #include "control.h"
     2          
-    3          void STEERING_Control(PID_Steering *pid_steering)
-    4          {
-    5   1        //temp = pid_steering->PID_STEERING_OUT;
-    6   1        //pid_steering->PID_STEERING_OUT=(pid_steering->PID_STEERING_OUT+725.0); //Ö®Ç°ÓÐÕý¸º
-    7   1        pid_steering->STEERING_OUT_temp = pid_steering->STEERING_OUT_temp + 725.0;
-    8   1        //temp=(temp+725.0); //Ö®Ç°ÓÐÕý¸º
+    3          
+    4          void Control_All()
+    5          {
+    6   1      
+    7   1        // ÒÔÏÂÎª¶æ»úÇý¶¯²¿·Ö
+    8   1        calculate_s(&dg_state, &err_steering); // ¼ÆËãÆ«²îÖµ£¬Ð´µç¸Ð
     9   1      
-   10   1        pid_steering->PID_STEERING_OUT = constrain_uint32((uint32)pid_steering->STEERING_OUT_temp, PWM_Steering_
-             -Min, PWM_Steering_Max);//Çý¶¯ÏÞ·ù
-   11   1        pwm_duty(STEERING,(pid_steering->PID_STEERING_OUT));//¶æ»úÇý¶¯
-   12   1      }
-   13          
-   14          void MOTOR_Control(PID_Motor *pid_motor)
-   15          {
-   16   1        pid_motor->PID_MOTOR_L_OUT = pid_motor->PID_MOTOR_L_OUT+PWM_Motor_L_now;
-   17   1        pid_motor->PID_MOTOR_R_OUT = pid_motor->PID_MOTOR_R_OUT+PWM_Motor_R_now;
-   18   1        
-   19   1        pid_motor->PID_MOTOR_L_OUT = constrain_float(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max);/
-             -/Çý¶¯ÏÞ·ù
-   20   1        pid_motor->PID_MOTOR_R_OUT = constrain_float(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
-   21   1        
-   22   1        //pwm_duty(MOTOR1_P,pid_motor->PID_MOTOR_L_OUT);//×óµç»úÇý¶¯
-   23   1        //pwm_duty(MOTOR1_N,pid_motor->PID_MOTOR_L_OUT);
-   24   1        //pwm_duty(PWMA_CH1P_P60,(uint32)0);//×óµç»úÇý¶¯
-   25   1        //pwm_duty(PWMA_CH2P_P62,pid_motor->PID_MOTOR_L_OUT/5);
-   26   1        
-   27   1          pwm_duty(PWMA_CH1P_P60,1400);//×óµç»úÇý¶¯
-   28   1          pwm_duty(PWMA_CH2P_P62,1400); // µ¥¶ÀËüÒ»¸öÓÐÊýÖµ£¬·´×ª
-   29   1          
-   30   1          pwm_duty(PWMA_CH3P_P64,1400); //ÓÒµç»úÇý¶¯
-   31   1          pwm_duty(PWMA_CH4P_P66,1400);
-   32   1        PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT;//×óµç»úPWM¸üÐÂ
-   33   1        
-   34   1        //pwm_duty(PWMA_CH3P_P64,(uint32)0);//ÓÒµç»úÇý¶¯
-   35   1        //pwm_duty(PWMA_CH4P_P66,pid_motor->PID_MOTOR_R_OUT/5);
-   36   1        
-   37   1        //pwm_duty(MOTOR2_P,pid_motor->PID_MOTOR_R_OUT);//ÓÒµç»úÇý¶¯
-   38   1        //pwm_duty(MOTOR2_N,pid_motor->PID_MOTOR_R_OUT);
-   39   1        PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT;//ÓÒµç»úPWM¸üÐÂ
-   40   1        
-   41   1      }
-   42          
-   43          void Control_All()
-   44          {
-   45   1        //ÒÔÏÂÎªµÀÂ·ÅÐ¶Ï²¿·Ö
-   46   1        road = road_judge(&dg_state);//¸ù¾ÝµÀÂ·×´¿ö·µ»ØµÀÂ·½á¹¹Ìå
-   47   1        
-   48   1        //ÒÔÏÂÎª¶æ»úÇý¶¯²¿·Ö
-   49   1        calculate_s(&dg_state,&err_steering);//¼ÆËãÆ«²îÖµ£¬Ð´ÈëÊµ²Î£¨ÔÚallinitÊ±µç¸ÐÒÑ¾­¿ªÊ¼²É¼¯adcÐÅºÅ£©
-   50   1        Pid_Steering_Calculate(&err_steering , &pid_steering);//¼ÆËãpidÊä³öÖµ£¬²¢Ð´ÈëÊµ²Î
-   51   1        STEERING_Control(&pid_steering);//´ÓpidÊä³öµ½Êµ¼Ê¶æ»úÇý¶¯
-   52   1        
-   53   1        //ÒÔÏÂÎªµç»úÇý¶¯²¿·Ö
-   54   1        speedout(road,&speed_now,&speed_state);//¸ù¾ÝµÀÂ·Çé¿ö½«ËÙ¶È×´Ì¬½á¹¹ÌåÖÐµÄÒ»×éÉè¶¨Öµ¸³¸øµ±Ç°ËÙ¶È½á¹¹ÌåÖÐµ
-             -ÄÄ¿±êÖµ
-C251 COMPILER V5.60.0,  control                                                            18/03/23  21:42:18  PAGE 2   
+   10   1        road = road_judge(&dg_state); // ¸ù¾Ýµç¸Ð½á¹¹ÌåÅÐ¶ÏµÀÂ·×´¿ö·µ»ØµÀÂ·½á¹¹Ìå
+   11   1      
+   12   1        Pid_Steering_Calculate(&err_steering, &pid_steering); // ¼ÆËãpidÊä³öÖµ£¬²¢Ð´ÈëÊµ²Î
+   13   1        STEERING_Control(road, &pid_steering);          // ´ÓpidÊä³öµ½Êµ¼Ê¶æ»úÇý¶¯,ÅÐ¶ÏµÀÂ·½á¹¹Ìå£¬²¢×ö³öÏìÓ¦
+   14   1      
+   15   1        // ÒÔÏÂÎªµç»úÇý¶¯²¿·Ö
+   16   1        // ËÙ¶ÈÑ¡Ôñ
+   17   1        speedout(road, &speed_now, &speed_state);  // ¸ù¾ÝµÀÂ·Çé¿ö½«ËÙ¶È×´Ì¬½á¹¹ÌåÖÐµÄÒ»×éÉè¶¨Öµ¸³¸øµ±Ç°ËÙ¶È½á¹¹
+             -ÌåÖÐµÄÄ¿±êÖµ
+   18   1        speed_cal(&speed_now);             // ¸ù¾Ý±àÂëÆ÷Êý¾Ý¼ÆËãËÙ¶ÈÖµ£¬²¢½«Æä¸³¸øµ±Ç°ËÙ¶È½á¹¹ÌåÖÐµÄµ±Ç°ËÙ¶ÈÖµ
+   19   1        calculate_err_m(&speed_now, &err_motor);   // ¸ù¾Ý±àÂëÆ÷ÊýÖµ¼ÆËãÆ«²îÖµ£¬²¢¸üÐÂÆ«²îÖµ½á¹¹ÌåÖÐlastÁ¿,½á¹û±£
+             -´æÔÚµç»úÆ«²îÖµ½á¹¹ÌåÖÐ
+   20   1        Pid_Motor_Calculate(&err_motor, &pid_motor); // ÓÉµç»úÆ«²î£¨ÓÉ±àÂëÆ÷·´Ó¦£©½á¹¹Ìå¼ÆËãµç»úPIDÊä³öÔöÁ¿
+   21   1        MOTOR_Control(road, &pid_motor);       // ´ÓpidÊä³öµ½Êµ¼Êµç»úÇý¶¯
+   22   1      }
+   23          
+   24          void STEERING_Control(Road road, PID_Steering *pid_steering)
+   25          {
+   26   1        // temp = pid_steering->PID_STEERING_OUT;
+   27   1        // pid_steering->PID_STEERING_OUT=(pid_steering->PID_STEERING_OUT+725.0); //Ö®Ç°ÓÐÕý¸º
+   28   1        switch (road)
+   29   1        {
+   30   2        case (Straight): // Ö±µÀ
+   31   2          pid_steering->STEERING_OUT_temp = pid_steering->STEERING_OUT_temp + 725.0;
+   32   2          // temp=(temp+725.0); //Ö®Ç°ÓÐÕý¸º£¬ÊÇPIDÈ¨ÖØºóµÄÖµ
+   33   2          pid_steering->PID_STEERING_OUT = constrain_uint32((uint32)pid_steering->STEERING_OUT_temp, PWM_Steering
+             -_Min, PWM_Steering_Max); // Çý¶¯ÏÞ·ù
+   34   2          pwm_duty(STEERING, (pid_steering->PID_STEERING_OUT));                                     // ¶æ»úÇý¶¯
+   35   2          break;
+   36   2      
+   37   2        case (Stop): // Í£ÏÂ
+   38   2          pwm_duty(STEERING, 725);
+   39   2          break;
+   40   2      
+   41   2        default: // ±ðµÄ
+   42   2      
+   43   2          break;
+   44   2        }
+   45   1      }
+   46          
+   47          void MOTOR_Control(Road road, PID_Motor *pid_motor)
+   48          {
+   49   1        switch (road)
+   50   1        {
+   51   2        case (Straight): // Ö±µÀ
+   52   2          pid_motor->PID_MOTOR_L_OUT = pid_motor->PID_MOTOR_L_OUT + PWM_Motor_L_now;
+   53   2          pid_motor->PID_MOTOR_R_OUT = pid_motor->PID_MOTOR_R_OUT + PWM_Motor_R_now;
+   54   2      
+C251 COMPILER V5.60.0,  control                                                            19/03/23  18:33:24  PAGE 2   
 
-   55   1        speed_cal(&speed_now);//¸ù¾Ý±àÂëÆ÷Êý¾Ý¼ÆËãËÙ¶ÈÖµ£¬²¢½«Æä¸³¸øµ±Ç°ËÙ¶È½á¹¹ÌåÖÐµÄµ±Ç°ËÙ¶ÈÖµ
-   56   1        calculate_err_m(&speed_now,&err_motor);//¸ù¾Ý±àÂëÆ÷ÊýÖµ¼ÆËãÆ«²îÖµ£¬²¢¸üÐÂÆ«²îÖµ½á¹¹ÌåÖÐlastÁ¿,½á¹û±£´æÔÚ
-             -µç»úÆ«²îÖµ½á¹¹ÌåÖÐ
-   57   1        Pid_Motor_Calculate(&err_motor,&pid_motor);//ÓÉµç»úÆ«²î£¨ÓÉ±àÂëÆ÷·´Ó¦£©½á¹¹Ìå¼ÆËãµç»úPIDÊä³öÔöÁ¿
-   58   1        MOTOR_Control(&pid_motor);//´ÓpidÊä³öµ½Êµ¼Êµç»úÇý¶¯
-   59   1      }
+   55   2          pid_motor->PID_MOTOR_L_OUT = constrain_float(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max);
+             - // Çý¶¯ÏÞ·ù
+   56   2          pid_motor->PID_MOTOR_R_OUT = constrain_float(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
+   57   2      
+   58   2          // pwm_duty(MOTOR1_P,pid_motor->PID_MOTOR_L_OUT);//×óµç»úÇý¶¯
+   59   2          // pwm_duty(MOTOR1_N,pid_motor->PID_MOTOR_L_OUT);
+   60   2          // pwm_duty(PWMA_CH1P_P60,(uint32)0);//×óµç»úÇý¶¯
+   61   2          // pwm_duty(PWMA_CH2P_P62,pid_motor->PID_MOTOR_L_OUT/5);
+   62   2          // 15000 ¶ÔÓ¦Õ¼¿Õ±È1400
+   63   2          pwm_duty(PWMA_CH1P_P60, pid_motor->PID_MOTOR_L_OUT); // ×óµç»úÇý¶¯
+   64   2          pwm_duty(PWMA_CH2P_P62, pid_motor->PID_MOTOR_L_OUT); // µ¥¶ÀËüÒ»¸öÓÐÊýÖµ£¬·´×ª
+   65   2      
+   66   2          pwm_duty(PWMA_CH3P_P64, pid_motor->PID_MOTOR_R_OUT); // ÓÒµç»úÇý¶¯
+   67   2          pwm_duty(PWMA_CH4P_P66, pid_motor->PID_MOTOR_R_OUT);
+   68   2          PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT; // ×óµç»úPWM¸üÐÂ
+   69   2      
+   70   2          // pwm_duty(PWMA_CH3P_P64,(uint32)0);//ÓÒµç»úÇý¶¯
+   71   2          // pwm_duty(PWMA_CH4P_P66,pid_motor->PID_MOTOR_R_OUT/5);
+   72   2      
+   73   2          // pwm_duty(MOTOR2_P,pid_motor->PID_MOTOR_R_OUT);//ÓÒµç»úÇý¶¯
+   74   2          // pwm_duty(MOTOR2_N,pid_motor->PID_MOTOR_R_OUT);
+   75   2          PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT; // ÓÒµç»úPWM¸üÐÂ
+   76   2          break;
+   77   2      
+   78   2        case (Stop): // Í£ÏÂ
+   79   2          pwm_duty(PWMA_CH1P_P60,0); // ×óµç»úÇý¶¯
+   80   2          pwm_duty(PWMA_CH2P_P62,0); // µ¥¶ÀËüÒ»¸öÓÐÊýÖµ£¬·´×ª
+   81   2      
+   82   2          pwm_duty(PWMA_CH3P_P64,0); // ÓÒµç»úÇý¶¯
+   83   2          pwm_duty(PWMA_CH4P_P66,0);
+   84   2          break;
+   85   2      
+   86   2        default: // ±ðµÄ
+   87   2          pid_motor->PID_MOTOR_L_OUT = pid_motor->PID_MOTOR_L_OUT + PWM_Motor_L_now;
+   88   2          pid_motor->PID_MOTOR_R_OUT = pid_motor->PID_MOTOR_R_OUT + PWM_Motor_R_now;
+   89   2      
+   90   2          pid_motor->PID_MOTOR_L_OUT = constrain_float(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max);
+             - // Çý¶¯ÏÞ·ù
+   91   2          pid_motor->PID_MOTOR_R_OUT = constrain_float(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
+   92   2      
+   93   2          // pwm_duty(MOTOR1_P,pid_motor->PID_MOTOR_L_OUT);//×óµç»úÇý¶¯
+   94   2          // pwm_duty(MOTOR1_N,pid_motor->PID_MOTOR_L_OUT);
+   95   2          // pwm_duty(PWMA_CH1P_P60,(uint32)0);//×óµç»úÇý¶¯
+   96   2          // pwm_duty(PWMA_CH2P_P62,pid_motor->PID_MOTOR_L_OUT/5);
+   97   2          // 15000 ¶ÔÓ¦Õ¼¿Õ±È1400
+   98   2          pwm_duty(PWMA_CH1P_P60, pid_motor->PID_MOTOR_L_OUT); // ×óµç»úÇý¶¯
+   99   2          pwm_duty(PWMA_CH2P_P62, pid_motor->PID_MOTOR_L_OUT); // µ¥¶ÀËüÒ»¸öÓÐÊýÖµ£¬·´×ª
+  100   2      
+  101   2          pwm_duty(PWMA_CH3P_P64, pid_motor->PID_MOTOR_R_OUT); // ÓÒµç»úÇý¶¯
+  102   2          pwm_duty(PWMA_CH4P_P66, pid_motor->PID_MOTOR_R_OUT);
+  103   2          PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT; // ×óµç»úPWM¸üÐÂ
+  104   2      
+  105   2          // pwm_duty(PWMA_CH3P_P64,(uint32)0);//ÓÒµç»úÇý¶¯
+  106   2          // pwm_duty(PWMA_CH4P_P66,pid_motor->PID_MOTOR_R_OUT/5);
+  107   2      
+  108   2          // pwm_duty(MOTOR2_P,pid_motor->PID_MOTOR_R_OUT);//ÓÒµç»úÇý¶¯
+  109   2          // pwm_duty(MOTOR2_N,pid_motor->PID_MOTOR_R_OUT);
+  110   2          PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT; // ÓÒµç»úPWM¸üÐÂ
+  111   2          break;
+  112   2        }
+  113   1      }
+  114          
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       407     ------
+  code size            =       504     ------
+C251 COMPILER V5.60.0,  control                                                            19/03/23  18:33:24  PAGE 3   
+
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

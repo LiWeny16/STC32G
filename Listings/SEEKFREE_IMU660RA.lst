@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  18/03/23  21:42:15  PAGE 1   
+C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  19/03/23  18:33:21  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE SEEKFREE_IMU660RA
@@ -66,7 +66,7 @@ stmt  level    source
    48          *                   // 软件 IIC 引脚
    49          *                   SCL/SPC           查看 zf_device_imu660ra.h 中 IMU660RA_SCL_PIN 宏定义
    50          *                   SDA/DSI           查看 zf_device_imu660ra.h 中 IMU660RA_SDA_PIN 宏定义
-C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  18/03/23  21:42:15  PAGE 2   
+C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  19/03/23  18:33:21  PAGE 2   
 
    51          *                   VCC               3.3V电源
    52          *                   GND               电源地
@@ -134,7 +134,7 @@ stmt  level    source
                {
                  IMU660RA_SDA_LOW();
                  IMU660RA_SCL_LOW();
-C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  18/03/23  21:42:15  PAGE 3   
+C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  19/03/23  18:33:21  PAGE 3   
 
                  imu660ra_simiic_delay();
                  IMU660RA_SCL_HIGH();
@@ -202,7 +202,7 @@ stmt  level    source
                
                
                //字节接收程序
-C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  18/03/23  21:42:15  PAGE 4   
+C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  19/03/23  18:33:21  PAGE 4   
 
                //接收器件传来的数据，此程序应配合|主应答函数|使用
                //内部使用，用户无需调用
@@ -270,7 +270,7 @@ stmt  level    source
              -------------
                static void imu660ra_simiic_write_regs(uint8 dev_add, uint8 reg, uint8 *dat, uint32 len)
                {
-C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  18/03/23  21:42:15  PAGE 5   
+C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  19/03/23  18:33:21  PAGE 5   
 
                  uint16 i = 0;
                  imu660ra_simiic_start();
@@ -338,7 +338,7 @@ stmt  level    source
                        dat_add++;
                    }
                    *dat_add = imu660ra_read_ch(no_ack); //读取数据
-C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  18/03/23  21:42:15  PAGE 6   
+C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  19/03/23  18:33:21  PAGE 6   
 
                  imu660ra_simiic_stop();
                }
@@ -406,7 +406,7 @@ stmt  level    source
   358          //-------------------------------------------------------------------------------------------------------
              -------------
   359          //  @brief      将val写入cmd对应的寄存器地址
-C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  18/03/23  21:42:15  PAGE 7   
+C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  19/03/23  18:33:21  PAGE 7   
 
   360          //  @param      cmd         命令字
   361          //  @param      val         待写入寄存器的数值
@@ -474,7 +474,7 @@ stmt  level    source
              -�电模式
   417          // 备注信息     内部调用
   418          //-------------------------------------------------------------------------------------------------------
-C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  18/03/23  21:42:15  PAGE 8   
+C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  19/03/23  18:33:21  PAGE 8   
 
              -------------
   419          static void imu660ra_write_register(uint8 reg, uint8 dat)
@@ -542,7 +542,7 @@ stmt  level    source
   474          
   475          //-------------------------------------------------------------------------------------------------------
              -------------
-C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  18/03/23  21:42:15  PAGE 9   
+C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  19/03/23  18:33:21  PAGE 9   
 
   476          // 函数简介     IMU660RA 自检
   477          // 参数说明     void
@@ -610,7 +610,7 @@ stmt  level    source
   531          //-------------------------------------------------------------------------------------------------------
              -------------
   532          void imu660ra_get_gyro (void)
-C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  18/03/23  21:42:15  PAGE 10  
+C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  19/03/23  18:33:21  PAGE 10  
 
   533          {
   534   1      #if IMU660RA_USE_SOFT_IIC
@@ -678,7 +678,7 @@ stmt  level    source
              -�:±500 dps    获取到的陀螺仪数据除以 65.6    可以转化为带物理单位的数据 单位为：°/s
   586   2              case 0x03: gyro_dat = (float)gyro_value / 131.2f; break;               //  0x03 陀螺仪量程�
              -�:±250 dps    获取到的陀螺仪数据除以 131.2   可以转化为带物理单位的数据 单位为：°/s
-C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  18/03/23  21:42:15  PAGE 11  
+C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  19/03/23  18:33:21  PAGE 11  
 
   587   2              case 0x04: gyro_dat = (float)gyro_value / 262.4f; break;               //  0x04 陀螺仪量程�
              -�:±125 dps    获取到的陀螺仪数据除以 262.4   可以转化为带物理单位的数据 单位为：°/s
@@ -746,7 +746,7 @@ stmt  level    source
   640   3      //      while(1)
   641   3      //      {
   642   3              printf("imu660ra init error.\r\n");
-C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  18/03/23  21:42:15  PAGE 12  
+C251 COMPILER V5.60.0,  SEEKFREE_IMU660RA                                                  19/03/23  18:33:21  PAGE 12  
 
   643   3      //        delay_ms(200);
   644   3      //      }

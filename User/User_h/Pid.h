@@ -29,6 +29,8 @@ typedef struct // 增量式PID（电机用）结构体
     float p_motor;         // 用于存放比例系数p
     float i_motor;         // 用于存放积分系数i
     float d_motor;         // 用于存放微分系数d
+		float MOTOR_L_OUT_temp;
+		float MOTOR_R_OUT_temp;
     int32 PID_MOTOR_L_OUT; // 用于存放最终输出给电机的左轮PWM增量值
     int32 PID_MOTOR_R_OUT; // 用于存放最终输出给电机的右轮PWM增量值
 } PID_Motor;

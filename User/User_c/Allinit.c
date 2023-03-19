@@ -109,11 +109,13 @@ void PID_init(void)
 	pid_steering.PID_STEERING_OUT = 725;
 	pid_steering.STEERING_OUT_temp = 0.0;
 
-	pid_motor.p_motor = 2;		   // 用于存放比例系数p
-	pid_motor.i_motor = 0.5;	   // 用于存放积分系数i
-	pid_motor.d_motor = 1;		   // 用于存放微分系数d
+	pid_motor.p_motor = 0.05;		   // 用于存放比例系数p
+	pid_motor.i_motor = 0.002;	   // 用于存放积分系数i
+	pid_motor.d_motor = 0.01;		   // 用于存放微分系数d
 	pid_motor.PID_MOTOR_L_OUT = 0; // 用于存放最终输出给电机的左轮PWM增量值
 	pid_motor.PID_MOTOR_R_OUT = 0; // 用于存放最终输出给电机的右轮PWM增量值
+	pid_motor.MOTOR_L_OUT_temp=0.0;
+	pid_motor.MOTOR_R_OUT_temp=0.0;
 }
 
 // 6.舵机初始化
@@ -130,8 +132,8 @@ void Motor_init(void)
 	speed_state.Outgar_speed_L_ai = 0; // 出库左
 	speed_state.Outgar_speed_R_ai = 0; // 出库右
 
-	speed_state.Strai_speed_L_ai = MFBL * 0.1; // 直道左
-	speed_state.Strai_speed_R_ai = MFBL * 0.1; // 直道右
+	speed_state.Strai_speed_L_ai = 9000; // 直道左  //全是uint32
+	speed_state.Strai_speed_R_ai = 9000; // 直道右
 
 	speed_state.Cur_speed_L_ai = 0; // 弯道左
 	speed_state.Cur_speed_R_ai = 0; // 弯道右
@@ -165,8 +167,8 @@ void Motor_init(void)
 	speed_now.speed_R = 0;	  // 右轮当前速度值
 	speed_now.speed_R_ai = 0; // 右轮目标值
 
-	PWM_Motor_Max = 9000;
-	PWM_Motor_Min = 1000;
+	PWM_Motor_Max = 3000;
+	PWM_Motor_Min = 0;
 	PWM_Motor_L_now = 2000;
 	PWM_Motor_R_now = 2000;
 }

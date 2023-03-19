@@ -16,8 +16,9 @@ void Pid_Steering_Calculate(volatile Err_Steering* err_steering , volatile PID_S
 
  //   constrain_float(err_steering->Errsum, pid_steering->imax, pid_steering->imin);
 //位置式PID积分项限幅
+
 	   pid_steering->STEERING_OUT_temp = (float)((pid_steering->p_steering * err_steering-> Err) + (pid_steering->i_steering * err_steering-> Errsum) + (pid_steering->d_steering * err_steering-> Errdif));
-     tempVar =(float)((pid_steering->p_steering * err_steering-> Err) + (pid_steering->i_steering * err_steering-> Errsum) + (pid_steering->d_steering * err_steering-> Errdif));
+    // tempVar =(float)((pid_steering->p_steering * err_steering-> Err) + (pid_steering->i_steering * err_steering-> Errsum) + (pid_steering->d_steering * err_steering-> Errdif));
 	//pid_steering->PID_STEERING_OUT = (f)(((pid_steering->p_steering * err_steering-> Err*(-1.0)) + (pid_steering->i_steering * err_steering-> Errsum*0) + (pid_steering->d_steering * err_steering-> Errdif)*0));
 	//	temp =   pid_steering->PID_STEERING_OUT
 		//位置式PID输出计算

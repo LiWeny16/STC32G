@@ -11,7 +11,7 @@
 #include "encoder.h"  //使用其中相关计算函数
 #include "road.h"     //使用道路判断结构体和道路判断函数
 
-void STEERING_Control(PID_Steering *pid_steering); // 舵机驱动输出（从PID到实际输出）
-void MOTOR_Control(PID_Motor *pid_motor);          // 电机驱动输出（从PID到实际输出）
+void STEERING_Control(Road road,PID_Steering *pid_steering); // 舵机驱动输出（从PID到实际输出）
+void MOTOR_Control(Road road,PID_Motor *pid_motor);          // 电机驱动输出（从PID到实际输出）
 void Control_All();                                // 总控制封装，包括：电感->偏差->舵机PID->实际驱动,编码器->速度->偏差->电机PID->实际驱动
 #endif

@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  Pid                                                                18/03/23  21:42:18  PAGE 1   
+C251 COMPILER V5.60.0,  Pid                                                                19/03/23  18:33:24  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE Pid
@@ -30,8 +30,8 @@ stmt  level    source
    18   1      //位置式PID积分项限幅
    19   1           pid_steering->STEERING_OUT_temp = (float)((pid_steering->p_steering * err_steering-> Err) + (pid_stee
              -ring->i_steering * err_steering-> Errsum) + (pid_steering->d_steering * err_steering-> Errdif));
-   20   1           tempVar =(float)((pid_steering->p_steering * err_steering-> Err) + (pid_steering->i_steering * err_s
-             -teering-> Errsum) + (pid_steering->d_steering * err_steering-> Errdif));
+   20   1          // tempVar =(float)((pid_steering->p_steering * err_steering-> Err) + (pid_steering->i_steering * err
+             -_steering-> Errsum) + (pid_steering->d_steering * err_steering-> Errdif));
    21   1        //pid_steering->PID_STEERING_OUT = (f)(((pid_steering->p_steering * err_steering-> Err*(-1.0)) + (pid_st
              -eering->i_steering * err_steering-> Errsum*0) + (pid_steering->d_steering * err_steering-> Errdif)*0));
    22   1        //  temp =   pid_steering->PID_STEERING_OUT
@@ -50,7 +50,7 @@ stmt  level    source
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       413     ------
+  code size            =       339     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
@@ -68,7 +68,7 @@ Module Information          Static   Overlayable
   hconst size          =    ------     ------
 End of Module Information.
 
-C251 COMPILER V5.60.0,  Pid                                                                18/03/23  21:42:18  PAGE 2   
+C251 COMPILER V5.60.0,  Pid                                                                19/03/23  18:33:24  PAGE 2   
 
 
 C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
