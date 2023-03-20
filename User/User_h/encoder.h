@@ -25,7 +25,7 @@ typedef struct//速度状态结构体（以速度表示）
 	      //   人为设定的目标速度值
         uint32 Outgar_speed_L_ai;//出库左
         uint32 Outgar_speed_R_ai;//出库右
-	
+	////////////我////////////用////////////的//////////////
         uint32 Strai_speed_L_ai;//直道左
         uint32 Strai_speed_R_ai;//直道右
 	
@@ -34,7 +34,18 @@ typedef struct//速度状态结构体（以速度表示）
 	
         uint32 Cur_R_speed_L_ai;//右转 左右轮
         uint32 Cur_R_speed_R_ai;//
+				
+				uint32 Ring_speed_L_ai;//圆环内部左
+	      uint32 Ring_speed_R_ai;//圆环内部右
+				
+        uint32 Ringin_speed_L_ai;//进圆环左
+				uint32 Ringin_speed_R_ai;//进圆环右
 	
+					
+        uint32 Ringout_speed_L_ai;//出圆环左
+				uint32 Ringout_speed_R_ai;//出圆环右
+				
+	////////////我////////////用////////////的//////////////
         uint32 Cross_speed_L_ai;//十字左
         uint32 Cross_speed_R_ai;//十字右
 	
@@ -44,14 +55,8 @@ typedef struct//速度状态结构体（以速度表示）
         uint32 Ramp_speed_L_ai;//坡道左
 	      uint32 Ramp_speed_R_ai;//坡道右
 	
-        uint32 Ring_speed_L_ai;//圆环内部左
-	      uint32 Ring_speed_R_ai;//圆环内部右
-				
-        uint32 Ringin_speed_L_ai;//进圆环左
-				uint32 Ringin_speed_R_ai;//进圆环右
-				
-        uint32 Ringout_speed_L_ai;//出圆环左
-				uint32 Ringout_speed_R_ai;//出圆环右
+
+
 				
         uint32 Three_speed_L_ai;//三岔左      
 				uint32 Three_speed_R_ai;//三岔右

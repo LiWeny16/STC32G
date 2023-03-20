@@ -108,7 +108,7 @@ void main()
 
 		// wireless_uart_send_buff((uint8*)temp,1);
 		printf("pid_steering.PID_STEERING_OUT=%d \r\n", pid_steering.PID_STEERING_OUT);
-		printf("tempVar = %d", tempVar);
+		printf("tempVar = %f", tempVar);
 		delay_ms(1000);
 
 		// printf("SP_R = %d\r\n", speed_now.speed_R);				// µ±Ç°

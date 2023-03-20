@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  Allinit                                                            19/03/23  22:47:38  PAGE 1   
+C251 COMPILER V5.60.0,  Allinit                                                            20/03/23  18:56:22  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE Allinit
@@ -66,7 +66,7 @@ stmt  level    source
    55   1        dg_state.L_yh_twice = 0;
    56   1        dg_state.L_yx_twice = 0;
    57   1      
-C251 COMPILER V5.60.0,  Allinit                                                            19/03/23  22:47:38  PAGE 2   
+C251 COMPILER V5.60.0,  Allinit                                                            20/03/23  18:56:22  PAGE 2   
 
    58   1        /*
    59   1        adc_init(ADC_P14,ADC_SYSclk_DIV_2);
@@ -119,9 +119,9 @@ stmt  level    source
   101          void PID_init(void)
   102          {
   103   1      
-  104   1        pid_steering.p_steering = 22.5;
+  104   1        pid_steering.p_steering = 26.5;
   105   1        pid_steering.i_steering = 0.0;
-  106   1        pid_steering.d_steering = 5.5;
+  106   1        pid_steering.d_steering = 4.8;
   107   1        pid_steering.imax = 1;
   108   1        pid_steering.imin = -1;
   109   1        pid_steering.PID_STEERING_OUT = 725;
@@ -134,7 +134,7 @@ stmt  level    source
   116   1        pid_motor.PID_MOTOR_R_OUT = 0; // 用于存放最终输出给电机的右轮PWM增量值
   117   1        pid_motor.MOTOR_L_OUT_temp=0.0;
   118   1        pid_motor.MOTOR_R_OUT_temp=0.0;
-C251 COMPILER V5.60.0,  Allinit                                                            19/03/23  22:47:38  PAGE 3   
+C251 COMPILER V5.60.0,  Allinit                                                            20/03/23  18:56:22  PAGE 3   
 
   119   1      }
   120          
@@ -152,14 +152,14 @@ stmt  level    source
   132   1        speed_state.Outgar_speed_L_ai = 0; // 出库左
   133   1        speed_state.Outgar_speed_R_ai = 0; // 出库右
   134   1      
-  135   1        speed_state.Strai_speed_L_ai = 12000; // 直道左  //全是uint32
-  136   1        speed_state.Strai_speed_R_ai = 12000; // 直道右
+  135   1        speed_state.Strai_speed_L_ai = 10000; // 直道左  //全是uint32
+  136   1        speed_state.Strai_speed_R_ai = 10000; // 直道右
   137   1      
-  138   1        speed_state.Cur_L_speed_L_ai = 9000; // 左转！
-  139   1        speed_state.Cur_L_speed_R_ai = 11000; // 
+  138   1        speed_state.Cur_L_speed_L_ai = 7000; // 左转！
+  139   1        speed_state.Cur_L_speed_R_ai = 8000; // 
   140   1        
-  141   1        speed_state.Cur_R_speed_L_ai = 11000; // 右转！
-  142   1        speed_state.Cur_R_speed_R_ai = 9000; // 
+  141   1        speed_state.Cur_R_speed_L_ai = 8000; // 右转！
+  142   1        speed_state.Cur_R_speed_R_ai = 7000; // 
   143   1      
   144   1        speed_state.Cross_speed_L_ai = 0; // 十字左
   145   1        speed_state.Cross_speed_R_ai = 0; // 十字右
@@ -170,14 +170,14 @@ stmt  level    source
   150   1        speed_state.Ramp_speed_L_ai = 0; // 坡道左
   151   1        speed_state.Ramp_speed_R_ai = 0; // 坡道右
   152   1      
-  153   1        speed_state.Ring_speed_L_ai = 0; // 圆环内部左
-  154   1        speed_state.Ring_speed_R_ai = 0; // 圆环内部右
+  153   1        speed_state.Ring_speed_L_ai = 7000; // 圆环内部左
+  154   1        speed_state.Ring_speed_R_ai = 7000; // 圆环内部右
   155   1      
-  156   1        speed_state.Ringin_speed_L_ai = 0; // 进圆环左
-  157   1        speed_state.Ringin_speed_R_ai = 0; // 进圆环右
+  156   1        speed_state.Ringin_speed_L_ai = 4000; // 进圆环左
+  157   1        speed_state.Ringin_speed_R_ai = 5000; // 进圆环右
   158   1      
-  159   1        speed_state.Ringout_speed_L_ai = 0; // 出圆环左
-  160   1        speed_state.Ringout_speed_R_ai = 0; // 出圆环右
+  159   1        speed_state.Ringout_speed_L_ai = 4000; // 出圆环左
+  160   1        speed_state.Ringout_speed_R_ai = 5000; // 出圆环右
   161   1      
   162   1        speed_state.Three_speed_L_ai = 0; // 三岔左
   163   1        speed_state.Three_speed_R_ai = 0; // 三岔右
@@ -202,7 +202,7 @@ stmt  level    source
   182   1        ctimer_count_init(Encoder_L);
   183   1        ctimer_count_init(Encoder_R);
   184   1        err_motor.err_L_m = 0;         // 根据当前解码器输出计算出的左轮偏差值
-C251 COMPILER V5.60.0,  Allinit                                                            19/03/23  22:47:38  PAGE 4   
+C251 COMPILER V5.60.0,  Allinit                                                            20/03/23  18:56:22  PAGE 4   
 
   185   1        err_motor.err_last_L_m = 0;      // 用于存放上一次计算出的左轮偏差值
   186   1        err_motor.err_past_L_m = 0;      // 用于存放上上一次计算出的左轮偏差值
@@ -256,7 +256,7 @@ stmt  level    source
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       684     ------
+  code size            =       696     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
@@ -271,7 +271,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-C251 COMPILER V5.60.0,  Allinit                                                            19/03/23  22:47:38  PAGE 5   
+C251 COMPILER V5.60.0,  Allinit                                                            20/03/23  18:56:22  PAGE 5   
 
   hconst size          =    ------     ------
 End of Module Information.

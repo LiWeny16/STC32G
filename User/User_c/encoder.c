@@ -20,10 +20,25 @@ void speedout(Road road,SPEED_now* speed_now,SPEED_state* speed_state)//根据路况
 		speed_now-> speed_L_ai = speed_state->Cur_R_speed_L_ai;
 		speed_now-> speed_R_ai = speed_state->Cur_R_speed_R_ai;
 		break;
+		case(Big_Ring): //大圆环内
+		speed_now-> speed_L_ai = speed_state->Ring_speed_L_ai;
+		speed_now-> speed_R_ai = speed_state->Ring_speed_R_ai;
+			break;
+		
+		case(Ring_In): //进大圆环
+		speed_now-> speed_L_ai = speed_state->Ringin_speed_L_ai;
+		speed_now-> speed_R_ai = speed_state->Ringin_speed_R_ai;
+			break;
+		
+		case(Ring_Out): //出大圆环
+		speed_now-> speed_L_ai = speed_state->Ringout_speed_L_ai;
+		speed_now-> speed_R_ai = speed_state->Ringout_speed_R_ai;
+			break;
+		
 		case(Stop):
 		speed_now-> speed_L_ai =0;
 		speed_now-> speed_R_ai =0;
-		default://别的
+		default://别的默认
 	  speed_now-> speed_L_ai = speed_state->Strai_speed_L_ai;
 		speed_now-> speed_R_ai = speed_state->Strai_speed_R_ai;
 		break;

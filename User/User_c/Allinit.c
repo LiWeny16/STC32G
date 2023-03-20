@@ -101,9 +101,9 @@ void PIT_init(void)
 void PID_init(void)
 {
 
-	pid_steering.p_steering = 22.5;
+	pid_steering.p_steering = 26.5;
 	pid_steering.i_steering = 0.0;
-	pid_steering.d_steering = 5.5;
+	pid_steering.d_steering = 4.8;
 	pid_steering.imax = 1;
 	pid_steering.imin = -1;
 	pid_steering.PID_STEERING_OUT = 725;
@@ -132,14 +132,14 @@ void Motor_init(void)
 	speed_state.Outgar_speed_L_ai = 0; // 出库左
 	speed_state.Outgar_speed_R_ai = 0; // 出库右
 
-	speed_state.Strai_speed_L_ai = 12000; // 直道左  //全是uint32
-	speed_state.Strai_speed_R_ai = 12000; // 直道右
+	speed_state.Strai_speed_L_ai = 10000; // 直道左  //全是uint32
+	speed_state.Strai_speed_R_ai = 10000; // 直道右
 
-	speed_state.Cur_L_speed_L_ai = 9000; // 左转！
-	speed_state.Cur_L_speed_R_ai = 11000; // 
+	speed_state.Cur_L_speed_L_ai = 7000; // 左转！
+	speed_state.Cur_L_speed_R_ai = 8000; // 
 	
-	speed_state.Cur_R_speed_L_ai = 11000; // 右转！
-	speed_state.Cur_R_speed_R_ai = 9000; // 
+	speed_state.Cur_R_speed_L_ai = 8000; // 右转！
+	speed_state.Cur_R_speed_R_ai = 7000; // 
 
 	speed_state.Cross_speed_L_ai = 0; // 十字左
 	speed_state.Cross_speed_R_ai = 0; // 十字右
@@ -150,14 +150,14 @@ void Motor_init(void)
 	speed_state.Ramp_speed_L_ai = 0; // 坡道左
 	speed_state.Ramp_speed_R_ai = 0; // 坡道右
 
-	speed_state.Ring_speed_L_ai = 0; // 圆环内部左
-	speed_state.Ring_speed_R_ai = 0; // 圆环内部右
+	speed_state.Ring_speed_L_ai = 7000; // 圆环内部左
+	speed_state.Ring_speed_R_ai = 7000; // 圆环内部右
 
-	speed_state.Ringin_speed_L_ai = 0; // 进圆环左
-	speed_state.Ringin_speed_R_ai = 0; // 进圆环右
+	speed_state.Ringin_speed_L_ai = 4000; // 进圆环左
+	speed_state.Ringin_speed_R_ai = 5000; // 进圆环右
 
-	speed_state.Ringout_speed_L_ai = 0; // 出圆环左
-	speed_state.Ringout_speed_R_ai = 0; // 出圆环右
+	speed_state.Ringout_speed_L_ai = 4000; // 出圆环左
+	speed_state.Ringout_speed_R_ai = 5000; // 出圆环右
 
 	speed_state.Three_speed_L_ai = 0; // 三岔左
 	speed_state.Three_speed_R_ai = 0; // 三岔右

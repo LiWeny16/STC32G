@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  Pid                                                                19/03/23  22:47:38  PAGE 1   
+C251 COMPILER V5.60.0,  Pid                                                                20/03/23  18:56:22  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE Pid
@@ -36,60 +36,68 @@ stmt  level    source
    24   1        float i_Curve_R;
    25   1        float d_Curve_R;
    26   1        
-   27   1        p_Curve_L = 25.5;
+   27   1        p_Curve_L = 23.5;
    28   1        i_Curve_L = 0;
    29   1        d_Curve_L = 5.5;
    30   1      
-   31   1        p_Curve_R = 25.5;
+   31   1        p_Curve_R = 23.5;
    32   1        i_Curve_R = 0;
    33   1        d_Curve_R = 5.5;
    34   1        switch (road)
    35   1        {
    36   2        case (Straight): // 直道
-   37   2          pid_steering->STEERING_OUT_temp = (float)((pid_steering->p_steering * (err_steering->Err)) + (pid_steer
+   37   2          err_steering->Err=(1.1151 * (err_steering->Err_x)) + (3.9868 * (err_steering->Err_h));
+   38   2          pid_steering->STEERING_OUT_temp = (float)((pid_steering->p_steering * (err_steering->Err)) + (pid_steer
              -ing->i_steering * err_steering->Errsum) + (pid_steering->d_steering * err_steering->Errdif));
-   38   2          break;
-   39   2      
-   40   2        case (Curve_Left): // 弯道
-   41   2          pid_steering->STEERING_OUT_temp = (float)((p_Curve_L * err_steering->Err) + (i_Curve_L * err_steering->
+   39   2          break;
+   40   2      
+   41   2        case (Curve_Left): // 弯道
+   42   2          err_steering->Err=(2.4151 * (err_steering->Err_x)) + (3.9868 * (err_steering->Err_h));
+   43   2          pid_steering->STEERING_OUT_temp = (float)((p_Curve_L * err_steering->Err) + (i_Curve_L * err_steering->
              -Errsum) + (d_Curve_L * err_steering->Errdif));
-   42   2          break;
-   43   2      
-   44   2        case (Curve_Right): // 弯道
-   45   2          pid_steering->STEERING_OUT_temp = (float)((p_Curve_R * err_steering->Err) + (i_Curve_R * err_steering->
+   44   2          break;
+   45   2      
+   46   2        case (Curve_Right): // 弯道
+   47   2          err_steering->Err=(2.4151 * (err_steering->Err_x)) + (3.9868 * (err_steering->Err_h));
+   48   2          pid_steering->STEERING_OUT_temp = (float)((p_Curve_R * err_steering->Err) + (i_Curve_R * err_steering->
              -Errsum) + (d_Curve_R * err_steering->Errdif));
-   46   2          break;
-   47   2      
-   48   2        case (Stop):
-   49   2          pid_steering->STEERING_OUT_temp = 0;
-   50   2        default: // 别的
-   51   2          pid_steering->STEERING_OUT_temp = (float)((pid_steering->p_steering * err_steering->Err) + (pid_steerin
-             -g->i_steering * err_steering->Errsum) + (pid_steering->d_steering * err_steering->Errdif));
-   52   2          break;
-C251 COMPILER V5.60.0,  Pid                                                                19/03/23  22:47:38  PAGE 2   
+   49   2          break;
+   50   2        case (Big_Ring):
+   51   2          err_steering->Err=(2.4151 * (err_steering->Err_x)) + (3.9868 * (err_steering->Err_h));
+   52   2          pid_steering->STEERING_OUT_temp = (float)((p_Curve_R * err_steering->Err) + (i_Curve_R * err_steering->
+             -Errsum) + (d_Curve_R * err_steering->Errdif));
+C251 COMPILER V5.60.0,  Pid                                                                20/03/23  18:56:22  PAGE 2   
 
-   53   2        }
-   54   1      
-   55   1        // tempVar =(float)((pid_steering->p_steering * err_steering-> Err) + (pid_steering->i_steering * err_st
+   53   2          break;
+   54   2        
+   55   2        case (Stop):
+   56   2          pid_steering->STEERING_OUT_temp = 0;
+   57   2        default: // 别的
+   58   2          pid_steering->STEERING_OUT_temp = (float)((pid_steering->p_steering * err_steering->Err) + (pid_steerin
+             -g->i_steering * err_steering->Errsum) + (pid_steering->d_steering * err_steering->Errdif));
+   59   2          break;
+   60   2        }
+   61   1      
+   62   1        // tempVar =(float)((pid_steering->p_steering * err_steering-> Err) + (pid_steering->i_steering * err_st
              -eering-> Errsum) + (pid_steering->d_steering * err_steering-> Errdif));
-   56   1        // pid_steering->PID_STEERING_OUT = (f)(((pid_steering->p_steering * err_steering-> Err*(-1.0)) + (pid_s
+   63   1        // pid_steering->PID_STEERING_OUT = (f)(((pid_steering->p_steering * err_steering-> Err*(-1.0)) + (pid_s
              -teering->i_steering * err_steering-> Errsum*0) + (pid_steering->d_steering * err_steering-> Errdif)*0));
-   57   1        //  temp =   pid_steering->PID_STEERING_OUT
-   58   1        // 位置式PID输出计算
-   59   1      }
-   60          
-   61          void Pid_Motor_Calculate(Err_Motor *err_motor, PID_Motor *pid_motor) // 电机增量式PID输出增量
-   62          {
-   63   1        pid_motor->PID_MOTOR_L_OUT = (pid_motor->p_motor * err_motor->err_derivative_L_m) + (pid_motor->i_motor 
+   64   1        //  temp =   pid_steering->PID_STEERING_OUT
+   65   1        // 位置式PID输出计算
+   66   1      }
+   67          
+   68          void Pid_Motor_Calculate(Err_Motor *err_motor, PID_Motor *pid_motor) // 电机增量式PID输出增量
+   69          {
+   70   1        pid_motor->PID_MOTOR_L_OUT = (pid_motor->p_motor * err_motor->err_derivative_L_m) + (pid_motor->i_motor 
              -* err_motor->err_L_m) + (pid_motor->d_motor * err_motor->err_derivative2_L_m);
-   64   1        pid_motor->PID_MOTOR_R_OUT = (pid_motor->p_motor * err_motor->err_derivative_R_m) + (pid_motor->i_motor 
+   71   1        pid_motor->PID_MOTOR_R_OUT = (pid_motor->p_motor * err_motor->err_derivative_R_m) + (pid_motor->i_motor 
              -* err_motor->err_R_m) + (pid_motor->d_motor * err_motor->err_derivative2_R_m);
-   65   1      }
+   72   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       431     ------
+  code size            =       549     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

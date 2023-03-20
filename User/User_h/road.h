@@ -15,6 +15,7 @@ typedef enum
 	Curve_Right,
 	Ring_In,
 	Ring_Out,
+	Big_Ring,
 	
   No_road,      //严重冲出跑道且无法校正则停车
   Out_of_way,   //已经冲出跑道
@@ -37,7 +38,7 @@ typedef enum
   Stoped,
 }Road;
 
-Road road_judge(DG_State* dg_sta);
+Road road_judge(DG_State* dg_sta ,Err_Steering *err_steering);
 
 
 #endif
