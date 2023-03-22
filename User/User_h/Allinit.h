@@ -43,10 +43,12 @@ void PIT_init(void);//定时中断（用于电感检测）初始化
 void PID_init(void);//PID初始化
 void Steering_init(void);//舵机初始化，归中，设置上下限
 void Motor_init(void);//电机初始化
-void FLAG_init(void);//路况判断标志位初始化
+//void FLAG_init(void);//路况判断标志位初始化
 void WIRELESS_init(void);//无线串口初始化
-void ALL_init(void);//总体初始化
 
 void temp_init(void);
+void flag_init(void);
+
+void ALL_init(void);//总体初始化
 
 #endif

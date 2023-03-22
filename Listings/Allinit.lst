@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  Allinit                                                            20/03/23  18:56:22  PAGE 1   
+C251 COMPILER V5.60.0,  Allinit                                                            22/03/23  18:05:14  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE Allinit
@@ -66,7 +66,7 @@ stmt  level    source
    55   1        dg_state.L_yh_twice = 0;
    56   1        dg_state.L_yx_twice = 0;
    57   1      
-C251 COMPILER V5.60.0,  Allinit                                                            20/03/23  18:56:22  PAGE 2   
+C251 COMPILER V5.60.0,  Allinit                                                            22/03/23  18:05:14  PAGE 2   
 
    58   1        /*
    59   1        adc_init(ADC_P14,ADC_SYSclk_DIV_2);
@@ -121,7 +121,7 @@ stmt  level    source
   103   1      
   104   1        pid_steering.p_steering = 26.5;
   105   1        pid_steering.i_steering = 0.0;
-  106   1        pid_steering.d_steering = 4.8;
+  106   1        pid_steering.d_steering = 2.5;
   107   1        pid_steering.imax = 1;
   108   1        pid_steering.imin = -1;
   109   1        pid_steering.PID_STEERING_OUT = 725;
@@ -134,7 +134,7 @@ stmt  level    source
   116   1        pid_motor.PID_MOTOR_R_OUT = 0; // 用于存放最终输出给电机的右轮PWM增量值
   117   1        pid_motor.MOTOR_L_OUT_temp=0.0;
   118   1        pid_motor.MOTOR_R_OUT_temp=0.0;
-C251 COMPILER V5.60.0,  Allinit                                                            20/03/23  18:56:22  PAGE 3   
+C251 COMPILER V5.60.0,  Allinit                                                            22/03/23  18:05:14  PAGE 3   
 
   119   1      }
   120          
@@ -152,14 +152,14 @@ stmt  level    source
   132   1        speed_state.Outgar_speed_L_ai = 0; // 出库左
   133   1        speed_state.Outgar_speed_R_ai = 0; // 出库右
   134   1      
-  135   1        speed_state.Strai_speed_L_ai = 10000; // 直道左  //全是uint32
-  136   1        speed_state.Strai_speed_R_ai = 10000; // 直道右
+  135   1        speed_state.Strai_speed_L_ai = 11000; // 直道左  //全是uint32
+  136   1        speed_state.Strai_speed_R_ai = 11000; // 直道右
   137   1      
-  138   1        speed_state.Cur_L_speed_L_ai = 7000; // 左转！
-  139   1        speed_state.Cur_L_speed_R_ai = 8000; // 
+  138   1        speed_state.Cur_L_speed_L_ai = 8000; // 左转！
+  139   1        speed_state.Cur_L_speed_R_ai = 9000; // 
   140   1        
-  141   1        speed_state.Cur_R_speed_L_ai = 8000; // 右转！
-  142   1        speed_state.Cur_R_speed_R_ai = 7000; // 
+  141   1        speed_state.Cur_R_speed_L_ai = 9000; // 右转！
+  142   1        speed_state.Cur_R_speed_R_ai = 8000; // 
   143   1      
   144   1        speed_state.Cross_speed_L_ai = 0; // 十字左
   145   1        speed_state.Cross_speed_R_ai = 0; // 十字右
@@ -170,8 +170,8 @@ stmt  level    source
   150   1        speed_state.Ramp_speed_L_ai = 0; // 坡道左
   151   1        speed_state.Ramp_speed_R_ai = 0; // 坡道右
   152   1      
-  153   1        speed_state.Ring_speed_L_ai = 7000; // 圆环内部左
-  154   1        speed_state.Ring_speed_R_ai = 7000; // 圆环内部右
+  153   1        speed_state.Ring_speed_L_ai = 6500; // 圆环内部左
+  154   1        speed_state.Ring_speed_R_ai = 6500; // 圆环内部右
   155   1      
   156   1        speed_state.Ringin_speed_L_ai = 4000; // 进圆环左
   157   1        speed_state.Ringin_speed_R_ai = 5000; // 进圆环右
@@ -202,7 +202,7 @@ stmt  level    source
   182   1        ctimer_count_init(Encoder_L);
   183   1        ctimer_count_init(Encoder_R);
   184   1        err_motor.err_L_m = 0;         // 根据当前解码器输出计算出的左轮偏差值
-C251 COMPILER V5.60.0,  Allinit                                                            20/03/23  18:56:22  PAGE 4   
+C251 COMPILER V5.60.0,  Allinit                                                            22/03/23  18:05:14  PAGE 4   
 
   185   1        err_motor.err_last_L_m = 0;      // 用于存放上一次计算出的左轮偏差值
   186   1        err_motor.err_past_L_m = 0;      // 用于存放上上一次计算出的左轮偏差值
@@ -216,9 +216,9 @@ stmt  level    source
   194   1        err_motor.err_derivative2_R_m = 0; // 用于存放右轮上次偏差与上上次偏差之差
   195   1      }
   196          // 9.路况判断标志位初始化
-  197          void FLAG_init(void)
-  198          {
-  199   1      }
+  197          //void FLAG_init(void)
+  198          //{
+  199          //}
   200          
   201          // 10.无线串口初始化
   202          void WIRELESS_init(void)
@@ -229,34 +229,41 @@ stmt  level    source
   207          void temp_init(void){
   208   1        temp = 0.0;
   209   1        tempVar = 0.0;
-  210   1        ringInFlag = 0;
+  210   1        //ringInFlag = 0;
   211   1      }
-  212          
-  213          // 11.总体初始化
-  214          void ALL_init(void)
-  215          {
-  216   1      
-  217   1        ADC_all_init();
-  218   1        GPIO_init();
-  219   1        PWM_SMB_init();
-  220   1        PIT_init();
-  221   1        PID_init();
-  222   1        Steering_init();
-  223   1        Motor_init();
-  224   1        Encoder_init();
-  225   1        FLAG_init();
-  226   1        
-  227   1        wireless_uart_init();
-  228   1        //wireless_ch573_init();
-  229   1        temp_init();
-  230   1        //  seekfree_wireless_init();
-  231   1        // WIRELESS_init();
-  232   1      }
+  212          // 12.FLAG标志初始化
+  213          void flag_init(void){
+  214   1        road_flag.Ring_In_Flag =0;
+  215   1        road_flag.Ring_Out_Flag =0;
+  216   1        road_flag.Near_Flag=0;
+  217   1      }
+  218          
+  219          // 13.总体初始化
+  220          void ALL_init(void)
+  221          {
+  222   1      
+  223   1        ADC_all_init();
+  224   1        GPIO_init();
+  225   1        PWM_SMB_init();
+  226   1        PIT_init();
+  227   1        PID_init();
+  228   1        Steering_init();
+  229   1        Motor_init();
+  230   1        Encoder_init();
+  231   1        //FLAG_init();
+  232   1        
+  233   1        wireless_uart_init();
+  234   1        //wireless_ch573_init();
+  235   1        temp_init();
+  236   1        flag_init();
+  237   1        //  seekfree_wireless_init();
+  238   1        // WIRELESS_init();
+  239   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       696     ------
+  code size            =       706     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
@@ -264,6 +271,8 @@ Module Information          Static   Overlayable
   xdata size           =    ------     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
+C251 COMPILER V5.60.0,  Allinit                                                            22/03/23  18:05:14  PAGE 5   
+
   bit size             =    ------     ------
   ebit size            =    ------     ------
   bitaddressable size  =    ------     ------
@@ -271,8 +280,6 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-C251 COMPILER V5.60.0,  Allinit                                                            20/03/23  18:56:22  PAGE 5   
-
   hconst size          =    ------     ------
 End of Module Information.
 

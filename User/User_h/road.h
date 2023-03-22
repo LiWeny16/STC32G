@@ -37,8 +37,15 @@ typedef enum
   InGarage,
   Stoped,
 }Road;
+typedef struct // 增量式PID（电机用）结构体
+{
 
-Road road_judge(DG_State* dg_sta ,Err_Steering *err_steering);
+	int16 Ring_In_Flag;
+	int16 Ring_Out_Flag;
+	int16 Near_Flag;
 
+}FLAG;
+Road road_judge(FLAG *road_flag,DG_State *dg_sta ,Err_Steering *err_steering);
+int16 isNear(DG_State *dg_state,int16 zh,int16 yh,int16 zx,int16 yx,int16 bear);
 
 #endif

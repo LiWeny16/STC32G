@@ -34,7 +34,7 @@ void Pid_Steering_Calculate(Road road, volatile Err_Steering *err_steering, vola
 	switch (road)
 	{
 	case (Straight): // Ö±µÀ
-		err_steering->Err=(1.1151 * (err_steering->Err_x)) + (3.9868 * (err_steering->Err_h));
+		err_steering->Err=(0.9151 * (err_steering->Err_x)) + (3.4868 * (err_steering->Err_h));
 		pid_steering->STEERING_OUT_temp = (float)((pid_steering->p_steering * (err_steering->Err)) + (pid_steering->i_steering * err_steering->Errsum) + (pid_steering->d_steering * err_steering->Errdif));
 		break;
 

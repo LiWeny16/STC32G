@@ -33,5 +33,5 @@ extern volatile uint16  PWM_Motor_R_now;//当前右电机占空比
 extern volatile float temp;
 
 extern volatile Road road;//道路判断结构体
-
+extern volatile FLAG road_flag;
 #endif

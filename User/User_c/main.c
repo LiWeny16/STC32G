@@ -110,7 +110,8 @@ void main()
 		printf("pid_steering.PID_STEERING_OUT=%d \r\n", pid_steering.PID_STEERING_OUT);
 		printf("tempVar = %f", tempVar);
 		delay_ms(1000);
-
+		printf("road_flag.flag_In = %d\r\n",road_flag.Ring_In_Flag);
+		printf("road_flag.flag_out = %d\r\n",road_flag.Ring_Out_Flag);
 		// printf("SP_R = %d\r\n", speed_now.speed_R);				// 当前
 		// printf("SP_RA = %d\r\n", speed_state.Strai_speed_R_ai); // 目标
 		// printf("pwm = %d\r\n\r\n", PWM_Motor_R_now);
@@ -119,15 +120,15 @@ void main()
 		// printf("\r\n\r\n");
 		// printf("PWM_L = %d \r\n\r\n", PWM_Motor_L_now);
 		// printf("PWM_R = %d \r\n\r\n", PWM_Motor_R_now);
-		// printf("speed_R = %d\r\n", speed_now.speed_R); // 当前
-		// printf("speed_L = %d\r\n", speed_now.speed_L); // 当前
+		 printf("speed_R = %d\r\n", speed_now.speed_R); // 当前
+		 printf("speed_L = %d\r\n", speed_now.speed_L); // 当前
 		// printf("speed_state.Strai_speed_L_ai = %d\r\n",speed_state.Strai_speed_L_ai);
 		// printf("speed_state.Strai_speed_R_ai = %d\r\n",speed_state.Strai_speed_R_ai);
 
 		// printf("err_motor.err_L_m = %d\r\n",err_motor.err_L_m);
 		// printf("err_motor.err_R_m = %d\r\n",err_motor.err_R_m);
 
-		// send_data_sw((err_steering.Err)*1000,(err_steering.Errsum)*1000,(err_steering.Errdif)*1000,0,0xf1);
+		send_data_sw((err_steering.Err)*1000,0,0,0,0xf1);
 		//	printf("P = %f\r\n", pid_motor.p_motor);
 		//	printf("I = %f\r\n", pid_motor.i_motor);
 		//  printf("D = %f\r\n\r\n", pid_motor.d_motor);

@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  Pid                                                                20/03/23  18:56:22  PAGE 1   
+C251 COMPILER V5.60.0,  Pid                                                                22/03/23  18:05:15  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE Pid
@@ -46,7 +46,7 @@ stmt  level    source
    34   1        switch (road)
    35   1        {
    36   2        case (Straight): // Ö±µÀ
-   37   2          err_steering->Err=(1.1151 * (err_steering->Err_x)) + (3.9868 * (err_steering->Err_h));
+   37   2          err_steering->Err=(0.9151 * (err_steering->Err_x)) + (3.4868 * (err_steering->Err_h));
    38   2          pid_steering->STEERING_OUT_temp = (float)((pid_steering->p_steering * (err_steering->Err)) + (pid_steer
              -ing->i_steering * err_steering->Errsum) + (pid_steering->d_steering * err_steering->Errdif));
    39   2          break;
@@ -66,7 +66,7 @@ stmt  level    source
    51   2          err_steering->Err=(2.4151 * (err_steering->Err_x)) + (3.9868 * (err_steering->Err_h));
    52   2          pid_steering->STEERING_OUT_temp = (float)((p_Curve_R * err_steering->Err) + (i_Curve_R * err_steering->
              -Errsum) + (d_Curve_R * err_steering->Errdif));
-C251 COMPILER V5.60.0,  Pid                                                                20/03/23  18:56:22  PAGE 2   
+C251 COMPILER V5.60.0,  Pid                                                                22/03/23  18:05:15  PAGE 2   
 
    53   2          break;
    54   2        

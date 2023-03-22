@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  control                                                            20/03/23  18:56:22  PAGE 1   
+C251 COMPILER V5.60.0,  control                                                            22/03/23  18:05:14  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE control
@@ -17,7 +17,7 @@ stmt  level    source
     6   1        // 以下为舵机驱动部分
     7   1        calculate_s(&dg_state, &err_steering); // 计算偏差值，写电感
     8   1      
-    9   1        road = road_judge(&dg_state,&err_steering); // 根据电感结构体判断道路状况返回道路结构体
+    9   1        road = road_judge(&road_flag,&dg_state,&err_steering); // 根据电感结构体判断道路状况返回道路结构体
    10   1      
    11   1        Pid_Steering_Calculate(road, &err_steering, &pid_steering); // 计算pid输出值，并写入实参
    12   1        STEERING_Control(road, &pid_steering);            // 从pid输出到实际舵机驱动,判断道路结构体，并做出响应
@@ -66,7 +66,7 @@ stmt  level    source
    50   2          pwm_duty(STEERING, 800); //左转打死
    51   2          break;
    52   2        case (Stop): // 停下
-C251 COMPILER V5.60.0,  control                                                            20/03/23  18:56:22  PAGE 2   
+C251 COMPILER V5.60.0,  control                                                            22/03/23  18:05:14  PAGE 2   
 
    53   2          pwm_duty(STEERING, 725);
    54   2          break;
@@ -134,7 +134,7 @@ stmt  level    source
   112   2          pwm_duty(PWMA_CH2P_P62, pid_motor->PID_MOTOR_L_OUT); // 单独它一个有数值，反转
   113   2      
   114   2          pwm_duty(PWMA_CH3P_P64, pid_motor->PID_MOTOR_R_OUT); // 右电机驱动
-C251 COMPILER V5.60.0,  control                                                            20/03/23  18:56:22  PAGE 3   
+C251 COMPILER V5.60.0,  control                                                            22/03/23  18:05:14  PAGE 3   
 
   115   2          pwm_duty(PWMA_CH4P_P66, pid_motor->PID_MOTOR_R_OUT);
   116   2          PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT; // 左电机PWM更新
@@ -170,7 +170,7 @@ stmt  level    source
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       562     ------
+  code size            =       570     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

@@ -6,7 +6,7 @@ void Control_All()
 	// 以下为舵机驱动部分
 	calculate_s(&dg_state, &err_steering); // 计算偏差值，写电感
 
-	road = road_judge(&dg_state,&err_steering); // 根据电感结构体判断道路状况返回道路结构体
+	road = road_judge(&road_flag,&dg_state,&err_steering); // 根据电感结构体判断道路状况返回道路结构体
 
 	Pid_Steering_Calculate(road, &err_steering, &pid_steering); // 计算pid输出值，并写入实参
 	STEERING_Control(road, &pid_steering);						// 从pid输出到实际舵机驱动,判断道路结构体，并做出响应
