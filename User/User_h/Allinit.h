@@ -35,6 +35,7 @@
 #include "encoder.h"
 #include "Variable.h"
 #include "TempVar.h"
+#include "control.h"
 
 void ADC_all_init(void);//电感ADC模块初始化
 void GPIO_init(void);//IO口初始化

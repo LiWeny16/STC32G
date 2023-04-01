@@ -6,26 +6,26 @@ Road road_judge(FLAG *road_flag,DG_State *dg_state ,Err_Steering *err_steering)
 	int32 L_Sum;
 	L_Sum = dg_state->L_zh_real + dg_state->L_yh_real + dg_state->L_zx_real + dg_state->L_yx_real;
 	tempVar = (float)L_Sum;
-	if (400 < L_Sum && L_Sum < 6000) // 直走
+	if (400 < L_Sum && L_Sum < 5000) // 直走
 	{
 		return Straight;
 	}
 	else if ( // 左转
-		6000 <= L_Sum &&
-		L_Sum < 7800 &&
+		5000 <= L_Sum &&
+		L_Sum < 6000 &&
 		err_steering->Err < 0)
 	{
 		return Curve_Left;
 	}
 	else if ( // 右转
-		6000 <= L_Sum &&
-		L_Sum < 7800 &&
+		5000 <= L_Sum &&
+		L_Sum < 6000 &&
 		err_steering->Err >= 0)
 	{
 		return Curve_Right;
 	}
 	else if ( // 在圆环内
-		7800 <= L_Sum &&
+		6800 <= L_Sum &&
 		err_steering->Err < 0)
 	{
 		return Big_Ring;

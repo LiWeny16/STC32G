@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  Pid                                                                22/03/23  18:05:15  PAGE 1   
+C251 COMPILER V5.60.0,  Pid                                                                31/03/23  21:15:40  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE Pid
@@ -36,37 +36,37 @@ stmt  level    source
    24   1        float i_Curve_R;
    25   1        float d_Curve_R;
    26   1        
-   27   1        p_Curve_L = 23.5;
+   27   1        p_Curve_L = 20.5;
    28   1        i_Curve_L = 0;
-   29   1        d_Curve_L = 5.5;
+   29   1        d_Curve_L = 8.5;
    30   1      
-   31   1        p_Curve_R = 23.5;
+   31   1        p_Curve_R = 20.5;
    32   1        i_Curve_R = 0;
-   33   1        d_Curve_R = 5.5;
+   33   1        d_Curve_R = 8.5;
    34   1        switch (road)
    35   1        {
    36   2        case (Straight): // 直道
-   37   2          err_steering->Err=(0.9151 * (err_steering->Err_x)) + (3.4868 * (err_steering->Err_h));
+   37   2          err_steering->Err=(1.2151 * (err_steering->Err_x)) + (3.4868 * (err_steering->Err_h));
    38   2          pid_steering->STEERING_OUT_temp = (float)((pid_steering->p_steering * (err_steering->Err)) + (pid_steer
              -ing->i_steering * err_steering->Errsum) + (pid_steering->d_steering * err_steering->Errdif));
    39   2          break;
    40   2      
    41   2        case (Curve_Left): // 弯道
-   42   2          err_steering->Err=(2.4151 * (err_steering->Err_x)) + (3.9868 * (err_steering->Err_h));
+   42   2          err_steering->Err=(0.4151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
    43   2          pid_steering->STEERING_OUT_temp = (float)((p_Curve_L * err_steering->Err) + (i_Curve_L * err_steering->
              -Errsum) + (d_Curve_L * err_steering->Errdif));
    44   2          break;
    45   2      
    46   2        case (Curve_Right): // 弯道
-   47   2          err_steering->Err=(2.4151 * (err_steering->Err_x)) + (3.9868 * (err_steering->Err_h));
+   47   2          err_steering->Err=(0.4151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
    48   2          pid_steering->STEERING_OUT_temp = (float)((p_Curve_R * err_steering->Err) + (i_Curve_R * err_steering->
              -Errsum) + (d_Curve_R * err_steering->Errdif));
    49   2          break;
    50   2        case (Big_Ring):
-   51   2          err_steering->Err=(2.4151 * (err_steering->Err_x)) + (3.9868 * (err_steering->Err_h));
+   51   2          err_steering->Err=(0.4151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
    52   2          pid_steering->STEERING_OUT_temp = (float)((p_Curve_R * err_steering->Err) + (i_Curve_R * err_steering->
              -Errsum) + (d_Curve_R * err_steering->Errdif));
-C251 COMPILER V5.60.0,  Pid                                                                22/03/23  18:05:15  PAGE 2   
+C251 COMPILER V5.60.0,  Pid                                                                31/03/23  21:15:40  PAGE 2   
 
    53   2          break;
    54   2        

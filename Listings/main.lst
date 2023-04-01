@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               22/03/23  18:05:14  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               31/03/23  21:15:38  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -66,7 +66,7 @@ stmt  level    source
    53   2          // pwm_duty(PWMA_CH1P_P60, 0);
    54   2          // pwm_duty(PWMA_CH2P_P62, 1000); // right
    55   2          // pwm_duty(PWMA_CH3P_P64, 0);
-C251 COMPILER V5.60.0,  main                                                               22/03/23  18:05:14  PAGE 2   
+C251 COMPILER V5.60.0,  main                                                               31/03/23  21:15:38  PAGE 2   
 
    56   2          // pwm_duty(PWMA_CH4P_P66, 1000);
    57   2      
@@ -133,10 +133,10 @@ stmt  level    source
   118   2      
   119   2          // 电机
   120   2          // printf("\r\n\r\n");
-  121   2          // printf("PWM_L = %d \r\n\r\n", PWM_Motor_L_now);
-C251 COMPILER V5.60.0,  main                                                               22/03/23  18:05:14  PAGE 3   
+  121   2           printf("PWM_L = %d \r\n\r\n", PWM_Motor_L_now);
+C251 COMPILER V5.60.0,  main                                                               31/03/23  21:15:38  PAGE 3   
 
-  122   2          // printf("PWM_R = %d \r\n\r\n", PWM_Motor_R_now);
+  122   2           printf("PWM_R = %d \r\n\r\n", PWM_Motor_R_now);
   123   2           printf("speed_R = %d\r\n", speed_now.speed_R); // 当前
   124   2           printf("speed_L = %d\r\n", speed_now.speed_L); // 当前
   125   2          // printf("speed_state.Strai_speed_L_ai = %d\r\n",speed_state.Strai_speed_L_ai);
@@ -145,7 +145,7 @@ stmt  level    source
   128   2          // printf("err_motor.err_L_m = %d\r\n",err_motor.err_L_m);
   129   2          // printf("err_motor.err_R_m = %d\r\n",err_motor.err_R_m);
   130   2      
-  131   2          send_data_sw((err_steering.Err)*1000,0,0,0,0xf1);
+  131   2          //send_data_sw((err_steering.Err)*1000,0,0,0,0xf1);
   132   2          //  printf("P = %f\r\n", pid_motor.p_motor);
   133   2          //  printf("I = %f\r\n", pid_motor.i_motor);
   134   2          //  printf("D = %f\r\n\r\n", pid_motor.d_motor);
@@ -155,7 +155,7 @@ stmt  level    source
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       424     ------
+  code size            =       435     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
@@ -170,7 +170,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =       470     ------
+  hconst size          =       502     ------
 End of Module Information.
 
 

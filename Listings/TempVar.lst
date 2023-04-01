@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  TempVar                                                            22/03/23  18:05:15  PAGE 1   
+C251 COMPILER V5.60.0,  TempVar                                                            31/03/23  21:15:41  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE TempVar
@@ -67,7 +67,7 @@ Module Information          Static   Overlayable
   xdata-const size     =    ------     ------
   edata size           =         4         22
   bit size             =    ------     ------
-C251 COMPILER V5.60.0,  TempVar                                                            22/03/23  18:05:15  PAGE 2   
+C251 COMPILER V5.60.0,  TempVar                                                            31/03/23  21:15:41  PAGE 2   
 
   ebit size            =    ------     ------
   bitaddressable size  =    ------     ------
