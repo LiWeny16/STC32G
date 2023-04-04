@@ -6,7 +6,7 @@ void Control_All()
 	// 以下为舵机驱动部分
 	calculate_s(&dg_state, &err_steering); // 计算偏差值，写电感
 
-	road = road_judge(&road_flag,&dg_state,&err_steering); // 根据电感结构体判断道路状况返回道路结构体
+	road = road_judge(&timer,&road_flag,&dg_state,&err_steering); // 根据电感结构体判断道路状况返回道路结构体
 
 	Pid_Steering_Calculate(road, &err_steering, &pid_steering); // 计算pid输出值，并写入实参
 	STEERING_Control(road, &pid_steering);						// 从pid输出到实际舵机驱动,判断道路结构体，并做出响应
@@ -24,7 +24,7 @@ void STEERING_Control(Road road, PID_Steering *pid_steering)
 {
 	// temp = pid_steering->PID_STEERING_OUT;
 	// pid_steering->PID_STEERING_OUT=(pid_steering->PID_STEERING_OUT+725.0); //之前有正负
-	float Steer_center_temp = 740.0;
+	float Steer_center_temp = 735.0;
 	switch (road)
 	{
 	case (Straight): // 直道
@@ -49,6 +49,15 @@ void STEERING_Control(Road road, PID_Steering *pid_steering)
 		break;
 	case (Ring_Out):
 		pwm_duty(STEERING, 800); //左转打死
+		break;
+	case (Force_Right):
+		pwm_duty(STEERING, 650); //右转打死
+		break;
+	case (Force_Left):
+		pwm_duty(STEERING, 805); //左转打死
+		break;
+	case (Force_Straight):
+		pwm_duty(STEERING, 735); //直打死
 		break;
 	case (Stop): // 停下
 		pwm_duty(STEERING, Steer_center_temp);
@@ -88,7 +97,7 @@ void MOTOR_Control(Road road, PID_Motor *pid_motor)
 		break;
 
 	case (Curve_Left): //左转
-				pid_motor->PID_MOTOR_L_OUT = pid_motor->PID_MOTOR_L_OUT + PWM_Motor_L_now;
+		pid_motor->PID_MOTOR_L_OUT = pid_motor->PID_MOTOR_L_OUT + PWM_Motor_L_now;
 		pid_motor->PID_MOTOR_R_OUT = pid_motor->PID_MOTOR_R_OUT + PWM_Motor_R_now;
 
 		pid_motor->PID_MOTOR_L_OUT = constrain_float(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max); // 驱动限幅
@@ -103,7 +112,7 @@ void MOTOR_Control(Road road, PID_Motor *pid_motor)
 		PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT; // 右电机PWM更新
 		break;
 	case (Curve_Right): //右转
-				pid_motor->PID_MOTOR_L_OUT = pid_motor->PID_MOTOR_L_OUT + PWM_Motor_L_now;
+		pid_motor->PID_MOTOR_L_OUT = pid_motor->PID_MOTOR_L_OUT + PWM_Motor_L_now;
 		pid_motor->PID_MOTOR_R_OUT = pid_motor->PID_MOTOR_R_OUT + PWM_Motor_R_now;
 
 		pid_motor->PID_MOTOR_L_OUT = constrain_float(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max); // 驱动限幅

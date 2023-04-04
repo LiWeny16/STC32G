@@ -10,6 +10,7 @@
 #include "adc.h"      //使用其中相关计算函数
 #include "encoder.h"  //使用其中相关计算函数
 #include "road.h"     //使用道路判断结构体和道路判断函数
+#include "TempVar.h"
 
 #define  R_Motor_P PWMA_CH1P_P60
 #define  R_Motor_N PWMA_CH1N_P61

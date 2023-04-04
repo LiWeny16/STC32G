@@ -16,7 +16,9 @@ typedef enum
 	Ring_In,
 	Ring_Out,
 	Big_Ring,
-	
+	Force_Right,
+	Force_Left,
+	Force_Straight,
   No_road,      //严重冲出跑道且无法校正则停车
   Out_of_way,   //已经冲出跑道
   Lose_left,    //丢线
@@ -43,9 +45,11 @@ typedef struct // 增量式PID（电机用）结构体
 	int16 Ring_In_Flag;
 	int16 Ring_Out_Flag;
 	int16 Near_Flag;
+	int16 Cross_Flag_Last;
+	int16 Cross_Flag;
 
 }FLAG;
-Road road_judge(FLAG *road_flag,DG_State *dg_sta ,Err_Steering *err_steering);
+Road road_judge(TIMER *timer,FLAG *road_flag,DG_State *dg_sta ,Err_Steering *err_steering);
 int16 isNear(DG_State *dg_state,int16 zh,int16 yh,int16 zx,int16 yx,int16 bear);
 
 #endif

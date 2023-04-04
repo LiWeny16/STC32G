@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               31/03/23  21:15:38  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               04/04/23  11:50:06  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -66,7 +66,7 @@ stmt  level    source
    53   2          // pwm_duty(PWMA_CH1P_P60, 0);
    54   2          // pwm_duty(PWMA_CH2P_P62, 1000); // right
    55   2          // pwm_duty(PWMA_CH3P_P64, 0);
-C251 COMPILER V5.60.0,  main                                                               31/03/23  21:15:38  PAGE 2   
+C251 COMPILER V5.60.0,  main                                                               04/04/23  11:50:06  PAGE 2   
 
    56   2          // pwm_duty(PWMA_CH4P_P66, 1000);
    57   2      
@@ -134,7 +134,7 @@ stmt  level    source
   119   2          // 电机
   120   2          // printf("\r\n\r\n");
   121   2           printf("PWM_L = %d \r\n\r\n", PWM_Motor_L_now);
-C251 COMPILER V5.60.0,  main                                                               31/03/23  21:15:38  PAGE 3   
+C251 COMPILER V5.60.0,  main                                                               04/04/23  11:50:06  PAGE 3   
 
   122   2           printf("PWM_R = %d \r\n\r\n", PWM_Motor_R_now);
   123   2           printf("speed_R = %d\r\n", speed_now.speed_R); // 当前

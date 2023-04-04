@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  Variable                                                           31/03/23  21:15:41  PAGE 1   
+C251 COMPILER V5.60.0,  Variable                                                           04/04/23  11:50:09  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE Variable
@@ -32,9 +32,10 @@ stmt  level    source
    21          volatile uint16  PWM_Motor_L_now;//当前左电机占空比
    22          volatile uint16  PWM_Motor_R_now;//当前右电机占空比
    23          
-   24          volatile float temp;
-   25          volatile FLAG road_flag;
-   26          volatile Road road;//道路判断结构体
+   24          volatile TIMER timer;
+   25          volatile float temp;
+   26          volatile FLAG road_flag;
+   27          volatile Road road;//道路判断结构体
 
 
 Module Information          Static   Overlayable
@@ -46,7 +47,7 @@ Module Information          Static   Overlayable
   pdata size           =    ------     ------
   xdata size           =    ------     ------
   xdata-const size     =    ------     ------
-  edata size           =       346     ------
+  edata size           =       358     ------
   bit size             =    ------     ------
   ebit size            =    ------     ------
   bitaddressable size  =    ------     ------

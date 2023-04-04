@@ -21,6 +21,7 @@ volatile uint16  PWM_Motor_Min;//电机最小占空比
 volatile uint16  PWM_Motor_L_now;//当前左电机占空比
 volatile uint16  PWM_Motor_R_now;//当前右电机占空比
 
+volatile TIMER timer;
 volatile float temp;
 volatile FLAG road_flag;
 volatile Road road;//道路判断结构体

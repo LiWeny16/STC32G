@@ -8,7 +8,7 @@
 #include "adc.h"
 #include "encoder.h"
 #include "Pid.h"
-
+#include "TempVar.h"
 
 /**************基础变量******/
 
@@ -30,8 +30,9 @@ extern volatile uint16  PWM_Motor_Min;//电机最小占空比
 extern volatile uint16  PWM_Motor_L_now;//当前左电机占空比
 extern volatile uint16  PWM_Motor_R_now;//当前右电机占空比
 
-extern volatile float temp;
 
+extern volatile TIMER timer;
+extern volatile float temp;
 extern volatile Road road;//道路判断结构体
 extern volatile FLAG road_flag;
 #endif

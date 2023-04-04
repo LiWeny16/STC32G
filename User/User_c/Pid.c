@@ -26,29 +26,29 @@ void Pid_Steering_Calculate(Road road, volatile Err_Steering *err_steering, vola
 	
 	p_Curve_L = 20.5;
 	i_Curve_L = 0;
-	d_Curve_L = 8.5;
+	d_Curve_L = 4.5;
 
 	p_Curve_R = 20.5;
 	i_Curve_R = 0;
-	d_Curve_R = 8.5;
+	d_Curve_R = 4.5;
 	switch (road)
 	{
 	case (Straight): // 直道
-		err_steering->Err=(1.2151 * (err_steering->Err_x)) + (3.4868 * (err_steering->Err_h));
+		err_steering->Err=(0.4151 * (err_steering->Err_x)) + (3.4868 * (err_steering->Err_h));
 		pid_steering->STEERING_OUT_temp = (float)((pid_steering->p_steering * (err_steering->Err)) + (pid_steering->i_steering * err_steering->Errsum) + (pid_steering->d_steering * err_steering->Errdif));
 		break;
 
 	case (Curve_Left): // 弯道
-		err_steering->Err=(0.4151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
+		err_steering->Err=(0.8151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
 		pid_steering->STEERING_OUT_temp = (float)((p_Curve_L * err_steering->Err) + (i_Curve_L * err_steering->Errsum) + (d_Curve_L * err_steering->Errdif));
 		break;
 
 	case (Curve_Right): // 弯道
-		err_steering->Err=(0.4151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
+		err_steering->Err=(0.8151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
 		pid_steering->STEERING_OUT_temp = (float)((p_Curve_R * err_steering->Err) + (i_Curve_R * err_steering->Errsum) + (d_Curve_R * err_steering->Errdif));
 		break;
 	case (Big_Ring):
-		err_steering->Err=(0.4151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
+		err_steering->Err=(0.8151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
 		pid_steering->STEERING_OUT_temp = (float)((p_Curve_R * err_steering->Err) + (i_Curve_R * err_steering->Errsum) + (d_Curve_R * err_steering->Errdif));
 		break;
 	

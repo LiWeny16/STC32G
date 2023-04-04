@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  control                                                            31/03/23  21:15:39  PAGE 1   
+C251 COMPILER V5.60.0,  control                                                            04/04/23  11:50:07  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE control
@@ -17,7 +17,8 @@ stmt  level    source
     6   1        // ÒÔÏÂÎª¶æ»úÇý¶¯²¿·Ö
     7   1        calculate_s(&dg_state, &err_steering); // ¼ÆËãÆ«²îÖµ£¬Ð´µç¸Ð
     8   1      
-    9   1        road = road_judge(&road_flag,&dg_state,&err_steering); // ¸ù¾Ýµç¸Ð½á¹¹ÌåÅÐ¶ÏµÀÂ·×´¿ö·µ»ØµÀÂ·½á¹¹Ìå
+    9   1        road = road_judge(&timer,&road_flag,&dg_state,&err_steering); // ¸ù¾Ýµç¸Ð½á¹¹ÌåÅÐ¶ÏµÀÂ·×´¿ö·µ»ØµÀÂ·½á¹¹Ì
+             -å
    10   1      
    11   1        Pid_Steering_Calculate(road, &err_steering, &pid_steering); // ¼ÆËãpidÊä³öÖµ£¬²¢Ð´ÈëÊµ²Î
    12   1        STEERING_Control(road, &pid_steering);            // ´ÓpidÊä³öµ½Êµ¼Ê¶æ»úÇý¶¯,ÅÐ¶ÏµÀÂ·½á¹¹Ìå£¬²¢×ö³öÏìÓ¦
@@ -37,7 +38,7 @@ stmt  level    source
    24          {
    25   1        // temp = pid_steering->PID_STEERING_OUT;
    26   1        // pid_steering->PID_STEERING_OUT=(pid_steering->PID_STEERING_OUT+725.0); //Ö®Ç°ÓÐÕý¸º
-   27   1        float Steer_center_temp = 740.0;
+   27   1        float Steer_center_temp = 735.0;
    28   1        switch (road)
    29   1        {
    30   2        case (Straight): // Ö±µÀ
@@ -65,9 +66,9 @@ stmt  level    source
    49   2          break;
    50   2        case (Ring_Out):
    51   2          pwm_duty(STEERING, 800); //×ó×ª´òËÀ
-   52   2          break;
-C251 COMPILER V5.60.0,  control                                                            31/03/23  21:15:39  PAGE 2   
+C251 COMPILER V5.60.0,  control                                                            04/04/23  11:50:07  PAGE 2   
 
+   52   2          break;
    53   2        case (Stop): // Í£ÏÂ
    54   2          pwm_duty(STEERING, Steer_center_temp);
    55   2          break;
@@ -133,9 +134,9 @@ stmt  level    source
   111   2      
   112   2          pwm_duty(L_Motor_P, 0); // ×óµç»úÇý¶¯
   113   2          pwm_duty(L_Motor_N,5000+ pid_motor->PID_MOTOR_L_OUT); // µ¥¶ÀËüÒ»¸öÓÐÊýÖµ£¬·´×ª
-  114   2      
-C251 COMPILER V5.60.0,  control                                                            31/03/23  21:15:39  PAGE 3   
+C251 COMPILER V5.60.0,  control                                                            04/04/23  11:50:07  PAGE 3   
 
+  114   2      
   115   2          pwm_duty(R_Motor_P,0); // ÓÒµç»úÇý¶¯
   116   2          pwm_duty(R_Motor_N,5000+ pid_motor->PID_MOTOR_R_OUT);
   117   2          PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT; // ×óµç»úPWM¸üÐÂ
@@ -171,7 +172,7 @@ stmt  level    source
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       568     ------
+  code size            =       578     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
