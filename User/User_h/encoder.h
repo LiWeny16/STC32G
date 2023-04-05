@@ -85,10 +85,14 @@ typedef struct//增量式PID（电机用）偏差值结构体
 
 typedef struct//当前速度结构体（表明当前状态下车的运行状态，值均已速度表示）
 {
-	uint32 speed_L;//左轮当前速度值
-	uint32 speed_L_ai;//左轮目标值
-	uint32 speed_R;//右轮当前速度值
-	uint32 speed_R_ai;//右轮目标值
+	int speed_L;//左轮当前速度值
+	int speed_L_ai;//左轮目标值
+	int speed_R;//右轮当前速度值
+	int speed_R_ai;//右轮目标值
+	int speed_counter0_0;
+	int speed_counter0_1;
+	int speed_counter0_2;
+	int speed_counter_EN;
 }SPEED_now; 
 
 

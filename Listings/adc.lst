@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  adc                                                                04/04/23  11:50:07  PAGE 1   
+C251 COMPILER V5.60.0,  adc                                                                06/04/23  00:08:04  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE adc
@@ -23,14 +23,14 @@ stmt  level    source
    11   1        dg->L_zx_max = 4096.0;
    12   1        dg->L_zh_max = 4096.0;
    13   1        //
-   14   1        dg->L_zx_real = (ADC_ReadAverage(ZX, count_dg, RE));
-   15   1        dg->L_zh_real = (ADC_ReadAverage(ZH, count_dg, RE)); // 最大值255
+   14   1        dg->L_zx_real = (int)(ADC_ReadAverage(ZX, count_dg, RE));
+   15   1        dg->L_zh_real = (int)(ADC_ReadAverage(ZH, count_dg, RE)); // 最大值255
    16   1      
    17   1        //  dg->L_zs_real = (ADC_ReadAverage(ZS, count_dg, RE));//没用
    18   1        //  dg->L_ys_real = (ADC_ReadAverage(YS, count_dg, RE));//没用
    19   1      
-   20   1        dg->L_yh_real = (ADC_ReadAverage(YH, count_dg, RE)); // 最大值255
-   21   1        dg->L_yx_real = (ADC_ReadAverage(YX, count_dg, RE));
+   20   1        dg->L_yh_real = (int)(ADC_ReadAverage(YH, count_dg, RE)); // 最大值255
+   21   1        dg->L_yx_real = (int)(ADC_ReadAverage(YX, count_dg, RE));
    22   1        // 求取10次采样平均值作为真实值
    23   1        
    24   1        //*********修正**********//
@@ -66,7 +66,7 @@ stmt  level    source
              -dg->L_zh_once * dg->L_zh_once + dg->L_yh_once * dg->L_yh_once);
    51   1        // dg->L_yx_twice = (dg->L_yx_once) / (dg->L_zx_once * dg->L_zx_once + dg->L_yx_once * dg->L_yx_once + 
              -dg->L_zh_once * dg->L_zh_once + dg->L_yh_once * dg->L_yh_once);
-C251 COMPILER V5.60.0,  adc                                                                04/04/23  11:50:07  PAGE 2   
+C251 COMPILER V5.60.0,  adc                                                                06/04/23  00:08:04  PAGE 2   
 
    52   1        // 第二次归一化，求取横电感和斜电感偏差值占总的百分比
    53   1      
@@ -105,7 +105,7 @@ stmt  level    source
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       680     ------
+  code size            =       780     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

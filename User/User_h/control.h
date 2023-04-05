@@ -12,10 +12,10 @@
 #include "road.h"     //使用道路判断结构体和道路判断函数
 #include "TempVar.h"
 
-#define  R_Motor_P PWMA_CH1P_P60
-#define  R_Motor_N PWMA_CH1N_P61
-#define  L_Motor_P PWMA_CH3P_P64
-#define  L_Motor_N PWMA_CH3N_P65
+#define  R_Motor_P PWMA_CH3P_P64 
+#define  R_Motor_N PWMA_CH3N_P65
+#define  L_Motor_P PWMA_CH1P_P60
+#define  L_Motor_N PWMA_CH1N_P61
 
 void STEERING_Control(Road road,PID_Steering *pid_steering); // 舵机驱动输出（从PID到实际输出）
 void MOTOR_Control(Road road,PID_Motor *pid_motor);          // 电机驱动输出（从PID到实际输出）

@@ -6,12 +6,24 @@ Road road_judge(TIMER *timer,FLAG *road_flag,DG_State *dg_state ,Err_Steering *e
 	int32 L_Sum;
 	L_Sum = dg_state->L_zh_real + dg_state->L_yh_real + dg_state->L_zx_real + dg_state->L_yx_real;
 	tempVar = (float)L_Sum;
+	P41 = 1;
+	P52= 1;
 	//********************************************************
-	if(timer->time0_0>100){ //到时间了，做事情
+	if(timer->time1_0>0){
+		timer->time1_0--;
+		if(timer->time1_0>0 && timer->time1_0<=114){ //延时25
+			return  Ring_In;
+		}
+		if(timer->time1_0<=0){
+		  timer->time1_0 =0;
+		}
+		
+	}
+	if(timer->time0_0>=20){ //到时间了，做事情 中断20ms一次 所以一次20ms 1s 50次
 		if(
 				road_flag->Cross_Flag_Last==1 && 
 				L_Sum >= 10500 &&
-				isNear(&dg_state, 2660, 2199, 3766, 3158,15000) == 0
+				isNear(&dg_state, 2661, 1965, 3688, 3634,15000) == 0
 		){
 			road_flag->Cross_Flag++;
 			road_flag->Cross_Flag_Last=0;
@@ -28,29 +40,33 @@ Road road_judge(TIMER *timer,FLAG *road_flag,DG_State *dg_state ,Err_Steering *e
 	}
 	else if ( // 左转
 		5000 <= L_Sum &&
-		L_Sum < 6000 &&
-		err_steering->Err < 0)
+		L_Sum < 9500 &&
+		err_steering->Err >=0.5)
 	{
 		return Curve_Left;
 	}
 	else if ( // 右转
 		5000 <= L_Sum &&
-		L_Sum < 6000 &&
-		err_steering->Err >= 0)
+		L_Sum < 9500 &&
+		err_steering->Err <= -0.5)
 	{
 		return Curve_Right;
 	}
-	else if ( // 在圆环内
-		6800 <= L_Sum &&
-		err_steering->Err < 0)
-	{
-		return Big_Ring;
-	}
+	// else if ( // 在圆环内
+	// 	7000 <= L_Sum &&
+	// 	err_steering->Err < 0)
+	// {
+	// 	return Big_Ring;
+	// }
 	else if ( //进环点
-		L_Sum >= 11000 &&
-		isNear(&dg_state,3779,3775,3740,233,12000)==1
+		L_Sum >= 10000 &&
+		L_Sum <= 11200 &&
+		dg_state->L_yx_real <=500 &&
+		isNear(&dg_state,3699,3661,3577,35,12000)==1
 		)
 	{
+			P41=0;
+		timer->time1_0=120; //*20ms
 		if(road_flag->Ring_Out_Flag ==0){//不同时为1，代表没走过大圆环
 			road_flag->Ring_In_Flag=1;
 	  		return Ring_In;
@@ -60,8 +76,9 @@ Road road_judge(TIMER *timer,FLAG *road_flag,DG_State *dg_state ,Err_Steering *e
 		}
 	}
 	else if ( //出环点
-		L_Sum >= 12000 &&
-		isNear(&dg_state,3784,2871,3782,2508,12000)==1
+		L_Sum >= 11500 &&
+		dg_state->L_yh_real <=1650 &&
+		isNear(&dg_state,3681,1512,3701,3564,12000)==1
 		)
 	{
 		if(road_flag->Ring_In_Flag ==1){
@@ -72,32 +89,37 @@ Road road_judge(TIMER *timer,FLAG *road_flag,DG_State *dg_state ,Err_Steering *e
 		}
 	}
 	else if ( // 十字路口
-		L_Sum >= 10500 &&
-		isNear(&dg_state, 2660, 2199, 3766, 3158,15000) == 1)
+		L_Sum >= 11000 &&
+		isNear(&dg_state, 2661, 1965, 3688, 3634,13000) == 1)
 	{
+	
 		road_flag->Ring_In_Flag = 0;
 		road_flag->Ring_Out_Flag = 0;
 		road_flag->Cross_Flag_Last = 1;
 		//定时器*******************
 		timer->time0_0++;
-		if(timer->time0_0==500){
+		if(timer->time0_0>=500){
+			timer->time0_0=0;
 			timer->time0_1++;
-			timer->time0_1=timer->time0_1>=10?0:timer->time0_1;//防止溢出
+			timer->time0_1=timer->time0_1>=50?0:timer->time0_1;//防止溢出
 		}
 	
 		//定时器*******************
 		return Force_Straight;
 	}
-	else if ((dg_state->L_zh_real <= 6) || //完全丢线
-			 (dg_state->L_yh_real <= 6) ||
-			 (dg_state->L_zx_real <= 6) ||
-			 (dg_state->L_yx_real <= 6))
+	else if (
+			 (dg_state->L_zh_real <= 6) && (dg_state->L_zh_real >=0)  || //完全丢线 逻辑与优先级高
+			 (dg_state->L_yh_real <= 6) && (dg_state->L_yh_real >=0)  ||
+			 (dg_state->L_zx_real <= 6) && (dg_state->L_zx_real >=0)  ||
+			 (dg_state->L_yx_real <= 6) && (dg_state->L_yx_real >=0) )
 	{
+	//	tempVar1=2333.0;
 		return Stop;
 	}
 
 	else
 	{
+	//	tempVar1=3222;
 		return Straight;
 	}
 }

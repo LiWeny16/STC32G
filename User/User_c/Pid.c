@@ -11,6 +11,11 @@ uint32 constrain_uint32(uint32 amt, uint32 low, uint32 high) // 限幅用，low和hig
 	return ((amt) < (low) ? (low) : ((amt) > (high) ? (high) : (amt)));
 }
 
+int32 constrain_int32(int32 amt, int32 low, int32 high) // 限幅用，low和high为上下限
+{
+	return ((amt) < (low) ? (low) : ((amt) > (high) ? (high) : (amt)));
+}
+
 void Pid_Steering_Calculate(Road road, volatile Err_Steering *err_steering, volatile PID_Steering *pid_steering) // 舵机位置式PID输出值
 {
 
@@ -39,16 +44,16 @@ void Pid_Steering_Calculate(Road road, volatile Err_Steering *err_steering, vola
 		break;
 
 	case (Curve_Left): // 弯道
-		err_steering->Err=(0.8151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
+		err_steering->Err=(1.1151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
 		pid_steering->STEERING_OUT_temp = (float)((p_Curve_L * err_steering->Err) + (i_Curve_L * err_steering->Errsum) + (d_Curve_L * err_steering->Errdif));
 		break;
 
 	case (Curve_Right): // 弯道
-		err_steering->Err=(0.8151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
+		err_steering->Err=(1.1151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
 		pid_steering->STEERING_OUT_temp = (float)((p_Curve_R * err_steering->Err) + (i_Curve_R * err_steering->Errsum) + (d_Curve_R * err_steering->Errdif));
 		break;
 	case (Big_Ring):
-		err_steering->Err=(0.8151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
+		err_steering->Err=(1.1151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
 		pid_steering->STEERING_OUT_temp = (float)((p_Curve_R * err_steering->Err) + (i_Curve_R * err_steering->Errsum) + (d_Curve_R * err_steering->Errdif));
 		break;
 	
@@ -67,6 +72,7 @@ void Pid_Steering_Calculate(Road road, volatile Err_Steering *err_steering, vola
 
 void Pid_Motor_Calculate(Err_Motor *err_motor, PID_Motor *pid_motor) // 电机增量式PID输出增量
 {
-	pid_motor->PID_MOTOR_L_OUT = (pid_motor->p_motor * err_motor->err_derivative_L_m) + (pid_motor->i_motor * err_motor->err_L_m) + (pid_motor->d_motor * err_motor->err_derivative2_L_m);
-	pid_motor->PID_MOTOR_R_OUT = (pid_motor->p_motor * err_motor->err_derivative_R_m) + (pid_motor->i_motor * err_motor->err_R_m) + (pid_motor->d_motor * err_motor->err_derivative2_R_m);
+	pid_motor->MOTOR_L_OUT_temp= (pid_motor->p_motor * err_motor->err_derivative_L_m) + (pid_motor->i_motor * err_motor->err_L_m) + (pid_motor->d_motor * err_motor->err_derivative2_L_m);
+	pid_motor->MOTOR_R_OUT_temp = (pid_motor->p_motor * err_motor->err_derivative_R_m) + (pid_motor->i_motor * err_motor->err_R_m) + (pid_motor->d_motor * err_motor->err_derivative2_R_m);
+
 }

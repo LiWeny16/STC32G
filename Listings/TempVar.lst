@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  TempVar                                                            04/04/23  11:50:09  PAGE 1   
+C251 COMPILER V5.60.0,  TempVar                                                            06/04/23  00:08:05  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE TempVar
@@ -12,48 +12,50 @@ stmt  level    source
     1          #include "TempVar.h"
     2          
     3          volatile float tempVar;
-    4          //volatile uint16 ringInFlag;
-    5          
-    6          void send_data_sw(int16 a,int16 b,int16 c,int16 d, uint8 target)
-    7          {
-    8   1          uint8 data_sssa[14];
-    9   1              //按协议发送指令
-   10   1          uint8 sc=0,ac=0,i;
-   11   1          data_sssa[0]=0XAA;
-   12   1          data_sssa[1]=0XFF;
-   13   1          data_sssa[2]=target;
-   14   1          data_sssa[3]=8;
-   15   1      
-   16   1          data_sssa[5]=(*((char *)(&a)));
-   17   1          data_sssa[4]=(*((char *)(&a)+1));
-   18   1      //    data_sssa[6]=(*((char *)(&a)+2));
-   19   1      //    data_sssa[7]=(*((char *)(&a)+3));
-   20   1      
-   21   1          data_sssa[7]=(*((char*)(&b)));
-   22   1          data_sssa[6]=(*((char*)(&b)+1));
-   23   1      //    data_sssa[10]=(*((char*)(&b)+2));
-   24   1      //    data_sssa[11]=(*((char*)(&b)+3));
-   25   1      
-   26   1          data_sssa[9]=(*((char*)(&c)));
-   27   1          data_sssa[8]=(*((char*)(&c)+1));
-   28   1      //    data_sssa[14]=(*((char*)(&c)+2));
-   29   1      //    data_sssa[15]=(*((char*)(&c)+3));
-   30   1      
-   31   1          data_sssa[11]=(*((char*)(&d)));
-   32   1          data_sssa[10]=(*((char*)(&d)+1));
-   33   1      //    data_sssa[18]=(*((char*)(&d)+2));
-   34   1      //    data_sssa[19]=(*((char*)(&d)+3));
-   35   1      
-   36   1          for(i=0;i<data_sssa[3]+4;i++)
-   37   1          {
-   38   2              sc+=data_sssa[i];
-   39   2              ac+=sc;
-   40   2          }
-   41   1          data_sssa[12]=sc;
-   42   1          data_sssa[13]=ac;
-   43   1          uart_putbuff(UART_1, data_sssa, 14);
-   44   1      
-   45   1      }
+    4          volatile float tempVar1;
+    5          volatile float tempVar2;
+    6          //volatile uint16 ringInFlag;
+    7          
+    8          void send_data_sw(int16 a,int16 b,int16 c,int16 d, uint8 target)
+    9          {
+   10   1          uint8 data_sssa[14];
+   11   1              //按协议发送指令
+   12   1          uint8 sc=0,ac=0,i;
+   13   1          data_sssa[0]=0XAA;
+   14   1          data_sssa[1]=0XFF;
+   15   1          data_sssa[2]=target;
+   16   1          data_sssa[3]=8;
+   17   1      
+   18   1          data_sssa[5]=(*((char *)(&a)));
+   19   1          data_sssa[4]=(*((char *)(&a)+1));
+   20   1      //    data_sssa[6]=(*((char *)(&a)+2));
+   21   1      //    data_sssa[7]=(*((char *)(&a)+3));
+   22   1      
+   23   1          data_sssa[7]=(*((char*)(&b)));
+   24   1          data_sssa[6]=(*((char*)(&b)+1));
+   25   1      //    data_sssa[10]=(*((char*)(&b)+2));
+   26   1      //    data_sssa[11]=(*((char*)(&b)+3));
+   27   1      
+   28   1          data_sssa[9]=(*((char*)(&c)));
+   29   1          data_sssa[8]=(*((char*)(&c)+1));
+   30   1      //    data_sssa[14]=(*((char*)(&c)+2));
+   31   1      //    data_sssa[15]=(*((char*)(&c)+3));
+   32   1      
+   33   1          data_sssa[11]=(*((char*)(&d)));
+   34   1          data_sssa[10]=(*((char*)(&d)+1));
+   35   1      //    data_sssa[18]=(*((char*)(&d)+2));
+   36   1      //    data_sssa[19]=(*((char*)(&d)+3));
+   37   1      
+   38   1          for(i=0;i<data_sssa[3]+4;i++)
+   39   1          {
+   40   2              sc+=data_sssa[i];
+   41   2              ac+=sc;
+   42   2          }
+   43   1          data_sssa[12]=sc;
+   44   1          data_sssa[13]=ac;
+   45   1          uart_putbuff(UART_1, data_sssa, 14);
+   46   1      
+   47   1      }
 
 
 Module Information          Static   Overlayable
@@ -65,10 +67,10 @@ Module Information          Static   Overlayable
   pdata size           =    ------     ------
   xdata size           =    ------     ------
   xdata-const size     =    ------     ------
-  edata size           =         4         22
-  bit size             =    ------     ------
-C251 COMPILER V5.60.0,  TempVar                                                            04/04/23  11:50:09  PAGE 2   
+C251 COMPILER V5.60.0,  TempVar                                                            06/04/23  00:08:05  PAGE 2   
 
+  edata size           =        12         22
+  bit size             =    ------     ------
   ebit size            =    ------     ------
   bitaddressable size  =    ------     ------
   ebitaddressable size =    ------     ------

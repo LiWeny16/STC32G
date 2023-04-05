@@ -45,7 +45,7 @@ void STEERING_Control(Road road, PID_Steering *pid_steering)
 		break;
 
 	case (Ring_In):
-		pwm_duty(STEERING, 800); //左转打死
+		pwm_duty(STEERING, 788); //左转打死
 		break;
 	case (Ring_Out):
 		pwm_duty(STEERING, 800); //左转打死
@@ -76,11 +76,11 @@ void MOTOR_Control(Road road, PID_Motor *pid_motor)
 	switch (road)
 	{
 	case (Straight): // 直道
-		pid_motor->PID_MOTOR_L_OUT = pid_motor->PID_MOTOR_L_OUT + PWM_Motor_L_now;
-		pid_motor->PID_MOTOR_R_OUT = pid_motor->PID_MOTOR_R_OUT + PWM_Motor_R_now;
-
-		pid_motor->PID_MOTOR_L_OUT = constrain_float(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max); // 驱动限幅
-		pid_motor->PID_MOTOR_R_OUT = constrain_float(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
+		pid_motor->PID_MOTOR_L_OUT = (int)pid_motor->MOTOR_L_OUT_temp + PWM_Motor_L_now;
+		pid_motor->PID_MOTOR_R_OUT = (int)pid_motor->MOTOR_R_OUT_temp + PWM_Motor_R_now;
+    //PID_MOTOR_L_OUT int32 PWM_Motor_L_now uint16
+		pid_motor->PID_MOTOR_L_OUT = constrain_int32(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max); // 驱动限幅
+		pid_motor->PID_MOTOR_R_OUT = constrain_int32(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
 
 		// pwm_duty(MOTOR1_P,pid_motor->PID_MOTOR_L_OUT);//左电机驱动
 		// pwm_duty(MOTOR1_N,pid_motor->PID_MOTOR_L_OUT);
@@ -97,56 +97,53 @@ void MOTOR_Control(Road road, PID_Motor *pid_motor)
 		break;
 
 	case (Curve_Left): //左转
-		pid_motor->PID_MOTOR_L_OUT = pid_motor->PID_MOTOR_L_OUT + PWM_Motor_L_now;
-		pid_motor->PID_MOTOR_R_OUT = pid_motor->PID_MOTOR_R_OUT + PWM_Motor_R_now;
-
-		pid_motor->PID_MOTOR_L_OUT = constrain_float(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max); // 驱动限幅
-		pid_motor->PID_MOTOR_R_OUT = constrain_float(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
-
+		pid_motor->PID_MOTOR_L_OUT = (int)pid_motor->MOTOR_L_OUT_temp + PWM_Motor_L_now;
+		pid_motor->PID_MOTOR_R_OUT = (int)pid_motor->MOTOR_R_OUT_temp + PWM_Motor_R_now;
+    //PID_MOTOR_L_OUT int32 PWM_Motor_L_now uint16
+		pid_motor->PID_MOTOR_L_OUT = constrain_int32(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max); // 驱动限幅
+		pid_motor->PID_MOTOR_R_OUT = constrain_int32(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
 		pwm_duty(L_Motor_P, 0); // 左电机驱动
-		pwm_duty(L_Motor_N,5000+ pid_motor->PID_MOTOR_L_OUT); // 单独它一个有数值，反转
+		pwm_duty(L_Motor_N, 5000+pid_motor->PID_MOTOR_L_OUT); // 单独它一个有数值，反转
 
 		pwm_duty(R_Motor_P, 0); // 右电机驱动
-		pwm_duty(R_Motor_N,5000+ pid_motor->PID_MOTOR_R_OUT);
+		pwm_duty(R_Motor_N, 5000+pid_motor->PID_MOTOR_R_OUT);
 		PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT; // 左电机PWM更新
 		PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT; // 右电机PWM更新
 		break;
 	case (Curve_Right): //右转
-		pid_motor->PID_MOTOR_L_OUT = pid_motor->PID_MOTOR_L_OUT + PWM_Motor_L_now;
-		pid_motor->PID_MOTOR_R_OUT = pid_motor->PID_MOTOR_R_OUT + PWM_Motor_R_now;
-
-		pid_motor->PID_MOTOR_L_OUT = constrain_float(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max); // 驱动限幅
-		pid_motor->PID_MOTOR_R_OUT = constrain_float(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
-
+	pid_motor->PID_MOTOR_L_OUT = (int)pid_motor->MOTOR_L_OUT_temp + PWM_Motor_L_now;
+		pid_motor->PID_MOTOR_R_OUT = (int)pid_motor->MOTOR_R_OUT_temp + PWM_Motor_R_now;
+    //PID_MOTOR_L_OUT int32 PWM_Motor_L_now uint16
+		pid_motor->PID_MOTOR_L_OUT = constrain_int32(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max); // 驱动限幅
+		pid_motor->PID_MOTOR_R_OUT = constrain_int32(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
 		pwm_duty(L_Motor_P, 0); // 左电机驱动
-		pwm_duty(L_Motor_N,5000+ pid_motor->PID_MOTOR_L_OUT); // 单独它一个有数值，反转
+		pwm_duty(L_Motor_N, 5000+pid_motor->PID_MOTOR_L_OUT); // 单独它一个有数值，反转
 
-		pwm_duty(R_Motor_P,0); // 右电机驱动
-		pwm_duty(R_Motor_N,5000+ pid_motor->PID_MOTOR_R_OUT);
+		pwm_duty(R_Motor_P, 0); // 右电机驱动
+		pwm_duty(R_Motor_N, 5000+pid_motor->PID_MOTOR_R_OUT);
 		PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT; // 左电机PWM更新
 		PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT; // 右电机PWM更新
 		break;
 	case (Stop):					// 停下
-		pwm_duty(L_Motor_P, 0); // 左电机驱动
+		pwm_duty(L_Motor_P, 5000); // 左电机驱动
 		pwm_duty(L_Motor_N, 5000); // 单独它一个有数值，反转
 
-		pwm_duty(R_Motor_P, 0); // 右电机驱动
+		pwm_duty(R_Motor_P, 5000); // 右电机驱动
 		pwm_duty(R_Motor_N, 5000);
 		break;
 
 	default: // 别的
-		pid_motor->PID_MOTOR_L_OUT = pid_motor->PID_MOTOR_L_OUT + PWM_Motor_L_now;
-		pid_motor->PID_MOTOR_R_OUT = pid_motor->PID_MOTOR_R_OUT + PWM_Motor_R_now;
+	pid_motor->PID_MOTOR_L_OUT = (int)pid_motor->MOTOR_L_OUT_temp + PWM_Motor_L_now;
+		pid_motor->PID_MOTOR_R_OUT = (int)pid_motor->MOTOR_R_OUT_temp + PWM_Motor_R_now;
+    //PID_MOTOR_L_OUT int32 PWM_Motor_L_now uint16
+		pid_motor->PID_MOTOR_L_OUT = constrain_int32(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max); // 驱动限幅
+		pid_motor->PID_MOTOR_R_OUT = constrain_int32(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
+		pwm_duty(L_Motor_P, 0); // 左电机驱动
+		pwm_duty(L_Motor_N, 5000+pid_motor->PID_MOTOR_L_OUT); // 单独它一个有数值，反转
 
-		pid_motor->PID_MOTOR_L_OUT = constrain_float(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max); // 驱动限幅
-		pid_motor->PID_MOTOR_R_OUT = constrain_float(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
-
-		pwm_duty(L_Motor_P,0); // 左电机驱动
-		pwm_duty(L_Motor_N,5000+ pid_motor->PID_MOTOR_L_OUT); // 单独它一个有数值，反转
-
-		pwm_duty(R_Motor_P,0); // 右电机驱动
-		pwm_duty(R_Motor_N,5000+ pid_motor->PID_MOTOR_R_OUT);
-		PWM_Motor_L_now =  pid_motor->PID_MOTOR_L_OUT; // 左电机PWM更新
+		pwm_duty(R_Motor_P, 0); // 右电机驱动
+		pwm_duty(R_Motor_N, 5000+pid_motor->PID_MOTOR_R_OUT);
+		PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT; // 左电机PWM更新
 		PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT; // 右电机PWM更新
 		break;
 	}

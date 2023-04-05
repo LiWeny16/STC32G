@@ -40,7 +40,7 @@ void main()
 	DisableGlobalIRQ();
 	board_init(); // 初始化寄存器,勿删除此句代码。
 	ALL_init();
-	delay_ms(1000);
+	// delay_ms(1000);
 	// pwm_init(PWMA_CH1P_P60, 10000, 0);
 	// pwm_init(PWMA_CH2P_P62, 10000, 0);
 	// pwm_init(PWMA_CH3P_P64, 10000, 0);
@@ -48,7 +48,7 @@ void main()
 	EnableGlobalIRQ();
 	while (1)
 	{
-		delay_ms(1000);
+		delay_ms(300);
 		// P52 = !P52;
 		// pwm_duty(PWMA_CH1P_P60, 0);
 		// pwm_duty(PWMA_CH2P_P62, 1000); // right
@@ -108,29 +108,53 @@ void main()
 
 		// wireless_uart_send_buff((uint8*)temp,1);
 		printf("pid_steering.PID_STEERING_OUT=%d \r\n", pid_steering.PID_STEERING_OUT);
-		printf("tempVar = %f", tempVar);
-		delay_ms(1000);
-		printf("road_flag.flag_In = %d\r\n",road_flag.Ring_In_Flag);
-		printf("road_flag.flag_out = %d\r\n",road_flag.Ring_Out_Flag);
+		//printf("tempVar = %f\r\n", tempVar);
+		//delay_ms(1000);
+		printf("road_flag.Ring_In_Flag = %d\r\n", road_flag.Ring_In_Flag);
+		printf("road_flag.Ring_Out_Flag = %d\r\n", road_flag.Ring_Out_Flag);
+		printf("road_flag->Cross_Flag = %d\r\n", road_flag.Cross_Flag);
 		// printf("SP_R = %d\r\n", speed_now.speed_R);				// 当前
 		// printf("SP_RA = %d\r\n", speed_state.Strai_speed_R_ai); // 目标
 		// printf("pwm = %d\r\n\r\n", PWM_Motor_R_now);
 
 		// 电机
 		// printf("\r\n\r\n");
-		 printf("PWM_L = %d \r\n\r\n", PWM_Motor_L_now);
-		 printf("PWM_R = %d \r\n\r\n", PWM_Motor_R_now);
-		 printf("speed_R = %d\r\n", speed_now.speed_R); // 当前
-		 printf("speed_L = %d\r\n", speed_now.speed_L); // 当前
-		// printf("speed_state.Strai_speed_L_ai = %d\r\n",speed_state.Strai_speed_L_ai);
-		// printf("speed_state.Strai_speed_R_ai = %d\r\n",speed_state.Strai_speed_R_ai);
+		printf("PWM_L = %d \r\n\r\n", PWM_Motor_L_now);
+		printf("PWM_R = %d \r\n\r\n", PWM_Motor_R_now);
+		printf("speed_R = %d\r\n", speed_now.speed_R); // 当前
+		printf("speed_L = %d\r\n", speed_now.speed_L); // 当前
+													   // printf("speed_state.Strai_speed_L_ai = %d\r\n",speed_state.Strai_speed_L_ai);
+													   // printf("speed_state.Strai_speed_R_ai = %d\r\n",speed_state.Strai_speed_R_ai);
 
-		// printf("err_motor.err_L_m = %d\r\n",err_motor.err_L_m);
-		// printf("err_motor.err_R_m = %d\r\n",err_motor.err_R_m);
+		printf("err_motor.err_L_m = %d\r\n",err_motor.err_L_m);
+		printf("err_motor.err_R_m = %d\r\n",err_motor.err_R_m);
+		
+		printf("pid_motor.MOTOR_L_OUT_temp = %f\r\n",pid_motor.MOTOR_L_OUT_temp);
+		printf("pid_motor.MOTOR_R_OUT_temp = %f\r\n",pid_motor.MOTOR_R_OUT_temp);
+		printf("PWM_Motor_L_now= %d\r\n",PWM_Motor_L_now);
+		printf("PWM_Motor_R_now = %d\r\n",PWM_Motor_R_now);
 
-		//send_data_sw((err_steering.Err)*1000,0,0,0,0xf1);
+		//send_data_sw((err_motor.err_L_m)*1000,0,0,0,0xf1);
+		//send_data_sw((err_motor.err_R_m)*1000,0,0,0,0xf2);
+		//send_data_sw((pid_motor.MOTOR_L_OUT_temp)*1000,0,0,0,0xf3);
+		//send_data_sw((pid_motor.MOTOR_R_OUT_temp)*1000,0,0,0,0xf4);
+		// send_data_sw((err_steering.Err)*1000,0,0,0,0xf1);
+
+		// PID显示
+
 		//	printf("P = %f\r\n", pid_motor.p_motor);
 		//	printf("I = %f\r\n", pid_motor.i_motor);
 		//  printf("D = %f\r\n\r\n", pid_motor.d_motor);
+
+		// 时间
+
+		printf("timer.time0_0 = %d\r\n", timer.time0_0);
+		printf("timer.time0_1 = %d\r\n", timer.time0_1);
+		printf("timer.time1_0 = %d\r\n", timer.time1_0);
+		
+		printf("tempVar = %f\r\n", tempVar);
+		printf("tempVar1 = %f\r\n", tempVar1);
+		printf("tempVar2 = %f\r\n", tempVar2);
+		// 步数
 	}
 }

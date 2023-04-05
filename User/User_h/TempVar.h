@@ -5,7 +5,8 @@
 #include "zf_uart.h"
 
 extern volatile float tempVar;
-
+extern volatile float tempVar1;
+extern volatile float tempVar2;
 
 typedef struct//时间结构体
 {

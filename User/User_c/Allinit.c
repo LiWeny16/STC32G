@@ -103,16 +103,16 @@ void PID_init(void)
 {
 
 	pid_steering.p_steering = 25.5;
-	pid_steering.i_steering = 0.01;
-	pid_steering.d_steering = 2.5;
+	pid_steering.i_steering = 0.05;
+	pid_steering.d_steering = 3.2;
 	pid_steering.imax = 1;
 	pid_steering.imin = -1;
 	pid_steering.PID_STEERING_OUT = 735;
 	pid_steering.STEERING_OUT_temp = 0.0;
 
-	pid_motor.p_motor = 0.05;		   // 用于存放比例系数p
-	pid_motor.i_motor = 0.002;	   // 用于存放积分系数i
-	pid_motor.d_motor = 0.01;		   // 用于存放微分系数d
+	pid_motor.p_motor = 0.09;		   // 用于存放比例系数p
+	pid_motor.i_motor = 0.1;	   // 用于存放积分系数i
+	pid_motor.d_motor = 0.02;		   // 用于存放微分系数d
 	pid_motor.PID_MOTOR_L_OUT = 0; // 用于存放最终输出给电机的左轮PWM增量值
 	pid_motor.PID_MOTOR_R_OUT = 0; // 用于存放最终输出给电机的右轮PWM增量值
 	pid_motor.MOTOR_L_OUT_temp=0.0;
@@ -133,15 +133,24 @@ void Motor_init(void)
 	speed_state.Outgar_speed_L_ai = 0; // 出库左
 	speed_state.Outgar_speed_R_ai = 0; // 出库右
 
-	speed_state.Strai_speed_L_ai = 16500; // 直道左  //全是uint32
-	speed_state.Strai_speed_R_ai = 16500; // 直道右
+	speed_state.Strai_speed_L_ai = 325; // 直道左  //全是uint32
+	speed_state.Strai_speed_R_ai = 325; // 直道右
 
-	speed_state.Cur_L_speed_L_ai = 11000; // 左转！
-	speed_state.Cur_L_speed_R_ai = 12000; // 
+	speed_state.Cur_L_speed_L_ai = 260; // 左转！
+	speed_state.Cur_L_speed_R_ai = 300; // 
 	
-	speed_state.Cur_R_speed_L_ai = 12000; // 右转！
-	speed_state.Cur_R_speed_R_ai = 1100; // 
+	speed_state.Cur_R_speed_L_ai = 300; // 右转！
+	speed_state.Cur_R_speed_R_ai = 260; // **待测**
+	
+	speed_state.Ring_speed_L_ai = 150; // 圆环内部左
+	speed_state.Ring_speed_R_ai = 150; // 圆环内部右
 
+	speed_state.Ringin_speed_L_ai = 140; // 进圆环左
+	speed_state.Ringin_speed_R_ai = 210; // 进圆环右
+
+	speed_state.Ringout_speed_L_ai = 100; // 出圆环左
+	speed_state.Ringout_speed_R_ai = 120; // 出圆环右
+//*********************************************
 	speed_state.Cross_speed_L_ai = 0; // 十字左
 	speed_state.Cross_speed_R_ai = 0; // 十字右
 
@@ -151,14 +160,7 @@ void Motor_init(void)
 	speed_state.Ramp_speed_L_ai = 0; // 坡道左
 	speed_state.Ramp_speed_R_ai = 0; // 坡道右
 
-	speed_state.Ring_speed_L_ai = 9500; // 圆环内部左
-	speed_state.Ring_speed_R_ai = 9500; // 圆环内部右
 
-	speed_state.Ringin_speed_L_ai = 4000; // 进圆环左
-	speed_state.Ringin_speed_R_ai = 5000; // 进圆环右
-
-	speed_state.Ringout_speed_L_ai = 4000; // 出圆环左
-	speed_state.Ringout_speed_R_ai = 5000; // 出圆环右
 
 	speed_state.Three_speed_L_ai = 0; // 三岔左
 	speed_state.Three_speed_R_ai = 0; // 三岔右
@@ -171,10 +173,10 @@ void Motor_init(void)
 	speed_now.speed_R = 0;	  // 右轮当前速度值
 	speed_now.speed_R_ai = 0; // 右轮目标值
 
-	PWM_Motor_Max = 4000;
+	PWM_Motor_Max = 2780;
 	PWM_Motor_Min = 0;
-	PWM_Motor_L_now = 2000;
-	PWM_Motor_R_now = 2000;
+	PWM_Motor_L_now = 0;
+	PWM_Motor_R_now = 0;
 }
 
 // 8.编码器初始化（带串口）
@@ -208,6 +210,8 @@ void WIRELESS_init(void)
 void temp_init(void){
 	temp = 0.0;
 	tempVar = 0.0;
+	tempVar1=0.0;
+	tempVar2=0.0;
 	timer.time0_0=0;
 	timer.time0_1=0;
 	timer.time1_0=0;

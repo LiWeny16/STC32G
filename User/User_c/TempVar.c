@@ -1,6 +1,8 @@
 #include "TempVar.h"
 
 volatile float tempVar;
+volatile float tempVar1;
+volatile float tempVar2;
 //volatile uint16 ringInFlag;
 
 void send_data_sw(int16 a,int16 b,int16 c,int16 d, uint8 target)

@@ -27,12 +27,12 @@
 typedef struct      // 电感状态结构体
 {
 
-    unsigned short L_zx_real; // 左45度电感
-    unsigned short L_zh_real; // 左横电感
+    int32 L_zx_real; // 左45度电感
+    int32 L_zh_real; // 左横电感
     //unsigned short L_zs_real; // 左竖电感
     //unsigned short L_ys_real; // 右竖电感
-    unsigned short L_yh_real; // 右横电感
-    unsigned short L_yx_real; // 右45度电感
+    int32 L_yh_real; // 右横电感
+    int32 L_yx_real; // 右45度电感
      ///float L_zh_real; // 左横电感
      ///float L_zx_real; // 左45度电感
      ///float L_yh_real; // 右横电感

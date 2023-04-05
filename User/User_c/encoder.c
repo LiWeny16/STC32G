@@ -47,24 +47,26 @@ void speedout(Road road,SPEED_now* speed_now,SPEED_state* speed_state)//根据路况
 
 void speed_cal(SPEED_now* speed_now)//通过编码器的数据计算速度，并将其写入当前速度结构体
 {
-	uint32 Speed_L = 0;
-	uint32 Speed_R = 0;
-	uint32 dat_L = 0 ;
-	uint32 dat_R = 0 ;
+	int Speed_L = 0;
+	int Speed_R = 0;
+	int dat_L = 0 ;
+	int dat_R = 0 ;
 	if(DIR_L == 1)//左轮速度
 		{
 			dat_L = ctimer_count_read(Encoder_L);
-			Speed_L= MFBL*(dat_L/(CONTROL_T*DECO));//用编码器在中断间隔之内的读数除以执行程序的中断间隔及一米对应的脉冲数来表示当前速度(m/s),已乘PID分辨率
+		//	Speed_L= MFBL*(dat_L/(CONTROL_T*DECO));//用编码器在中断间隔之内的读数除以执行程序的中断间隔及一米对应的脉冲数来表示当前速度(m/s),已乘PID分辨率
 			//Speed_L = dat_L; //测试用
 			//滤波
-			Speed_L = Speed_L>1?Speed_L:1;
+		//	Speed_L = Speed_L>1?Speed_L:1;
+			Speed_L = dat_L;
 		}
 		else
 		{
 			dat_L = ctimer_count_read(Encoder_L) * -1;
-		  Speed_L = (MFBL*(dat_L/(CONTROL_T*DECO))) * -1;//用编码器在中断间隔之内的读数除以执行程序的中断间隔及一米对应的脉冲数来表示当前速度(m/s),已乘PID分辨率
+		 // Speed_L = (MFBL*(dat_L/(CONTROL_T*DECO))) * -1;//用编码器在中断间隔之内的读数除以执行程序的中断间隔及一米对应的脉冲数来表示当前速度(m/s),已乘PID分辨率
 			//Speed_L = dat_L;
-			Speed_L = Speed_L>1?Speed_L:1;
+			//Speed_L = Speed_L>1?Speed_L:1;
+			Speed_L = dat_L;
 		}
 
 		speed_now->speed_L = Speed_L;
@@ -73,18 +75,34 @@ void speed_cal(SPEED_now* speed_now)//通过编码器的数据计算速度，并将其写入当前速
 	if(DIR_R == 0)//右轮速度
 		{
 			dat_R = ctimer_count_read(Encoder_R);
-			Speed_R = MFBL*(dat_R/(CONTROL_T*DECO));//用编码器在中断间隔之内的读数除以执行程序的中断间隔及一米对应的脉冲数来表示当前速度(m/s),已乘PID分辨率
+		//	Speed_R = MFBL*(dat_R/(CONTROL_T*DECO));//用编码器在中断间隔之内的读数除以执行程序的中断间隔及一米对应的脉冲数来表示当前速度(m/s),已乘PID分辨率
 			//Speed_R = dat_R;
-			Speed_R = Speed_R>1?Speed_R:1;
+		//	Speed_R = Speed_R>1?Speed_R:1;
+			Speed_R = dat_R;
 		}
 		else
 		{
 			dat_R = ctimer_count_read(Encoder_R) * -1;
-			Speed_R = (MFBL*(dat_R/(CONTROL_T*DECO))) * -1;//用编码器在中断间隔之内的读数除以执行程序的中断间隔及一米对应的脉冲数来表示当前速度(m/s),已乘PID分辨率
+		//	Speed_R = (MFBL*(dat_R/(CONTROL_T*DECO))) * -1;//用编码器在中断间隔之内的读数除以执行程序的中断间隔及一米对应的脉冲数来表示当前速度(m/s),已乘PID分辨率
 			//Speed_R = dat_R;
-			Speed_R = Speed_R>1?Speed_R:1;
+		//	Speed_R = Speed_R>1?Speed_R:1;
+			Speed_R = dat_R;
 		}
+		//******计********步************
+		// speed_now->speed_counter0_0++;
+		// if(speed_now->speed_counter0_0>=10000){
+		// 	speed_now->speed_counter0_1++;
+		// 	speed_now->speed_counter0_0=0;
+		// }
+		// if(speed_now->speed_counter0_1>=10000){
+		// 	speed_now->speed_counter0_2++;
+		// 	speed_now->speed_counter0_1=0;
+		// }
+		// if(speed_now->speed_counter0_2>=10000){
+		// 	speed_now->speed_counter0_2=0;
+		// }
 
+		//******计********步************
 		speed_now->speed_R = Speed_R;
 		ctimer_count_clean(Encoder_R);
 		ctimer_count_clean(Encoder_L);

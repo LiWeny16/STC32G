@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  Pid                                                                04/04/23  11:50:08  PAGE 1   
+C251 COMPILER V5.60.0,  Pid                                                                06/04/23  00:08:04  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE Pid
@@ -22,89 +22,95 @@ stmt  level    source
    11   1        return ((amt) < (low) ? (low) : ((amt) > (high) ? (high) : (amt)));
    12   1      }
    13          
-   14          void Pid_Steering_Calculate(Road road, volatile Err_Steering *err_steering, volatile PID_Steering *pid_st
-             -eering) // 舵机位置式PID输出值
+   14          int32 constrain_int32(int32 amt, int32 low, int32 high) // 限幅用，low和high为上下限
    15          {
-   16   1      
-   17   1        //   constrain_float(err_steering->Errsum, pid_steering->imax, pid_steering->imin);
-   18   1        // 位置式PID积分项限幅
-   19   1        float p_Curve_L;
-   20   1        float i_Curve_L;
-   21   1        float d_Curve_L;
-   22   1      
-   23   1        float p_Curve_R;
-   24   1        float i_Curve_R;
-   25   1        float d_Curve_R;
-   26   1        
-   27   1        p_Curve_L = 20.5;
-   28   1        i_Curve_L = 0;
-   29   1        d_Curve_L = 4.5;
-   30   1      
-   31   1        p_Curve_R = 20.5;
-   32   1        i_Curve_R = 0;
-   33   1        d_Curve_R = 4.5;
-   34   1        switch (road)
-   35   1        {
-   36   2        case (Straight): // 直道
-   37   2          err_steering->Err=(0.4151 * (err_steering->Err_x)) + (3.4868 * (err_steering->Err_h));
-   38   2          pid_steering->STEERING_OUT_temp = (float)((pid_steering->p_steering * (err_steering->Err)) + (pid_steer
+   16   1        return ((amt) < (low) ? (low) : ((amt) > (high) ? (high) : (amt)));
+   17   1      }
+   18          
+   19          void Pid_Steering_Calculate(Road road, volatile Err_Steering *err_steering, volatile PID_Steering *pid_st
+             -eering) // 舵机位置式PID输出值
+   20          {
+   21   1      
+   22   1        //   constrain_float(err_steering->Errsum, pid_steering->imax, pid_steering->imin);
+   23   1        // 位置式PID积分项限幅
+   24   1        float p_Curve_L;
+   25   1        float i_Curve_L;
+   26   1        float d_Curve_L;
+   27   1      
+   28   1        float p_Curve_R;
+   29   1        float i_Curve_R;
+   30   1        float d_Curve_R;
+   31   1        
+   32   1        p_Curve_L = 20.5;
+   33   1        i_Curve_L = 0;
+   34   1        d_Curve_L = 4.5;
+   35   1      
+   36   1        p_Curve_R = 20.5;
+   37   1        i_Curve_R = 0;
+   38   1        d_Curve_R = 4.5;
+   39   1        switch (road)
+   40   1        {
+   41   2        case (Straight): // 直道
+   42   2          err_steering->Err=(0.4151 * (err_steering->Err_x)) + (3.4868 * (err_steering->Err_h));
+   43   2          pid_steering->STEERING_OUT_temp = (float)((pid_steering->p_steering * (err_steering->Err)) + (pid_steer
              -ing->i_steering * err_steering->Errsum) + (pid_steering->d_steering * err_steering->Errdif));
-   39   2          break;
-   40   2      
-   41   2        case (Curve_Left): // 弯道
-   42   2          err_steering->Err=(0.8151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
-   43   2          pid_steering->STEERING_OUT_temp = (float)((p_Curve_L * err_steering->Err) + (i_Curve_L * err_steering->
-             -Errsum) + (d_Curve_L * err_steering->Errdif));
    44   2          break;
    45   2      
-   46   2        case (Curve_Right): // 弯道
-   47   2          err_steering->Err=(0.8151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
-   48   2          pid_steering->STEERING_OUT_temp = (float)((p_Curve_R * err_steering->Err) + (i_Curve_R * err_steering->
-             -Errsum) + (d_Curve_R * err_steering->Errdif));
+   46   2        case (Curve_Left): // 弯道
+   47   2          err_steering->Err=(1.1151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
+   48   2          pid_steering->STEERING_OUT_temp = (float)((p_Curve_L * err_steering->Err) + (i_Curve_L * err_steering->
+             -Errsum) + (d_Curve_L * err_steering->Errdif));
    49   2          break;
-   50   2        case (Big_Ring):
-   51   2          err_steering->Err=(0.8151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
-   52   2          pid_steering->STEERING_OUT_temp = (float)((p_Curve_R * err_steering->Err) + (i_Curve_R * err_steering->
+   50   2      
+   51   2        case (Curve_Right): // 弯道
+   52   2          err_steering->Err=(1.1151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
+   53   2          pid_steering->STEERING_OUT_temp = (float)((p_Curve_R * err_steering->Err) + (i_Curve_R * err_steering->
              -Errsum) + (d_Curve_R * err_steering->Errdif));
-C251 COMPILER V5.60.0,  Pid                                                                04/04/23  11:50:08  PAGE 2   
+C251 COMPILER V5.60.0,  Pid                                                                06/04/23  00:08:04  PAGE 2   
 
-   53   2          break;
-   54   2        
-   55   2        case (Stop):
-   56   2          pid_steering->STEERING_OUT_temp = 0;
-   57   2        default: // 别的
-   58   2          pid_steering->STEERING_OUT_temp = (float)((pid_steering->p_steering * err_steering->Err) + (pid_steerin
+   54   2          break;
+   55   2        case (Big_Ring):
+   56   2          err_steering->Err=(1.1151 * (err_steering->Err_x)) + (4.5868 * (err_steering->Err_h));
+   57   2          pid_steering->STEERING_OUT_temp = (float)((p_Curve_R * err_steering->Err) + (i_Curve_R * err_steering->
+             -Errsum) + (d_Curve_R * err_steering->Errdif));
+   58   2          break;
+   59   2        
+   60   2        case (Stop):
+   61   2          pid_steering->STEERING_OUT_temp = 0;
+   62   2        default: // 别的
+   63   2          pid_steering->STEERING_OUT_temp = (float)((pid_steering->p_steering * err_steering->Err) + (pid_steerin
              -g->i_steering * err_steering->Errsum) + (pid_steering->d_steering * err_steering->Errdif));
-   59   2          break;
-   60   2        }
-   61   1      
-   62   1        // tempVar =(float)((pid_steering->p_steering * err_steering-> Err) + (pid_steering->i_steering * err_st
+   64   2          break;
+   65   2        }
+   66   1      
+   67   1        // tempVar =(float)((pid_steering->p_steering * err_steering-> Err) + (pid_steering->i_steering * err_st
              -eering-> Errsum) + (pid_steering->d_steering * err_steering-> Errdif));
-   63   1        // pid_steering->PID_STEERING_OUT = (f)(((pid_steering->p_steering * err_steering-> Err*(-1.0)) + (pid_s
+   68   1        // pid_steering->PID_STEERING_OUT = (f)(((pid_steering->p_steering * err_steering-> Err*(-1.0)) + (pid_s
              -teering->i_steering * err_steering-> Errsum*0) + (pid_steering->d_steering * err_steering-> Errdif)*0));
-   64   1        //  temp =   pid_steering->PID_STEERING_OUT
-   65   1        // 位置式PID输出计算
-   66   1      }
-   67          
-   68          void Pid_Motor_Calculate(Err_Motor *err_motor, PID_Motor *pid_motor) // 电机增量式PID输出增量
-   69          {
-   70   1        pid_motor->PID_MOTOR_L_OUT = (pid_motor->p_motor * err_motor->err_derivative_L_m) + (pid_motor->i_motor 
+   69   1        //  temp =   pid_steering->PID_STEERING_OUT
+   70   1        // 位置式PID输出计算
+   71   1      }
+   72          
+   73          void Pid_Motor_Calculate(Err_Motor *err_motor, PID_Motor *pid_motor) // 电机增量式PID输出增量
+   74          {
+   75   1        pid_motor->MOTOR_L_OUT_temp= (pid_motor->p_motor * err_motor->err_derivative_L_m) + (pid_motor->i_motor 
              -* err_motor->err_L_m) + (pid_motor->d_motor * err_motor->err_derivative2_L_m);
-   71   1        pid_motor->PID_MOTOR_R_OUT = (pid_motor->p_motor * err_motor->err_derivative_R_m) + (pid_motor->i_motor 
-             -* err_motor->err_R_m) + (pid_motor->d_motor * err_motor->err_derivative2_R_m);
-   72   1      }
+   76   1        pid_motor->MOTOR_R_OUT_temp = (pid_motor->p_motor * err_motor->err_derivative_R_m) + (pid_motor->i_motor
+             - * err_motor->err_R_m) + (pid_motor->d_motor * err_motor->err_derivative2_R_m);
+   77   1      
+   78   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       549     ------
+  code size            =       571     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
   xdata size           =    ------     ------
   xdata-const size     =    ------     ------
-  edata size           =    ------         12
+  edata size           =    ------         16
   bit size             =    ------     ------
   ebit size            =    ------     ------
   bitaddressable size  =    ------     ------

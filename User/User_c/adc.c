@@ -11,14 +11,14 @@ void calculate_s(DG_State *dg, Err_Steering *Err_Ste) // ¸ù¾İµç¸Ğ×´Ì¬¼ÆËãÆ«²îÖµ£
   dg->L_zx_max = 4096.0;
   dg->L_zh_max = 4096.0;
   //
-  dg->L_zx_real = (ADC_ReadAverage(ZX, count_dg, RE));
-  dg->L_zh_real = (ADC_ReadAverage(ZH, count_dg, RE)); // ×î´óÖµ255
+  dg->L_zx_real = (int)(ADC_ReadAverage(ZX, count_dg, RE));
+  dg->L_zh_real = (int)(ADC_ReadAverage(ZH, count_dg, RE)); // ×î´óÖµ255
 
   //  dg->L_zs_real = (ADC_ReadAverage(ZS, count_dg, RE));//Ã»ÓÃ
   //  dg->L_ys_real = (ADC_ReadAverage(YS, count_dg, RE));//Ã»ÓÃ
 
-  dg->L_yh_real = (ADC_ReadAverage(YH, count_dg, RE)); // ×î´óÖµ255
-  dg->L_yx_real = (ADC_ReadAverage(YX, count_dg, RE));
+  dg->L_yh_real = (int)(ADC_ReadAverage(YH, count_dg, RE)); // ×î´óÖµ255
+  dg->L_yx_real = (int)(ADC_ReadAverage(YX, count_dg, RE));
   // ÇóÈ¡10´Î²ÉÑùÆ½¾ùÖµ×÷ÎªÕæÊµÖµ
 	
 	//*********ĞŞÕı**********//
