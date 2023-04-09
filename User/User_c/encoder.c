@@ -20,9 +20,14 @@ void speedout(Road road,SPEED_now* speed_now,SPEED_state* speed_state)//根据路况
 		speed_now-> speed_L_ai = speed_state->Cur_R_speed_L_ai;
 		speed_now-> speed_R_ai = speed_state->Cur_R_speed_R_ai;
 		break;
-		case(Big_Ring): //大圆环内
-		speed_now-> speed_L_ai = speed_state->Ring_speed_L_ai;
-		speed_now-> speed_R_ai = speed_state->Ring_speed_R_ai;
+		case(Ring_Left): //环左
+		speed_now-> speed_L_ai = speed_state->Ring_L_speed_L_ai;//左轮
+		speed_now-> speed_R_ai = speed_state->Ring_L_speed_R_ai;//右轮
+			break;
+		
+		case(Ring_Right): //环右
+		speed_now-> speed_L_ai = speed_state->Ring_R_speed_L_ai;//左轮
+		speed_now-> speed_R_ai = speed_state->Ring_R_speed_R_ai;//右轮
 			break;
 		
 		case(Ring_In): //进大圆环
@@ -34,18 +39,26 @@ void speedout(Road road,SPEED_now* speed_now,SPEED_state* speed_state)//根据路况
 		speed_now-> speed_L_ai = speed_state->Ringout_speed_L_ai;
 		speed_now-> speed_R_ai = speed_state->Ringout_speed_R_ai;
 			break;
-		
+		case(OutGarage):
+		speed_now-> speed_L_ai = speed_state->Outgar_speed_L_ai;
+		speed_now-> speed_R_ai = speed_state->Outgar_speed_R_ai;
+			break;
 		case(Stop):
 		speed_now-> speed_L_ai =0;
 		speed_now-> speed_R_ai =0;
+			break;
+		case(InGarage):
+		speed_now-> speed_L_ai =70;
+		speed_now-> speed_R_ai =100;
+		  break;
 		default://别的默认
 	  speed_now-> speed_L_ai = speed_state->Strai_speed_L_ai;
 		speed_now-> speed_R_ai = speed_state->Strai_speed_R_ai;
-		break;
+			break;
 	}
 }
 
-void speed_cal(SPEED_now* speed_now)//通过编码器的数据计算速度，并将其写入当前速度结构体
+void speed_cal(FOOT_COUNTER *foot_counter, SPEED_now* speed_now)//通过编码器的数据计算速度，并将其写入当前速度结构体
 {
 	int Speed_L = 0;
 	int Speed_R = 0;
@@ -89,18 +102,49 @@ void speed_cal(SPEED_now* speed_now)//通过编码器的数据计算速度，并将其写入当前速
 			Speed_R = dat_R;
 		}
 		//******计********步************
-		// speed_now->speed_counter0_0++;
-		// if(speed_now->speed_counter0_0>=10000){
-		// 	speed_now->speed_counter0_1++;
-		// 	speed_now->speed_counter0_0=0;
-		// }
-		// if(speed_now->speed_counter0_1>=10000){
-		// 	speed_now->speed_counter0_2++;
-		// 	speed_now->speed_counter0_1=0;
-		// }
-		// if(speed_now->speed_counter0_2>=10000){
-		// 	speed_now->speed_counter0_2=0;
-		// }
+		//计数器1
+		if(foot_counter->speed_counter0_EN==1){
+				foot_counter->speed_counter0_0+=Speed_R;	
+				if(foot_counter->speed_counter0_0>=10000){
+					foot_counter->speed_counter0_1++;
+					foot_counter->speed_counter0_0=0;
+				}
+				if(foot_counter->speed_counter0_1>=10000){
+					foot_counter->speed_counter0_2++;
+					foot_counter->speed_counter0_1=0;
+				}
+				if(foot_counter->speed_counter0_2>=10000){
+					foot_counter->speed_counter0_2=0;
+				}
+		}
+		else{
+		foot_counter->speed_counter0_EN=0;
+		foot_counter->speed_counter0_0=0;
+		foot_counter->speed_counter0_1=0;
+		foot_counter->speed_counter0_2=0;
+		}
+		//计数器2
+		if(foot_counter->speed_counter1_EN==1){
+				foot_counter->speed_counter1_0+=Speed_R;	
+				if(foot_counter->speed_counter1_0>=10000){
+					foot_counter->speed_counter1_1++;
+					foot_counter->speed_counter1_0=0;
+				}
+				if(foot_counter->speed_counter1_1>=10000){
+					foot_counter->speed_counter1_2++;
+					foot_counter->speed_counter1_1=0;
+				}
+				if(foot_counter->speed_counter1_2>=10000){
+					foot_counter->speed_counter1_2=0;
+				}
+		}
+		else{
+		foot_counter->speed_counter1_EN=0;
+		foot_counter->speed_counter1_0=0;
+		foot_counter->speed_counter1_1=0;
+		foot_counter->speed_counter1_2=0;
+		}
+		
 
 		//******计********步************
 		speed_now->speed_R = Speed_R;

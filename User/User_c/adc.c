@@ -14,8 +14,8 @@ void calculate_s(DG_State *dg, Err_Steering *Err_Ste) // ¸ù¾İµç¸Ğ×´Ì¬¼ÆËãÆ«²îÖµ£
   dg->L_zx_real = (int)(ADC_ReadAverage(ZX, count_dg, RE));
   dg->L_zh_real = (int)(ADC_ReadAverage(ZH, count_dg, RE)); // ×î´óÖµ255
 
-  //  dg->L_zs_real = (ADC_ReadAverage(ZS, count_dg, RE));//Ã»ÓÃ
-  //  dg->L_ys_real = (ADC_ReadAverage(YS, count_dg, RE));//Ã»ÓÃ
+	dg->L_zs_real = (int)(ADC_ReadAverage(ZS, count_dg, RE));//
+	dg->L_ys_real = (int)(ADC_ReadAverage(YS, count_dg, RE));//
 
   dg->L_yh_real = (int)(ADC_ReadAverage(YH, count_dg, RE)); // ×î´óÖµ255
   dg->L_yx_real = (int)(ADC_ReadAverage(YX, count_dg, RE));
@@ -27,9 +27,11 @@ void calculate_s(DG_State *dg, Err_Steering *Err_Ste) // ¸ù¾İµç¸Ğ×´Ì¬¼ÆËãÆ«²îÖµ£
 	
   dg->L_zx_real = dg->L_zx_real >= 1 ? dg->L_zx_real : 1;
   dg->L_zh_real = dg->L_zh_real >= 1 ? dg->L_zh_real : 1;
-  // dg->L_zs_real = dg->L_zs_real >= 1 ? dg->L_zs_real : 1;//Ã»ÓÃ
-  // dg->L_ys_real = dg->L_ys_real >= 1 ? dg->L_ys_real : 1;//Ã»ÓÃ
-  dg->L_yh_real = dg->L_yh_real >= 1 ? dg->L_yh_real : 1;
+ 
+	dg->L_zs_real = dg->L_zs_real >= 1 ? dg->L_zs_real : 1;
+  dg->L_ys_real = dg->L_ys_real >= 1 ? dg->L_ys_real : 1;
+  
+	dg->L_yh_real = dg->L_yh_real >= 1 ? dg->L_yh_real : 1;
   dg->L_yx_real = dg->L_yx_real >= 1 ? dg->L_yx_real : 1;
   // Ê¹²ÉÑù×îĞ¡ÖµÎª1
 
@@ -41,8 +43,13 @@ void calculate_s(DG_State *dg, Err_Steering *Err_Ste) // ¸ù¾İµç¸Ğ×´Ì¬¼ÆËãÆ«²îÖµ£
   // dg->L_yx_once = (sqrt((()dg->L_yx_real) / (dg->L_yx_max)));
   dg->L_zx_once = (((float)dg->L_zx_real) / (dg->L_zx_max));
   dg->L_zh_once = (((float)dg->L_zh_real) / (dg->L_zh_max));
+	
   dg->L_yh_once = (((float)dg->L_yh_real) / (dg->L_yh_max));
   dg->L_yx_once = (((float)dg->L_yx_real) / (dg->L_yx_max));
+	
+	dg->L_zs_once = (((float)dg->L_zs_real) / (dg->L_zs_max));
+  dg->L_ys_once = (((float)dg->L_ys_real) / (dg->L_ys_max));
+	
   // µÚÒ»´Î¹éÒ»»¯£¬Ê¹µÃµç¸Ğ¾àÀëµç¸Ğ×î´óÖµ´¦µÄÎÇºÏ¶ÈÓÃ°Ù·Ö±È±íÊ¾£¬²¢¿ª·½Ê¹µÃÆ«²îºÍĞ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³Éµ¥µ÷¹ØÏµ£¨¼´Ïû³ı¼«µã£©£¬Ê¹µÃ¶ªÏß¸üºÃÅĞ¶Ï
 
   // dg->L_zx_twice = (dg->L_zx_once) / (dg->L_zx_once * dg->L_zx_once + dg->L_yx_once * dg->L_yx_once + dg->L_zh_once * dg->L_zh_once + dg->L_yh_once * dg->L_yh_once);
@@ -61,22 +68,26 @@ void calculate_s(DG_State *dg, Err_Steering *Err_Ste) // ¸ù¾İµç¸Ğ×´Ì¬¼ÆËãÆ«²îÖµ£
   // Err_Ste->Err_x_last = Err_Ste->Err_x;
   // Err_Ste->Err_h_last = Err_Ste->Err_h;
   // Err_Ste->Err_last = Err_Ste->Err;
-
+	
+	//¹éÒ»»¯×ö²î
   Err_Ste->Err_x = (dg->L_zx_once - dg->L_yx_once);
   Err_Ste->Err_h = (dg->L_zh_once - dg->L_yh_once);
+	//ÏŞ·ù
 	Err_Ste->Err_x=  Err_Ste->Err_x>1?1: Err_Ste->Err_x;
 	Err_Ste->Err_h=  Err_Ste->Err_h>1?1: Err_Ste->Err_h;
 	Err_Ste->Err_x=  Err_Ste->Err_x<(-1)?(-1): Err_Ste->Err_x;
 	Err_Ste->Err_h=  Err_Ste->Err_h<(-1)?(-1): Err_Ste->Err_h;
 	
-  Err_Ste->Err = (1.1151 * (Err_Ste->Err_x)) + (3.9868 * (Err_Ste->Err_h));
-  // ÒÔÉÏÏµÊıÊ¹ÓÃmatlabÄâºÏ£¬Ê¹µÃÆ«²îºÍĞ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³ÉÏßĞÔ¹ØÏµ£¬ÖÁ´Ë£¬Æ«²îºÍĞ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³Éµ¥µ÷ÏßĞÔ¹ØÏµ
-  Err_Ste->Errsum = Err_Ste->Err;
-  Err_Ste->Errdif = Err_Ste->Err - Err_Ste->Err_last;
-  // Î»ÖÃÊ½PID»ı·ÖºÍ²î·ÖÔËËã
+  //Err_Ste->Err = (1.1151 * (Err_Ste->Err_x)) + (3.9868 * (Err_Ste->Err_h));
+  
+	// ÒÔÉÏÏµÊıÊ¹ÓÃmatlabÄâºÏ£¬Ê¹µÃÆ«²îºÍĞ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³ÉÏßĞÔ¹ØÏµ£¬ÖÁ´Ë£¬Æ«²îºÍĞ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³Éµ¥µ÷ÏßĞÔ¹ØÏµ
+  //Err_Ste->Errsum += Err_Ste->Err;
+  //Err_Ste->Errdif = Err_Ste->Err - Err_Ste->Err_last;
+  
+	// Î»ÖÃÊ½PID»ı·ÖºÍ²î·ÖÔËËã
  // Err_Ste->Err_x_last = Err_Ste->Err_x;
  // Err_Ste->Err_h_last = Err_Ste->Err_h;
-  Err_Ste->Err_last = Err_Ste->Err;
+  //Err_Ste->Err_last = Err_Ste->Err;
 
   // Æ«²îÖµ¸üĞÂ
 }

@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               06/04/23  00:08:03  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               09/04/23  22:44:24  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -66,7 +66,7 @@ stmt  level    source
    53   2          // pwm_duty(PWMA_CH1P_P60, 0);
    54   2          // pwm_duty(PWMA_CH2P_P62, 1000); // right
    55   2          // pwm_duty(PWMA_CH3P_P64, 0);
-C251 COMPILER V5.60.0,  main                                                               06/04/23  00:08:03  PAGE 2   
+C251 COMPILER V5.60.0,  main                                                               09/04/23  22:44:24  PAGE 2   
 
    56   2          // pwm_duty(PWMA_CH4P_P66, 1000);
    57   2      
@@ -91,95 +91,105 @@ stmt  level    source
    76   2      
    77   2          printf("DG_State.L_yh_real = %d\r\n", dg_state.L_yh_real);
    78   2          printf("DG_State.L_zh_real = %d\r\n", dg_state.L_zh_real);
-   79   2      
-   80   2          printf("DG_State.L_zx_once = %f\r\n", dg_state.L_zx_once);
-   81   2          printf("DG_State.L_zh_once = %f\r\n", dg_state.L_zh_once);
+   79   2          
+   80   2          printf("DG_State.L_ys_real = %d\r\n", dg_state.L_ys_real);
+   81   2          printf("DG_State.L_zs_real = %d\r\n", dg_state.L_zs_real);
    82   2      
-   83   2          printf("DG_State.L_yx_once = %f\r\n", dg_state.L_yx_once);
-   84   2          printf("DG_State.L_yh_once = %f\r\n", dg_state.L_yh_once);
+   83   2          // printf("DG_State.L_zx_once = %f\r\n", dg_state.L_zx_once);
+   84   2          // printf("DG_State.L_zh_once = %f\r\n", dg_state.L_zh_once);
    85   2      
-   86   2          // printf("dg_state.L_zx_max = %f\r\n", dg_state.L_zx_max);
-   87   2          // printf("dg_state.L_zh_max = %f\r\n", dg_state.L_zh_max);
+   86   2          // printf("DG_State.L_yx_once = %f\r\n", dg_state.L_yx_once);
+   87   2          // printf("DG_State.L_yh_once = %f\r\n", dg_state.L_yh_once);
    88   2      
-   89   2          // printf("dg_state.L_yh_max = %f\r\n", dg_state.L_yh_max);
-   90   2          // printf("dg_state.L_yx_max = %f\r\n", dg_state.L_yx_max);
+   89   2          // printf("dg_state.L_zx_max = %f\r\n", dg_state.L_zx_max);
+   90   2          // printf("dg_state.L_zh_max = %f\r\n", dg_state.L_zh_max);
    91   2      
-   92   2          printf("err_steering.Err_x = %f\r\n", err_steering.Err_x);
-   93   2          printf("err_steering.Err_h = %f\r\n", err_steering.Err_h);
+   92   2          // printf("dg_state.L_yh_max = %f\r\n", dg_state.L_yh_max);
+   93   2          // printf("dg_state.L_yx_max = %f\r\n", dg_state.L_yx_max);
    94   2      
-   95   2          // printf("pid_steering.p_steering = %f\r\n", pid_steering.p_steering);
-   96   2          // printf("pid_steering.i_steering= %f\r\n", pid_steering.i_steering);
-   97   2          // printf("pid_steering.d_steering= %f\r\n", pid_steering.d_steering);
-   98   2          // printf("pid_steering.imax= %f\r\n", pid_steering.imax);
-   99   2          // printf("err_steering.Err_x = %d\r\n", err_steering.Err_x);
-  100   2          // printf("err_steering.Err_h = %d\r\n", err_steering.Err_h);
-  101   2      
-  102   2          printf("err_steering.Err = %f\r\n", err_steering.Err);
-  103   2          printf("err_steering.Err_last = %f\r\n", err_steering.Err_last);
-  104   2          // printf("err_steering.Errsum = %f\r\n",err_steering.Errsum);
-  105   2          printf("err_steering.Errdif = %f\r\n", err_steering.Errdif);
-  106   2      
-  107   2          // printf("temp = %f\r\n",temp);
-  108   2      
-  109   2          // wireless_uart_send_buff((uint8*)temp,1);
-  110   2          printf("pid_steering.PID_STEERING_OUT=%d \r\n", pid_steering.PID_STEERING_OUT);
-  111   2          //printf("tempVar = %f\r\n", tempVar);
-  112   2          //delay_ms(1000);
-  113   2          printf("road_flag.Ring_In_Flag = %d\r\n", road_flag.Ring_In_Flag);
-  114   2          printf("road_flag.Ring_Out_Flag = %d\r\n", road_flag.Ring_Out_Flag);
-  115   2          printf("road_flag->Cross_Flag = %d\r\n", road_flag.Cross_Flag);
-  116   2          // printf("SP_R = %d\r\n", speed_now.speed_R);        // 当前
-  117   2          // printf("SP_RA = %d\r\n", speed_state.Strai_speed_R_ai); // 目标
-  118   2          // printf("pwm = %d\r\n\r\n", PWM_Motor_R_now);
-  119   2      
-  120   2          // 电机
-  121   2          // printf("\r\n\r\n");
-C251 COMPILER V5.60.0,  main                                                               06/04/23  00:08:03  PAGE 3   
+   95   2          printf("err_steering.Err_x = %f\r\n", err_steering.Err_x);
+   96   2          printf("err_steering.Err_h = %f\r\n", err_steering.Err_h);
+   97   2      
+   98   2          // printf("pid_steering.p_steering = %f\r\n", pid_steering.p_steering);
+   99   2          // printf("pid_steering.i_steering= %f\r\n", pid_steering.i_steering);
+  100   2          // printf("pid_steering.d_steering= %f\r\n", pid_steering.d_steering);
+  101   2          // printf("pid_steering.imax= %f\r\n", pid_steering.imax);
+  102   2          // printf("err_steering.Err_x = %d\r\n", err_steering.Err_x);
+  103   2          // printf("err_steering.Err_h = %d\r\n", err_steering.Err_h);
+  104   2      
+  105   2          printf("err_steering.Err = %f\r\n", err_steering.Err);
+  106   2          printf("err_steering.Err_last = %f\r\n", err_steering.Err_last);
+  107   2          // printf("err_steering.Errsum = %f\r\n",err_steering.Errsum);
+  108   2          printf("err_steering.Errdif = %f\r\n", err_steering.Errdif);
+  109   2      
+  110   2          // printf("temp = %f\r\n",temp);
+  111   2      
+  112   2          // wireless_uart_send_buff((uint8*)temp,1);
+  113   2          printf("pid_steering.PID_STEERING_OUT=%d \r\n", pid_steering.PID_STEERING_OUT);
+  114   2          //printf("tempVar = %f\r\n", tempVar);
+  115   2          //delay_ms(1000);
+  116   2          printf("road_flag.Ring_In_Flag = %d\r\n", road_flag.Ring_In_Flag);
+  117   2          printf("road_flag.Ring_Out_Flag = %d\r\n", road_flag.Ring_Out_Flag);
+  118   2          printf("road_flag->Cross_Flag = %d\r\n", road_flag.Cross_Flag);
+  119   2          // printf("SP_R = %d\r\n", speed_now.speed_R);        // 当前
+  120   2          // printf("SP_RA = %d\r\n", speed_state.Strai_speed_R_ai); // 目标
+  121   2          // printf("pwm = %d\r\n\r\n", PWM_Motor_R_now);
+C251 COMPILER V5.60.0,  main                                                               09/04/23  22:44:24  PAGE 3   
 
-  122   2          printf("PWM_L = %d \r\n\r\n", PWM_Motor_L_now);
-  123   2          printf("PWM_R = %d \r\n\r\n", PWM_Motor_R_now);
-  124   2          printf("speed_R = %d\r\n", speed_now.speed_R); // 当前
-  125   2          printf("speed_L = %d\r\n", speed_now.speed_L); // 当前
-  126   2                                   // printf("speed_state.Strai_speed_L_ai = %d\r\n",speed_state.Strai_speed_L_ai);
-  127   2                                   // printf("speed_state.Strai_speed_R_ai = %d\r\n",speed_state.Strai_speed_R_ai);
-  128   2      
-  129   2          printf("err_motor.err_L_m = %d\r\n",err_motor.err_L_m);
-  130   2          printf("err_motor.err_R_m = %d\r\n",err_motor.err_R_m);
-  131   2          
-  132   2          printf("pid_motor.MOTOR_L_OUT_temp = %f\r\n",pid_motor.MOTOR_L_OUT_temp);
-  133   2          printf("pid_motor.MOTOR_R_OUT_temp = %f\r\n",pid_motor.MOTOR_R_OUT_temp);
-  134   2          printf("PWM_Motor_L_now= %d\r\n",PWM_Motor_L_now);
-  135   2          printf("PWM_Motor_R_now = %d\r\n",PWM_Motor_R_now);
-  136   2      
-  137   2          //send_data_sw((err_motor.err_L_m)*1000,0,0,0,0xf1);
-  138   2          //send_data_sw((err_motor.err_R_m)*1000,0,0,0,0xf2);
-  139   2          //send_data_sw((pid_motor.MOTOR_L_OUT_temp)*1000,0,0,0,0xf3);
-  140   2          //send_data_sw((pid_motor.MOTOR_R_OUT_temp)*1000,0,0,0,0xf4);
-  141   2          // send_data_sw((err_steering.Err)*1000,0,0,0,0xf1);
-  142   2      
-  143   2          // PID显示
-  144   2      
-  145   2          //  printf("P = %f\r\n", pid_motor.p_motor);
-  146   2          //  printf("I = %f\r\n", pid_motor.i_motor);
-  147   2          //  printf("D = %f\r\n\r\n", pid_motor.d_motor);
-  148   2      
-  149   2          // 时间
-  150   2      
-  151   2          printf("timer.time0_0 = %d\r\n", timer.time0_0);
-  152   2          printf("timer.time0_1 = %d\r\n", timer.time0_1);
-  153   2          printf("timer.time1_0 = %d\r\n", timer.time1_0);
-  154   2          
-  155   2          printf("tempVar = %f\r\n", tempVar);
-  156   2          printf("tempVar1 = %f\r\n", tempVar1);
-  157   2          printf("tempVar2 = %f\r\n", tempVar2);
-  158   2          // 步数
-  159   2        }
-  160   1      }
+  122   2      
+  123   2          // 电机
+  124   2          // printf("\r\n\r\n");
+  125   2          printf("PWM_L = %d \r\n\r\n", PWM_Motor_L_now);
+  126   2          printf("PWM_R = %d \r\n\r\n", PWM_Motor_R_now);
+  127   2          printf("speed_R = %d\r\n", speed_now.speed_R); // 当前
+  128   2          printf("speed_L = %d\r\n", speed_now.speed_L); // 当前
+  129   2                                   // printf("speed_state.Strai_speed_L_ai = %d\r\n",speed_state.Strai_speed_L_ai);
+  130   2                                   // printf("speed_state.Strai_speed_R_ai = %d\r\n",speed_state.Strai_speed_R_ai);
+  131   2      
+  132   2          // printf("err_motor.err_L_m = %d\r\n",err_motor.err_L_m);
+  133   2          // printf("err_motor.err_R_m = %d\r\n",err_motor.err_R_m);
+  134   2          
+  135   2          // printf("pid_motor.MOTOR_L_OUT_temp = %f\r\n",pid_motor.MOTOR_L_OUT_temp);
+  136   2          // printf("pid_motor.MOTOR_R_OUT_temp = %f\r\n",pid_motor.MOTOR_R_OUT_temp);
+  137   2          // printf("PWM_Motor_L_now= %d\r\n",PWM_Motor_L_now);
+  138   2          // printf("PWM_Motor_R_now = %d\r\n",PWM_Motor_R_now);
+  139   2      
+  140   2          //send_data_sw((err_motor.err_L_m)*1000,0,0,0,0xf1);
+  141   2          //send_data_sw((err_motor.err_R_m)*1000,0,0,0,0xf2);
+  142   2          //send_data_sw((pid_motor.MOTOR_L_OUT_temp)*1000,0,0,0,0xf3);
+  143   2          //send_data_sw((pid_motor.MOTOR_R_OUT_temp)*1000,0,0,0,0xf4);
+  144   2          // send_data_sw((err_steering.Err)*1000,0,0,0,0xf1);
+  145   2      
+  146   2          // PID显示
+  147   2      
+  148   2          //  printf("P = %f\r\n", pid_motor.p_motor);
+  149   2          //  printf("I = %f\r\n", pid_motor.i_motor);
+  150   2          //  printf("D = %f\r\n\r\n", pid_motor.d_motor);
+  151   2      
+  152   2          // 时间
+  153   2      
+  154   2          // printf("timer.time0_0 = %d\r\n", timer.time0_0);
+  155   2          // printf("timer.time0_1 = %d\r\n", timer.time0_1);
+  156   2          // printf("timer.time1_0 = %d\r\n", timer.time1_0);
+  157   2          
+  158   2           printf("tempVar = %f\r\n", tempVar);
+  159   2           printf("tempVar1 = %f\r\n", tempVar1);
+  160   2           printf("tempVar2 = %f\r\n", tempVar2);
+  161   2          // // 步数
+  162   2           //printf("foot_counter.speed_counter0_0 = %d\r\n", foot_counter.speed_counter0_0);
+  163   2           //printf("foot_counter.speed_counter0_1 = %d\r\n", foot_counter.speed_counter0_1);
+  164   2           //printf("foot_counter.speed_counter0_2 = %d\r\n", foot_counter.speed_counter0_2);
+  165   2           
+  166   2           printf("foot_counter.speed_counter1_0 = %d\r\n", foot_counter.speed_counter1_0);
+  167   2           printf("foot_counter.speed_counter1_1 = %d\r\n", foot_counter.speed_counter1_1);
+  168   2           printf("foot_counter.speed_counter1_2 = %d\r\n", foot_counter.speed_counter1_2);
+  169   2        }
+  170   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       649     ------
+  code size            =       497     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
@@ -193,8 +203,10 @@ Module Information          Static   Overlayable
   ebitaddressable size =    ------     ------
   far data size        =    ------     ------
   huge data size       =    ------     ------
+C251 COMPILER V5.60.0,  main                                                               09/04/23  22:44:24  PAGE 4   
+
   const size           =    ------     ------
-  hconst size          =       801     ------
+  hconst size          =       634     ------
 End of Module Information.
 
 

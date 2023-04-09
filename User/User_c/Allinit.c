@@ -8,8 +8,8 @@ void ADC_all_init(void)
 	adc_init(ADC_P01, ADC_SYSclk_DIV_2);
 	adc_init(ADC_P05, ADC_SYSclk_DIV_2);
 	adc_init(ADC_P06, ADC_SYSclk_DIV_2);
-	// adc_init(ADC_P11, ADC_SYSclk_DIV_2);
-	// adc_init(ADC_P10, ADC_SYSclk_DIV_2);
+	adc_init(ADC_P11, ADC_SYSclk_DIV_2);
+	adc_init(ADC_P10, ADC_SYSclk_DIV_2);
 
 	err_steering.Err_x = 0; // 舵机偏差结构体（实参）
 	err_steering.Err_h = 0;
@@ -40,6 +40,10 @@ void ADC_all_init(void)
 //	dg_state.L_ys_max = 0;
 	dg_state.L_yh_max = 4096.0;
 	dg_state.L_yx_max = 4096.0;
+	
+	dg_state.L_ys_max = 4096.0;
+	dg_state.L_zs_max = 4096.0;
+	
 
 	dg_state.L_zx_once = 0; // 一次归一化后
 	dg_state.L_zh_once = 0;
@@ -102,17 +106,17 @@ void PIT_init(void)
 void PID_init(void)
 {
 
-	pid_steering.p_steering = 25.5;
-	pid_steering.i_steering = 0.05;
-	pid_steering.d_steering = 3.2;
+	pid_steering.p_steering = 23.3;
+	pid_steering.i_steering = 0.0;
+	pid_steering.d_steering = 0.0;
 	pid_steering.imax = 1;
 	pid_steering.imin = -1;
 	pid_steering.PID_STEERING_OUT = 735;
 	pid_steering.STEERING_OUT_temp = 0.0;
 
-	pid_motor.p_motor = 0.09;		   // 用于存放比例系数p
-	pid_motor.i_motor = 0.1;	   // 用于存放积分系数i
-	pid_motor.d_motor = 0.02;		   // 用于存放微分系数d
+	pid_motor.p_motor = 0.14;		   // 用于存放比例系数p
+	pid_motor.i_motor = 0.07;	   // 用于存放积分系数i
+	pid_motor.d_motor = 0.01;		   // 用于存放微分系数d
 	pid_motor.PID_MOTOR_L_OUT = 0; // 用于存放最终输出给电机的左轮PWM增量值
 	pid_motor.PID_MOTOR_R_OUT = 0; // 用于存放最终输出给电机的右轮PWM增量值
 	pid_motor.MOTOR_L_OUT_temp=0.0;
@@ -130,26 +134,30 @@ void Steering_init(void)
 // 7.电机初始化
 void Motor_init(void)
 {
-	speed_state.Outgar_speed_L_ai = 0; // 出库左
-	speed_state.Outgar_speed_R_ai = 0; // 出库右
+	speed_state.Outgar_speed_L_ai = 220; // 出库左
+	speed_state.Outgar_speed_R_ai = 170; // 出库右
 
-	speed_state.Strai_speed_L_ai = 325; // 直道左  //全是uint32
-	speed_state.Strai_speed_R_ai = 325; // 直道右
+	speed_state.Strai_speed_L_ai = 280; // 直道左  //全是uint32
+	speed_state.Strai_speed_R_ai = 280; // 直道右
 
-	speed_state.Cur_L_speed_L_ai = 260; // 左转！
-	speed_state.Cur_L_speed_R_ai = 300; // 
+	speed_state.Cur_L_speed_L_ai = 245; // 左转！
+	speed_state.Cur_L_speed_R_ai = 260; // 
 	
-	speed_state.Cur_R_speed_L_ai = 300; // 右转！
-	speed_state.Cur_R_speed_R_ai = 260; // **待测**
+	speed_state.Cur_R_speed_L_ai = 260; // 右转！
+	speed_state.Cur_R_speed_R_ai = 245; //
 	
-	speed_state.Ring_speed_L_ai = 150; // 圆环内部左
-	speed_state.Ring_speed_R_ai = 150; // 圆环内部右
+	speed_state.Ring_L_speed_L_ai = 230; // 圆环左转
+	speed_state.Ring_L_speed_R_ai = 280; // 
+	
+	speed_state.Ring_R_speed_L_ai = 280; // 圆环右转 
+	speed_state.Ring_R_speed_R_ai = 230; //
+	
 
-	speed_state.Ringin_speed_L_ai = 140; // 进圆环左
-	speed_state.Ringin_speed_R_ai = 210; // 进圆环右
+	speed_state.Ringin_speed_L_ai = 230; // 进圆环左
+	speed_state.Ringin_speed_R_ai = 280; // 进圆环右
 
-	speed_state.Ringout_speed_L_ai = 100; // 出圆环左
-	speed_state.Ringout_speed_R_ai = 120; // 出圆环右
+	speed_state.Ringout_speed_L_ai = 120; // 出圆环左
+	speed_state.Ringout_speed_R_ai = 140; // 出圆环右
 //*********************************************
 	speed_state.Cross_speed_L_ai = 0; // 十字左
 	speed_state.Cross_speed_R_ai = 0; // 十字右
@@ -173,10 +181,10 @@ void Motor_init(void)
 	speed_now.speed_R = 0;	  // 右轮当前速度值
 	speed_now.speed_R_ai = 0; // 右轮目标值
 
-	PWM_Motor_Max = 2780;
+	PWM_Motor_Max = 2480;
 	PWM_Motor_Min = 0;
-	PWM_Motor_L_now = 0;
-	PWM_Motor_R_now = 0;
+	PWM_Motor_L_now = 250;
+	PWM_Motor_R_now = 180;
 }
 
 // 8.编码器初始化（带串口）
@@ -216,6 +224,23 @@ void temp_init(void){
 	timer.time0_1=0;
 	timer.time1_0=0;
 	timer.time1_1=0;
+	timer.time2_0=0;
+	timer.time2_1=0;
+	EN_Flag=0;
+	gpio_pull_set(P4_5,PULLUP);//GPIO上拉 高电平有效（因为接地了
+	gpio_pull_set(P4_6,PULLUP);
+	gpio_pull_set(P6_7,PULLUP);//光电传感器
+	gpio_pull_set(P6_6,PULLUP);
+	foot_counter.speed_counter0_0=0;
+	foot_counter.speed_counter0_1=0;
+	foot_counter.speed_counter0_2=0;
+	foot_counter.speed_counter0_EN=1;
+	foot_counter.speed_counter1_0=0;
+	foot_counter.speed_counter1_1=0;
+	foot_counter.speed_counter1_2=0;
+	foot_counter.speed_counter1_EN=1;
+	
+	
 	//ringInFlag = 0;
 }
 // 12.FLAG标志初始化
@@ -225,6 +250,7 @@ void flag_init(void){
 	road_flag.Near_Flag=0;
 	road_flag.Cross_Flag_Last=0;
 	road_flag.Cross_Flag=0;
+	road_flag.InGarage_Flag=0;
 
 }
 

@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  06/04/23  00:08:02  PAGE 1   
+C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  09/04/23  22:44:21  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE SEEKFREE_ICM20602
@@ -66,7 +66,7 @@ stmt  level    source
              -------------
                //  @brief      模拟IIC延时
                //  @return     void            
-C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  06/04/23  00:08:02  PAGE 2   
+C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  09/04/23  22:44:21  PAGE 2   
 
                //  @since      v1.0
                //  Sample usage:       如果IIC通讯失败可以尝试增加j的值
@@ -134,7 +134,7 @@ stmt  level    source
                    }
                
                    ICM20602_SCL_LOW();
-C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  06/04/23  00:08:02  PAGE 3   
+C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  09/04/23  22:44:21  PAGE 3   
 
                  icm20602_simiic_delay();
                    return 1;
@@ -202,7 +202,7 @@ stmt  level    source
                //  @param      reg       寄存器地址
                //  @param      dat       写入的数据
                //  @return     void            
-C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  06/04/23  00:08:02  PAGE 4   
+C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  09/04/23  22:44:21  PAGE 4   
 
                //  @since      v1.0
                //  Sample usage:       
@@ -270,7 +270,7 @@ stmt  level    source
                    {
                        *dat_add = icm20602_read_ch(ack); //读取数据
                        dat_add++;
-C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  06/04/23  00:08:02  PAGE 5   
+C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  09/04/23  22:44:21  PAGE 5   
 
                    }
                    *dat_add = icm20602_read_ch(no_ack); //读取数据
@@ -338,7 +338,7 @@ stmt  level    source
   302          
   303          
   304          //-------------------------------------------------------------------------------------------------------
-C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  06/04/23  00:08:02  PAGE 6   
+C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  09/04/23  22:44:21  PAGE 6   
 
              -------------
   305          //  @brief      将val写入cmd对应的寄存器地址
@@ -406,7 +406,7 @@ stmt  level    source
   362          //-------------------------------------------------------------------------------------------------------
              -------------
   363          // 函数简介     IMU660RA 写寄存器
-C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  06/04/23  00:08:02  PAGE 7   
+C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  09/04/23  22:44:21  PAGE 7   
 
   364          // 参数说明     reg             寄存器地址
   365          // 参数说明     dat            数据
@@ -474,7 +474,7 @@ stmt  level    source
   419   1          ICM20602_CS(0);
   420   1          icm20602_simspi_r_reg_bytes(reg | ICM20602_SPI_R, dat, len);
   421   1        ICM20602_CS(1);
-C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  06/04/23  00:08:02  PAGE 8   
+C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  09/04/23  22:44:21  PAGE 8   
 
   422   1      }
   423          
@@ -542,7 +542,7 @@ stmt  level    source
   477          void icm20602_get_gyro (void)
   478          {
   479   1          uint8 dat[6];
-C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  06/04/23  00:08:02  PAGE 9   
+C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  09/04/23  22:44:21  PAGE 9   
 
   480   1      
   481   1          icm20602_read_registers(ICM20602_GYRO_XOUT_H, dat, 6);
@@ -610,7 +610,7 @@ stmt  level    source
   530          // 函数简介     初始化 ICM20602
   531          // 参数说明     void
   532          // 返回参数     uint8           1-初始化失败 0-初始化成功
-C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  06/04/23  00:08:02  PAGE 10  
+C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  09/04/23  22:44:21  PAGE 10  
 
   533          // 使用示例     icm20602_init();
   534          // 备注信息
@@ -678,7 +678,7 @@ stmt  level    source
   593   2              icm20602_write_register(ICM20602_PWR_MGMT_2,     0x00);                 // 开启陀螺仪和加速度计
   594   2              icm20602_write_register(ICM20602_CONFIG,         0x01);                 // 176HZ 1KHZ
   595   2              icm20602_write_register(ICM20602_SMPLRT_DIV,     0x07);                 // 采样速率 SAMPLE_RATE =
-C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  06/04/23  00:08:02  PAGE 11  
+C251 COMPILER V5.60.0,  SEEKFREE_ICM20602                                                  09/04/23  22:44:21  PAGE 11  
 
              - INTERNAL_SAMPLE_RATE / (1 + SMPLRT_DIV)
   596   2              

@@ -3,7 +3,22 @@
 volatile float tempVar;
 volatile float tempVar1;
 volatile float tempVar2;
+volatile int8 EN_Flag;
 //volatile uint16 ringInFlag;
+void wireless_EN(void){
+		if(P45){ //0
+		  EN_Flag=0;
+		}
+		if(P46){
+		  EN_Flag=1;
+		}
+	//	if(EN_Flag){
+	//	 P47 =1;
+	//	 }
+	//	else{
+	//	 P47 =0;
+	//	}
+}
 
 void send_data_sw(int16 a,int16 b,int16 c,int16 d, uint8 target)
 {

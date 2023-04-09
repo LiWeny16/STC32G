@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  SEEKFREE_ABSOLUTE_ENCODER                                          06/04/23  00:08:02  PAGE 1   
+C251 COMPILER V5.60.0,  SEEKFREE_ABSOLUTE_ENCODER                                          09/04/23  22:44:20  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE SEEKFREE_ABSOLUTE_ENCODER
@@ -66,7 +66,7 @@ stmt  level    source
    50          //  @brief      通过SPI写一个byte,同时读取一个byte
    51          //  @param      byte        发送的数据    
    52          //  @return     uint8       return 返回status状态
-C251 COMPILER V5.60.0,  SEEKFREE_ABSOLUTE_ENCODER                                          06/04/23  00:08:02  PAGE 2   
+C251 COMPILER V5.60.0,  SEEKFREE_ABSOLUTE_ENCODER                                          09/04/23  22:44:20  PAGE 2   
 
    53          //  @since      v1.0
    54          //  Sample usage:
@@ -134,7 +134,7 @@ stmt  level    source
   110          //  Sample usage:
   111          //-------------------------------------------------------------------------------------------------------
              -------------
-C251 COMPILER V5.60.0,  SEEKFREE_ABSOLUTE_ENCODER                                          06/04/23  00:08:02  PAGE 3   
+C251 COMPILER V5.60.0,  SEEKFREE_ABSOLUTE_ENCODER                                          09/04/23  22:44:20  PAGE 3   
 
   112          uint8 encoder_simspi_w_reg_byte(uint8 cmd, uint8 val)
   113          {
@@ -202,7 +202,7 @@ stmt  level    source
   170          //  @param      void
   171          //  @return     uint16       返回角度值0-4096 对应0-360°
   172          //  @since      v1.0
-C251 COMPILER V5.60.0,  SEEKFREE_ABSOLUTE_ENCODER                                          06/04/23  00:08:02  PAGE 4   
+C251 COMPILER V5.60.0,  SEEKFREE_ABSOLUTE_ENCODER                                          09/04/23  22:44:20  PAGE 4   
 
   173          //  Sample usage:
   174          //-------------------------------------------------------------------------------------------------------
@@ -270,7 +270,7 @@ stmt  level    source
   231          
   232          //-------------------------以下为硬件SPI--------------------------//
   233          //-------------------------以下为硬件SPI--------------------------//
-C251 COMPILER V5.60.0,  SEEKFREE_ABSOLUTE_ENCODER                                          06/04/23  00:08:02  PAGE 5   
+C251 COMPILER V5.60.0,  SEEKFREE_ABSOLUTE_ENCODER                                          09/04/23  22:44:20  PAGE 5   
 
   234          //-------------------------以下为硬件SPI--------------------------//
   235          
@@ -338,7 +338,7 @@ stmt  level    source
              -------------
   290          uint8 encoder_spi_w_reg_byte(uint8 cmd, uint8 val)
   291          {
-C251 COMPILER V5.60.0,  SEEKFREE_ABSOLUTE_ENCODER                                          06/04/23  00:08:02  PAGE 6   
+C251 COMPILER V5.60.0,  SEEKFREE_ABSOLUTE_ENCODER                                          09/04/23  22:44:20  PAGE 6   
 
   292   1          uint8 dat;
   293   1          ABS_ENCODER_SPI_CSN (0);
@@ -406,7 +406,7 @@ stmt  level    source
   350          //  @since      v1.0
   351          //  Sample usage:
   352          //-------------------------------------------------------------------------------------------------------
-C251 COMPILER V5.60.0,  SEEKFREE_ABSOLUTE_ENCODER                                          06/04/23  00:08:02  PAGE 7   
+C251 COMPILER V5.60.0,  SEEKFREE_ABSOLUTE_ENCODER                                          09/04/23  22:44:20  PAGE 7   
 
              -------------
   353          uint16 encoder_angle_spi(void)
@@ -475,7 +475,7 @@ Module Information          Static   Overlayable
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-C251 COMPILER V5.60.0,  SEEKFREE_ABSOLUTE_ENCODER                                          06/04/23  00:08:02  PAGE 8   
+C251 COMPILER V5.60.0,  SEEKFREE_ABSOLUTE_ENCODER                                          09/04/23  22:44:20  PAGE 8   
 
   xdata size           =    ------     ------
   xdata-const size     =    ------     ------

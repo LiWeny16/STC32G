@@ -4,9 +4,10 @@ void Control_All()
 {
 
 	// 以下为舵机驱动部分
+	wireless_EN();
 	calculate_s(&dg_state, &err_steering); // 计算偏差值，写电感
 
-	road = road_judge(&timer,&road_flag,&dg_state,&err_steering); // 根据电感结构体判断道路状况返回道路结构体
+	road = road_judge(&foot_counter,&timer,&road_flag,&dg_state,&err_steering); // 根据电感结构体判断道路状况返回道路结构体
 
 	Pid_Steering_Calculate(road, &err_steering, &pid_steering); // 计算pid输出值，并写入实参
 	STEERING_Control(road, &pid_steering);						// 从pid输出到实际舵机驱动,判断道路结构体，并做出响应
@@ -14,10 +15,10 @@ void Control_All()
 	// 以下为电机驱动部分
 	// 速度选择
 	speedout(road, &speed_now, &speed_state);	 // 根据道路情况将速度状态结构体中的一组设定值赋给当前速度结构体中的目标值
-	speed_cal(&speed_now);						 // 根据编码器数据计算速度值，并将其赋给当前速度结构体中的当前速度值
+	speed_cal(&foot_counter,&speed_now);						 // 根据编码器数据计算速度值，并将其赋给当前速度结构体中的当前速度值
 	calculate_err_m(&speed_now, &err_motor);	 // 根据编码器数值计算偏差值，并更新偏差值结构体中last量,结果保存在电机偏差值结构体中
 	Pid_Motor_Calculate(&err_motor, &pid_motor); // 由电机偏差（由编码器反应）结构体计算电机PID输出增量
-	MOTOR_Control(road, &pid_motor);			 // 从pid输出到实际电机驱动
+	MOTOR_Control(road, &pid_motor);			 // 从pid输出到实际电机驱动 和road几乎没关系
 }
 
 void STEERING_Control(Road road, PID_Steering *pid_steering)
@@ -45,10 +46,16 @@ void STEERING_Control(Road road, PID_Steering *pid_steering)
 		break;
 
 	case (Ring_In):
-		pwm_duty(STEERING, 788); //左转打死
+		pwm_duty(STEERING, 788); //进环
 		break;
 	case (Ring_Out):
-		pwm_duty(STEERING, 800); //左转打死
+		pwm_duty(STEERING, 800); //出环
+		break;
+	case (OutGarage):
+		pwm_duty(STEERING, 685); //出库
+		break;
+	case (InGarage):
+		pwm_duty(STEERING, 685); //入库
 		break;
 	case (Force_Right):
 		pwm_duty(STEERING, 650); //右转打死

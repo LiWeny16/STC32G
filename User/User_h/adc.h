@@ -13,14 +13,16 @@
 #define YX ADC_P05 // L6
 #define YH ADC_P06 // L7
 
+
+#define ZS ADC_P11  // L7
+#define YS ADC_P10  // L5
+
 // #define ZX ADC_P00  // L3
 // #define ZH ADC_P01  // L1
 
 // #define ZS ADC_P05  // L2 //没用
 // #define YS ADC_P06  // L6 //没用
 
-// #define YH ADC_P11  // L7
-// #define YX ADC_P10  // L5
 
 #define RE ADC_12BIT // 分辨率
 #define count_dg 10 // 平均处理的采样次数
@@ -29,9 +31,11 @@ typedef struct      // 电感状态结构体
 
     int32 L_zx_real; // 左45度电感
     int32 L_zh_real; // 左横电感
-    //unsigned short L_zs_real; // 左竖电感
-    //unsigned short L_ys_real; // 右竖电感
-    int32 L_yh_real; // 右横电感
+    
+		int32 L_zs_real; // 左竖电感
+		int32 L_ys_real; // 右竖电感
+    
+		int32 L_yh_real; // 右横电感
     int32 L_yx_real; // 右45度电感
      ///float L_zh_real; // 左横电感
      ///float L_zx_real; // 左45度电感
@@ -40,8 +44,12 @@ typedef struct      // 电感状态结构体
 
     float L_zx_max; // 检测到的最大值
     float L_zh_max;
+	
     float L_yh_max;
     float L_yx_max;
+	
+		float L_zs_max;
+    float L_ys_max;
     // unsigned short L_zx_max; // 检测到的最大值
     // unsigned short L_zh_max;
     // unsigned short L_zs_max;

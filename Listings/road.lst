@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  road                                                               06/04/23  00:08:05  PAGE 1   
+C251 COMPILER V5.60.0,  road                                                               09/04/23  22:44:28  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE road
@@ -12,166 +12,291 @@ stmt  level    source
     1          // 该文件用于对道路情况进行判断，并将相应标志位赋值
     2          
     3          #include "road.h"
-    4          Road road_judge(TIMER *timer,FLAG *road_flag,DG_State *dg_state ,Err_Steering *err_steering)
+    4          Road road_judge(FOOT_COUNTER *foot_counter,TIMER *timer,FLAG *road_flag,DG_State *dg_state ,Err_Steering 
+             -*err_steering)
     5          {
     6   1        int32 L_Sum;
-    7   1        L_Sum = dg_state->L_zh_real + dg_state->L_yh_real + dg_state->L_zx_real + dg_state->L_yx_real;
-    8   1        tempVar = (float)L_Sum;
-    9   1        P41 = 1;
-   10   1        P52= 1;
-   11   1        //********************************************************
-   12   1        if(timer->time1_0>0){
-   13   2          timer->time1_0--;
-   14   2          if(timer->time1_0>0 && timer->time1_0<=114){ //延时25
-   15   3            return  Ring_In;
-   16   3          }
-   17   2          if(timer->time1_0<=0){
-   18   3            timer->time1_0 =0;
-   19   3          }
-   20   2          
-   21   2        }
-   22   1        if(timer->time0_0>=20){ //到时间了，做事情 中断20ms一次 所以一次20ms 1s 50次
-   23   2          if(
-   24   2              road_flag->Cross_Flag_Last==1 && 
-   25   2              L_Sum >= 10500 &&
-   26   2              isNear(&dg_state, 2661, 1965, 3688, 3634,15000) == 0
-   27   2          ){
-*** WARNING C98 IN LINE 24 OF User\User_c\road.c: parameter 1: pointer to different objects
-*** WARNING C91 IN LINE 24 OF User\User_c\road.c: '&': pointer to different objects
-   28   3            road_flag->Cross_Flag++;
-   29   3            road_flag->Cross_Flag_Last=0;
-   30   3          }
-   31   2          //清除计时器
-   32   2          timer->time0_0=0;
-   33   2          timer->time0_1=0;
-   34   2        } 
-   35   1        //*********************************************************
-   36   1        
-   37   1        if (400 < L_Sum && L_Sum < 5000) // 直走
-   38   1        {
-   39   2          return Straight;
-   40   2        }
-   41   1        else if ( // 左转
-   42   1          5000 <= L_Sum &&
-   43   1          L_Sum < 9500 &&
-   44   1          err_steering->Err >=0.5)
-   45   1        {
-   46   2          return Curve_Left;
-   47   2        }
-   48   1        else if ( // 右转
-   49   1          5000 <= L_Sum &&
-   50   1          L_Sum < 9500 &&
-   51   1          err_steering->Err <= -0.5)
-   52   1        {
-   53   2          return Curve_Right;
-   54   2        }
-   55   1        // else if ( // 在圆环内
-C251 COMPILER V5.60.0,  road                                                               06/04/23  00:08:05  PAGE 2   
+    7   1        int32 L_Sum_Plus;
+    8   1        int32 L_Sum_Left;
+    9   1        int32 L_Sum_Right;
+   10   1        int32 Ring_L_Min;
+   11   1        int32 Ring_R_Min;
+   12   1        Ring_L_Min = 400; //斜电感界限
+   13   1        Ring_R_Min = 900;
+   14   1        L_Sum_Left =  dg_state->L_zh_real +dg_state->L_zs_real+dg_state->L_zx_real;
+   15   1        L_Sum_Right =  dg_state->L_yh_real +dg_state->L_ys_real+dg_state->L_yx_real;
+   16   1      
+   17   1        
+   18   1        L_Sum = dg_state->L_zh_real + dg_state->L_yh_real + dg_state->L_zx_real + dg_state->L_yx_real;
+   19   1        L_Sum_Plus = dg_state->L_zh_real + dg_state->L_yh_real + dg_state->L_zx_real + dg_state->L_yx_real +dg_s
+             -tate->L_zs_real+dg_state->L_ys_real;
+   20   1        tempVar = (float)L_Sum;
+   21   1        P41 = 1;
+   22   1        P52= 1;
+   23   1        //
+   24   1        if(!EN_Flag){return Stop;}
+   25   1        //*******************步************数*********************
+   26   1        
+   27   1        
+   28   1        if(foot_counter->speed_counter0_EN == 1 && foot_counter->speed_counter0_0<=6290){
+   29   2          return OutGarage;
+   30   2        }else{
+   31   2          foot_counter->speed_counter0_EN = 0;
+   32   2        }
+   33   1        if(road_flag->InGarage_Flag==0 && 
+   34   1          foot_counter->speed_counter1_1 >42 && 
+   35   1          Light_Right==1 && 
+   36   1          Light_Left==0){
+   37   2          road_flag->InGarage_Flag=1;
+   38   2          tempVar2=114.0;
+   39   2          timer->time2_0 =80;
+   40   2          return InGarage;
+   41   2        }
+   42   1        //*******************************************************
+   43   1        
+   44   1        
+   45   1        
+   46   1        //*****************时**************间*************************
+   47   1        if(timer->time2_0>0){ //入库
+   48   2          timer->time2_0--;
+   49   2          if(timer->time2_0>0 && timer->time2_0<=79){ 
+   50   3            return  InGarage;
+   51   3          }
+   52   2          if(timer->time2_0<=0){
+   53   3            timer->time2_0 =0;
+   54   3            timer->time2_1 =0;
+   55   3          }
+C251 COMPILER V5.60.0,  road                                                               09/04/23  22:44:28  PAGE 2   
 
-   56   1        //  7000 <= L_Sum &&
-   57   1        //  err_steering->Err < 0)
-   58   1        // {
-   59   1        //  return Big_Ring;
-   60   1        // }
-   61   1        else if ( //进环点
-   62   1          L_Sum >= 10000 &&
-   63   1          L_Sum <= 11200 &&
-   64   1          dg_state->L_yx_real <=500 &&
-   65   1          isNear(&dg_state,3699,3661,3577,35,12000)==1
-   66   1          )
-*** WARNING C98 IN LINE 62 OF User\User_c\road.c: parameter 1: pointer to different objects
-*** WARNING C91 IN LINE 62 OF User\User_c\road.c: '&': pointer to different objects
-   67   1        {
-   68   2            P41=0;
-   69   2          timer->time1_0=120; //*20ms
-   70   2          if(road_flag->Ring_Out_Flag ==0){//不同时为1，代表没走过大圆环
-   71   3            road_flag->Ring_In_Flag=1;
-   72   3              return Ring_In;
-   73   3          }else{
-   74   3            // 代表走过了，略过即可
-   75   3            return Straight;
-   76   3          }
-   77   2        }
-   78   1        else if ( //出环点
-   79   1          L_Sum >= 11500 &&
-   80   1          dg_state->L_yh_real <=1650 &&
-   81   1          isNear(&dg_state,3681,1512,3701,3564,12000)==1
-   82   1          )
-*** WARNING C98 IN LINE 79 OF User\User_c\road.c: parameter 1: pointer to different objects
-*** WARNING C91 IN LINE 79 OF User\User_c\road.c: '&': pointer to different objects
-   83   1        {
-   84   2          if(road_flag->Ring_In_Flag ==1){
-   85   3            road_flag->Ring_Out_Flag =1;//碰到且已经入圆环，就打标记
-   86   3            return Ring_Out;
-   87   3          }else{
-   88   3            return Straight;
-   89   3          }
-   90   2        }
-   91   1        else if ( // 十字路口
-   92   1          L_Sum >= 11000 &&
-   93   1          isNear(&dg_state, 2661, 1965, 3688, 3634,13000) == 1)
-*** WARNING C98 IN LINE 92 OF User\User_c\road.c: parameter 1: pointer to different objects
-*** WARNING C91 IN LINE 92 OF User\User_c\road.c: '&': pointer to different objects
-   94   1        {
-   95   2        
-   96   2          road_flag->Ring_In_Flag = 0;
-   97   2          road_flag->Ring_Out_Flag = 0;
-   98   2          road_flag->Cross_Flag_Last = 1;
-   99   2          //定时器*******************
-  100   2          timer->time0_0++;
-  101   2          if(timer->time0_0>=500){
-  102   3            timer->time0_0=0;
-  103   3            timer->time0_1++;
-  104   3            timer->time0_1=timer->time0_1>=50?0:timer->time0_1;//防止溢出
-  105   3          }
-  106   2        
-  107   2          //定时器*******************
-  108   2          return Force_Straight;
-  109   2        }
-  110   1        else if (
-  111   1             (dg_state->L_zh_real <= 6) && (dg_state->L_zh_real >=0)  || //完全丢线 逻辑与优先级高
-  112   1             (dg_state->L_yh_real <= 6) && (dg_state->L_yh_real >=0)  ||
-  113   1             (dg_state->L_zx_real <= 6) && (dg_state->L_zx_real >=0)  ||
-  114   1             (dg_state->L_yx_real <= 6) && (dg_state->L_yx_real >=0) )
-  115   1        {
-C251 COMPILER V5.60.0,  road                                                               06/04/23  00:08:05  PAGE 3   
+   56   2        }
+   57   1        if(timer->time1_0>0){//到时间了，做事情 中断20ms一次 所以一次20ms 1s 50次
+   58   2          timer->time1_0--;
+   59   2          if(timer->time1_0>0 && timer->time1_0<=119){ //延时25
+   60   3            return  Ring_In;
+   61   3          }
+   62   2          if(timer->time1_0<=0){
+   63   3            timer->time1_0 =0;
+   64   3          }
+   65   2          
+   66   2        }
+   67   1        if(timer->time0_0>=20){ 
+   68   2          if(
+   69   2              road_flag->Cross_Flag_Last==1 && 
+   70   2              L_Sum >= 10500 &&
+   71   2              isNear(&dg_state, 2661, 1965, 3688, 3634,15000) == 0
+   72   2          ){
+*** WARNING C98 IN LINE 69 OF User\User_c\road.c: parameter 1: pointer to different objects
+*** WARNING C91 IN LINE 69 OF User\User_c\road.c: '&': pointer to different objects
+   73   3            road_flag->Cross_Flag++;
+   74   3            road_flag->Cross_Flag_Last=0;
+   75   3          }
+   76   2          //清除计时器
+   77   2          timer->time0_0=0;
+   78   2          timer->time0_1=0;
+   79   2        } 
+   80   1        //*********************************************************
+   81   1        
+   82   1        if (
+   83   1          (500 < L_Sum && L_Sum < 5000) &&  
+   84   1           err_steering->Err <=0.9 &&
+   85   1           err_steering->Err >=-0.9 &&
+   86   1           dg_state->L_ys_real >Ring_L_Min &&
+   87   1           dg_state->L_zs_real >Ring_R_Min 
+   88   1        ) // 直走
+   89   1        {
+   90   2          return Straight;
+   91   2        }
+   92   1        else if ( // 左转
+   93   1          500 <= L_Sum &&
+   94   1          L_Sum < 5800 &&
+   95   1          err_steering->Err >0.9 &&
+   96   1        //  err_steering->Err <=1.2 &&
+   97   1          dg_state->L_ys_real >Ring_L_Min 
+   98   1         // dg_state->L_zs_real >Ring_R_Min 
+   99   1          )
+  100   1        {
+  101   2          return Curve_Left;
+  102   2        }
+  103   1        else if ( // 右转
+  104   1          1000 <= L_Sum &&
+  105   1          L_Sum < 5800 &&
+  106   1          err_steering->Err <-0.9 &&
+  107   1        //   err_steering->Err >=-1.2  &&
+  108   1        //  dg_state->L_ys_real >Ring_L_Min &&
+  109   1          dg_state->L_zs_real >Ring_R_Min
+  110   1          )
+  111   1        {
+  112   2          return Curve_Right;
+  113   2        }
+  114   1      //  Ring_L_Min = 400; //斜电感界限
+  115   1      //  Ring_R_Min = 900;
+  116   1        else if(  //环左
+  117   1          (5800 <= L_Sum &&
+  118   1          L_Sum < 10800 &&
+  119   1          dg_state->L_ys_real <=Ring_L_Min)|| //左界限180
+C251 COMPILER V5.60.0,  road                                                               09/04/23  22:44:28  PAGE 3   
 
-  116   2        //  tempVar1=2333.0;
-  117   2          return Stop;
-  118   2        }
-  119   1      
-  120   1        else
-  121   1        {
-  122   2        //  tempVar1=3222;
-  123   2          return Straight;
+  120   1           (dg_state->L_zs_real>3000 && dg_state->L_ys_real <180) 
+  121   1        //  err_steering->Err > 0.2
+  122   1        ){
+  123   2          return Ring_Left;
   124   2        }
-  125   1      }
-  126          int16 isNear(DG_State *dg_state,int16 zh,int16 yh,int16 zx,int16 yx,int16 bear)
-  127          {
-  128   1        if((float)(((int16)dg_state->L_zh_real - zh) * ((int16)dg_state->L_zh_real - zh) +
-  129   1             ((int16)dg_state->L_yh_real - yh) * ((int16)dg_state->L_yh_real - yh) +
-  130   1             ((int16)dg_state->L_zx_real - zx) * ((int16)dg_state->L_zx_real - zx) +
-  131   1             ((int16)dg_state->L_yx_real - yx) * ((int16)dg_state->L_yx_real - yx)) /10 <=bear)
-  132   1        {
-  133   2          return 1;
-  134   2        }
-  135   1        else
-  136   1        {
-  137   2          return 0;
-  138   2        }
-  139   1      }
+  125   1        else if( //环右
+  126   1          (5800 <= L_Sum &&
+  127   1          L_Sum < 10800 &&
+  128   1          dg_state->L_zs_real <=Ring_R_Min)||
+  129   1          (dg_state->L_zs_real<200 && dg_state->L_ys_real >3000)
+  130   1        //  err_steering->Err < -0.2
+  131   1        ){
+  132   2          return Ring_Right;
+  133   2        }
+  134   1        // else if ( // 在圆环内
+  135   1        //6500 <= L_Sum &&
+  136   1        // L_Sum<=7980 &&
+  137   1        //  err_steering->Err < 0)
+  138   1        // {
+  139   1        //  return Big_Ring;
+  140   1        // }
+  141   1        else if ( //进环点 
+  142   1          L_Sum >= 9000 &&
+  143   1          L_Sum <= 12000 &&
+  144   1          dg_state->L_yx_real <=900 &&
+  145   1          dg_state->L_ys_real <=2000 &&
+  146   1          isNear(&dg_state,3693,3325,3683,718,12000)==1
+  147   1          )
+*** WARNING C98 IN LINE 142 OF User\User_c\road.c: parameter 1: pointer to different objects
+*** WARNING C91 IN LINE 142 OF User\User_c\road.c: '&': pointer to different objects
+  148   1        {
+  149   2            P41=0;
+  150   2          
+  151   2          if(road_flag->Ring_Out_Flag ==0){//不同时为1，代表没走过大圆环
+  152   3            timer->time1_0=120; //*20ms
+  153   3            road_flag->Ring_Out_Flag=1; //下次不走
+  154   3            road_flag->Ring_In_Flag=1;
+  155   3              return Ring_In;
+  156   3          }else{
+  157   3            // 代表走过了，略过即可
+  158   3            return Force_Straight;
+  159   3          }
+  160   2        }
+  161   1        else if 
+  162   1        ( //出环点 暂时不用
+  163   1          (
+  164   1          L_Sum >= 22200 &&
+  165   1          dg_state->L_zh_real >=3200 &&
+  166   1          dg_state->L_yh_real <=2500 &&
+  167   1          isNear(&dg_state,3667,2127,3668,3573,12000)==1 
+  168   1          ) ||
+  169   1          (
+  170   1            L_Sum >= 12000 &&
+  171   1            isNear(&dg_state,3466,1913,3197,3274,8000)==1
+  172   1          ) ||
+  173   1          (
+  174   1            L_Sum >= 13400 &&
+  175   1            isNear(&dg_state,3667,2788,3668,3566,12000)==1
+  176   1          )
+  177   1        )
+*** WARNING C98 IN LINE 163 OF User\User_c\road.c: parameter 1: pointer to different objects
+*** WARNING C98 IN LINE 163 OF User\User_c\road.c: parameter 1: pointer to different objects
+*** WARNING C98 IN LINE 163 OF User\User_c\road.c: parameter 1: pointer to different objects
+*** WARNING C91 IN LINE 163 OF User\User_c\road.c: '&': pointer to different objects
+*** WARNING C91 IN LINE 163 OF User\User_c\road.c: '&': pointer to different objects
+*** WARNING C91 IN LINE 163 OF User\User_c\road.c: '&': pointer to different objects
+C251 COMPILER V5.60.0,  road                                                               09/04/23  22:44:28  PAGE 4   
+
+  178   1          
+  179   1        {
+  180   2          if(road_flag->Ring_In_Flag ==1){
+  181   3            road_flag->Ring_Out_Flag =1;//碰到且已经入圆环，就打标记
+  182   3            return Ring_Out;
+  183   3          }else{
+  184   3            return Straight;
+  185   3          }
+  186   2        }
+  187   1        else if ( // 十字路口
+  188   1          L_Sum >= 18000 &&
+  189   1          dg_state->L_zx_real <=1500 &&
+  190   1          isNear(&dg_state, 1834, 2333, 919, 3446,11000) == 1)
+*** WARNING C98 IN LINE 188 OF User\User_c\road.c: parameter 1: pointer to different objects
+*** WARNING C91 IN LINE 188 OF User\User_c\road.c: '&': pointer to different objects
+  191   1        {
+  192   2        
+  193   2          road_flag->Ring_In_Flag = 0;
+  194   2          road_flag->Ring_Out_Flag = 0;
+  195   2          road_flag->Cross_Flag_Last = 1;
+  196   2          //定时器*******************
+  197   2          timer->time0_0++;
+  198   2          if(timer->time0_0>=500){
+  199   3            timer->time0_0=0;
+  200   3            timer->time0_1++;
+  201   3            timer->time0_1=timer->time0_1>=50?0:timer->time0_1;//防止溢出
+  202   3          }
+  203   2        
+  204   2          //定时器*******************
+  205   2          return Force_Straight;
+  206   2        }
+  207   1        else if (
+  208   1             ((dg_state->L_zh_real <= 10) && (dg_state->L_zh_real >=0))  && //完全丢线 逻辑与优先级高
+  209   1             ((dg_state->L_yh_real <= 10) && (dg_state->L_yh_real >=0))  &&
+  210   1             ((dg_state->L_zx_real <= 10) && (dg_state->L_zx_real >=0))  &&
+  211   1             ((dg_state->L_yx_real <= 10) && (dg_state->L_yx_real >=0)) )
+  212   1        {
+  213   2        //  tempVar1=2333.0;
+  214   2          return Stop;
+  215   2        }
+  216   1      
+  217   1        else
+  218   1        {
+  219   2        //  tempVar1=3222;
+  220   2          return Straight;
+  221   2        }
+  222   1      }
+  223          int16 isNear(DG_State *dg_state,int16 zh,int16 yh,int16 zx,int16 yx,int16 bear)
+  224          {
+  225   1        if((float)(((int16)dg_state->L_zh_real - zh) * ((int16)dg_state->L_zh_real - zh) +
+  226   1             ((int16)dg_state->L_yh_real - yh) * ((int16)dg_state->L_yh_real - yh) +
+  227   1             ((int16)dg_state->L_zx_real - zx) * ((int16)dg_state->L_zx_real - zx) +
+  228   1             ((int16)dg_state->L_yx_real - yx) * ((int16)dg_state->L_yx_real - yx)) /10 <=bear)
+  229   1        {
+  230   2          return 1;
+  231   2        }
+  232   1        else
+  233   1        {
+  234   2          return 0;
+  235   2        }
+  236   1      }
+  237          
+  238          int16 isNearPlus(DG_State *dg_state,int16 zh,int16 yh,int16 zx,int16 yx ,int16 zs,int16 ys,int16 bear)
+  239          {
+  240   1        if((float)(
+  241   1             ((int16)dg_state->L_zh_real - zh) * ((int16)dg_state->L_zh_real - zh) +
+C251 COMPILER V5.60.0,  road                                                               09/04/23  22:44:28  PAGE 5   
+
+  242   1             ((int16)dg_state->L_yh_real - yh) * ((int16)dg_state->L_yh_real - yh) +
+  243   1             ((int16)dg_state->L_zx_real - zx) * ((int16)dg_state->L_zx_real - zx) +
+  244   1             ((int16)dg_state->L_yx_real - yx) * ((int16)dg_state->L_yx_real - yx) +  
+  245   1             ((int16)dg_state->L_zs_real - zs) * ((int16)dg_state->L_zs_real - zs) +
+  246   1             ((int16)dg_state->L_ys_real - ys) * ((int16)dg_state->L_ys_real - ys)) /10 <=bear)
+  247   1        {
+  248   2          return 1;
+  249   2        }
+  250   1        else
+  251   1        {
+  252   2          return 0;
+  253   2        }
+  254   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       913     ------
+  code size            =      1630     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
   xdata size           =    ------     ------
   xdata-const size     =    ------     ------
-  edata size           =    ------         22
+  edata size           =    ------         32
   bit size             =    ------     ------
   ebit size            =    ------     ------
   bitaddressable size  =    ------     ------
@@ -183,4 +308,4 @@ Module Information          Static   Overlayable
 End of Module Information.
 
 
-C251 COMPILATION COMPLETE.  8 WARNING(S),  0 ERROR(S)
+C251 COMPILATION COMPLETE.  12 WARNING(S),  0 ERROR(S)

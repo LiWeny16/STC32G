@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  control                                                            06/04/23  00:08:04  PAGE 1   
+C251 COMPILER V5.60.0,  control                                                            09/04/23  22:44:26  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE control
@@ -15,170 +15,178 @@ stmt  level    source
     4          {
     5   1      
     6   1        // ÒÔÏÂÎª¶æ»úÇý¶¯²¿·Ö
-    7   1        calculate_s(&dg_state, &err_steering); // ¼ÆËãÆ«²îÖµ£¬Ð´µç¸Ð
-    8   1      
-    9   1        road = road_judge(&timer,&road_flag,&dg_state,&err_steering); // ¸ù¾Ýµç¸Ð½á¹¹ÌåÅÐ¶ÏµÀÂ·×´¿ö·µ»ØµÀÂ·½á¹¹Ì
-             -å
-   10   1      
-   11   1        Pid_Steering_Calculate(road, &err_steering, &pid_steering); // ¼ÆËãpidÊä³öÖµ£¬²¢Ð´ÈëÊµ²Î
-   12   1        STEERING_Control(road, &pid_steering);            // ´ÓpidÊä³öµ½Êµ¼Ê¶æ»úÇý¶¯,ÅÐ¶ÏµÀÂ·½á¹¹Ìå£¬²¢×ö³öÏìÓ¦
-   13   1      
-   14   1        // ÒÔÏÂÎªµç»úÇý¶¯²¿·Ö
-   15   1        // ËÙ¶ÈÑ¡Ôñ
-   16   1        speedout(road, &speed_now, &speed_state);  // ¸ù¾ÝµÀÂ·Çé¿ö½«ËÙ¶È×´Ì¬½á¹¹ÌåÖÐµÄÒ»×éÉè¶¨Öµ¸³¸øµ±Ç°ËÙ¶È½á¹¹
+    7   1        wireless_EN();
+    8   1        calculate_s(&dg_state, &err_steering); // ¼ÆËãÆ«²îÖµ£¬Ð´µç¸Ð
+    9   1      
+   10   1        road = road_judge(&foot_counter,&timer,&road_flag,&dg_state,&err_steering); // ¸ù¾Ýµç¸Ð½á¹¹ÌåÅÐ¶ÏµÀÂ·×´¿
+             -ö·µ»ØµÀÂ·½á¹¹Ìå
+   11   1      
+   12   1        Pid_Steering_Calculate(road, &err_steering, &pid_steering); // ¼ÆËãpidÊä³öÖµ£¬²¢Ð´ÈëÊµ²Î
+   13   1        STEERING_Control(road, &pid_steering);            // ´ÓpidÊä³öµ½Êµ¼Ê¶æ»úÇý¶¯,ÅÐ¶ÏµÀÂ·½á¹¹Ìå£¬²¢×ö³öÏìÓ¦
+   14   1      
+   15   1        // ÒÔÏÂÎªµç»úÇý¶¯²¿·Ö
+   16   1        // ËÙ¶ÈÑ¡Ôñ
+   17   1        speedout(road, &speed_now, &speed_state);  // ¸ù¾ÝµÀÂ·Çé¿ö½«ËÙ¶È×´Ì¬½á¹¹ÌåÖÐµÄÒ»×éÉè¶¨Öµ¸³¸øµ±Ç°ËÙ¶È½á¹¹
              -ÌåÖÐµÄÄ¿±êÖµ
-   17   1        speed_cal(&speed_now);             // ¸ù¾Ý±àÂëÆ÷Êý¾Ý¼ÆËãËÙ¶ÈÖµ£¬²¢½«Æä¸³¸øµ±Ç°ËÙ¶È½á¹¹ÌåÖÐµÄµ±Ç°ËÙ¶ÈÖµ
-   18   1        calculate_err_m(&speed_now, &err_motor);   // ¸ù¾Ý±àÂëÆ÷ÊýÖµ¼ÆËãÆ«²îÖµ£¬²¢¸üÐÂÆ«²îÖµ½á¹¹ÌåÖÐlastÁ¿,½á¹û±£
+   18   1        speed_cal(&foot_counter,&speed_now);             // ¸ù¾Ý±àÂëÆ÷Êý¾Ý¼ÆËãËÙ¶ÈÖµ£¬²¢½«Æä¸³¸øµ±Ç°ËÙ¶È½á¹¹ÌåÖÐµÄµ±Ç°
+             -ËÙ¶ÈÖµ
+   19   1        calculate_err_m(&speed_now, &err_motor);   // ¸ù¾Ý±àÂëÆ÷ÊýÖµ¼ÆËãÆ«²îÖµ£¬²¢¸üÐÂÆ«²îÖµ½á¹¹ÌåÖÐlastÁ¿,½á¹û±£
              -´æÔÚµç»úÆ«²îÖµ½á¹¹ÌåÖÐ
-   19   1        Pid_Motor_Calculate(&err_motor, &pid_motor); // ÓÉµç»úÆ«²î£¨ÓÉ±àÂëÆ÷·´Ó¦£©½á¹¹Ìå¼ÆËãµç»úPIDÊä³öÔöÁ¿
-   20   1        MOTOR_Control(road, &pid_motor);       // ´ÓpidÊä³öµ½Êµ¼Êµç»úÇý¶¯
-   21   1      }
-   22          
-   23          void STEERING_Control(Road road, PID_Steering *pid_steering)
-   24          {
-   25   1        // temp = pid_steering->PID_STEERING_OUT;
-   26   1        // pid_steering->PID_STEERING_OUT=(pid_steering->PID_STEERING_OUT+725.0); //Ö®Ç°ÓÐÕý¸º
-   27   1        float Steer_center_temp = 735.0;
-   28   1        switch (road)
-   29   1        {
-   30   2        case (Straight): // Ö±µÀ
-   31   2          pid_steering->STEERING_OUT_temp = pid_steering->STEERING_OUT_temp + Steer_center_temp;
-   32   2          // temp=(temp+725.0); //Ö®Ç°ÓÐÕý¸º£¬ÊÇPIDÈ¨ÖØºóµÄÖµ
-   33   2          pid_steering->PID_STEERING_OUT = constrain_uint32((uint32)pid_steering->STEERING_OUT_temp, PWM_Steering
+   20   1        Pid_Motor_Calculate(&err_motor, &pid_motor); // ÓÉµç»úÆ«²î£¨ÓÉ±àÂëÆ÷·´Ó¦£©½á¹¹Ìå¼ÆËãµç»úPIDÊä³öÔöÁ¿
+   21   1        MOTOR_Control(road, &pid_motor);       // ´ÓpidÊä³öµ½Êµ¼Êµç»úÇý¶¯ ºÍroad¼¸ºõÃ»¹ØÏµ
+   22   1      }
+   23          
+   24          void STEERING_Control(Road road, PID_Steering *pid_steering)
+   25          {
+   26   1        // temp = pid_steering->PID_STEERING_OUT;
+   27   1        // pid_steering->PID_STEERING_OUT=(pid_steering->PID_STEERING_OUT+725.0); //Ö®Ç°ÓÐÕý¸º
+   28   1        float Steer_center_temp = 735.0;
+   29   1        switch (road)
+   30   1        {
+   31   2        case (Straight): // Ö±µÀ
+   32   2          pid_steering->STEERING_OUT_temp = pid_steering->STEERING_OUT_temp + Steer_center_temp;
+   33   2          // temp=(temp+725.0); //Ö®Ç°ÓÐÕý¸º£¬ÊÇPIDÈ¨ÖØºóµÄÖµ
+   34   2          pid_steering->PID_STEERING_OUT = constrain_uint32((uint32)pid_steering->STEERING_OUT_temp, PWM_Steering
              -_Min, PWM_Steering_Max); // Çý¶¯ÏÞ·ù
-   34   2          pwm_duty(STEERING, (pid_steering->PID_STEERING_OUT));                                     // ¶æ»úÇý¶¯
-   35   2          break;
-   36   2        case (Curve_Left):
-   37   2          pid_steering->STEERING_OUT_temp = pid_steering->STEERING_OUT_temp + Steer_center_temp;
-   38   2          pid_steering->PID_STEERING_OUT = constrain_uint32((uint32)pid_steering->STEERING_OUT_temp, PWM_Steering
+   35   2          pwm_duty(STEERING, (pid_steering->PID_STEERING_OUT));                                     // ¶æ»úÇý¶¯
+   36   2          break;
+   37   2        case (Curve_Left):
+   38   2          pid_steering->STEERING_OUT_temp = pid_steering->STEERING_OUT_temp + Steer_center_temp;
+   39   2          pid_steering->PID_STEERING_OUT = constrain_uint32((uint32)pid_steering->STEERING_OUT_temp, PWM_Steering
              -_Min, PWM_Steering_Max); // Çý¶¯ÏÞ·ù
-   39   2          pwm_duty(STEERING, (pid_steering->PID_STEERING_OUT));
-   40   2          break;
-   41   2        case (Curve_Right):
-   42   2          pid_steering->STEERING_OUT_temp = pid_steering->STEERING_OUT_temp + Steer_center_temp;
-   43   2          pid_steering->PID_STEERING_OUT = constrain_uint32((uint32)pid_steering->STEERING_OUT_temp, PWM_Steering
+   40   2          pwm_duty(STEERING, (pid_steering->PID_STEERING_OUT));
+   41   2          break;
+   42   2        case (Curve_Right):
+   43   2          pid_steering->STEERING_OUT_temp = pid_steering->STEERING_OUT_temp + Steer_center_temp;
+   44   2          pid_steering->PID_STEERING_OUT = constrain_uint32((uint32)pid_steering->STEERING_OUT_temp, PWM_Steering
              -_Min, PWM_Steering_Max); // Çý¶¯ÏÞ·ù
-   44   2          pwm_duty(STEERING, (pid_steering->PID_STEERING_OUT));
-   45   2          break;
-   46   2      
-   47   2        case (Ring_In):
-   48   2          pwm_duty(STEERING, 788); //×ó×ª´òËÀ
-   49   2          break;
-   50   2        case (Ring_Out):
-   51   2          pwm_duty(STEERING, 800); //×ó×ª´òËÀ
-C251 COMPILER V5.60.0,  control                                                            06/04/23  00:08:04  PAGE 2   
+   45   2          pwm_duty(STEERING, (pid_steering->PID_STEERING_OUT));
+   46   2          break;
+   47   2      
+   48   2        case (Ring_In):
+   49   2          pwm_duty(STEERING, 788); //½ø»·
+   50   2          break;
+C251 COMPILER V5.60.0,  control                                                            09/04/23  22:44:26  PAGE 2   
 
-   52   2          break;
-   53   2        case (Force_Right):
-   54   2          pwm_duty(STEERING, 650); //ÓÒ×ª´òËÀ
-   55   2          break;
-   56   2        case (Force_Left):
-   57   2          pwm_duty(STEERING, 805); //×ó×ª´òËÀ
-   58   2          break;
-   59   2        case (Force_Straight):
-   60   2          pwm_duty(STEERING, 735); //Ö±´òËÀ
-   61   2          break;
-   62   2        case (Stop): // Í£ÏÂ
-   63   2          pwm_duty(STEERING, Steer_center_temp);
-   64   2          break;
-   65   2      
-   66   2        default: // ±ðµÄ
-   67   2          pid_steering->STEERING_OUT_temp = pid_steering->STEERING_OUT_temp + Steer_center_temp;
-   68   2          pid_steering->PID_STEERING_OUT = constrain_uint32((uint32)pid_steering->STEERING_OUT_temp, PWM_Steering
+   51   2        case (Ring_Out):
+   52   2          pwm_duty(STEERING, 800); //³ö»·
+   53   2          break;
+   54   2        case (OutGarage):
+   55   2          pwm_duty(STEERING, 685); //³ö¿â
+   56   2          break;
+   57   2        case (InGarage):
+   58   2          pwm_duty(STEERING, 685); //Èë¿â
+   59   2          break;
+   60   2        case (Force_Right):
+   61   2          pwm_duty(STEERING, 650); //ÓÒ×ª´òËÀ
+   62   2          break;
+   63   2        case (Force_Left):
+   64   2          pwm_duty(STEERING, 805); //×ó×ª´òËÀ
+   65   2          break;
+   66   2        case (Force_Straight):
+   67   2          pwm_duty(STEERING, 735); //Ö±´òËÀ
+   68   2          break;
+   69   2        case (Stop): // Í£ÏÂ
+   70   2          pwm_duty(STEERING, Steer_center_temp);
+   71   2          break;
+   72   2      
+   73   2        default: // ±ðµÄ
+   74   2          pid_steering->STEERING_OUT_temp = pid_steering->STEERING_OUT_temp + Steer_center_temp;
+   75   2          pid_steering->PID_STEERING_OUT = constrain_uint32((uint32)pid_steering->STEERING_OUT_temp, PWM_Steering
              -_Min, PWM_Steering_Max); // Çý¶¯ÏÞ·ù
-   69   2          pwm_duty(STEERING, (pid_steering->PID_STEERING_OUT));   
-   70   2          break;
-   71   2        }
-   72   1      }
-   73          
-   74          void MOTOR_Control(Road road, PID_Motor *pid_motor)
-   75          {
-   76   1        switch (road)
-   77   1        {
-   78   2        case (Straight): // Ö±µÀ
-   79   2          pid_motor->PID_MOTOR_L_OUT = (int)pid_motor->MOTOR_L_OUT_temp + PWM_Motor_L_now;
-   80   2          pid_motor->PID_MOTOR_R_OUT = (int)pid_motor->MOTOR_R_OUT_temp + PWM_Motor_R_now;
-   81   2          //PID_MOTOR_L_OUT int32 PWM_Motor_L_now uint16
-   82   2          pid_motor->PID_MOTOR_L_OUT = constrain_int32(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max);
+   76   2          pwm_duty(STEERING, (pid_steering->PID_STEERING_OUT));   
+   77   2          break;
+   78   2        }
+   79   1      }
+   80          
+   81          void MOTOR_Control(Road road, PID_Motor *pid_motor)
+   82          {
+   83   1        switch (road)
+   84   1        {
+   85   2        case (Straight): // Ö±µÀ
+   86   2          pid_motor->PID_MOTOR_L_OUT = (int)pid_motor->MOTOR_L_OUT_temp + PWM_Motor_L_now;
+   87   2          pid_motor->PID_MOTOR_R_OUT = (int)pid_motor->MOTOR_R_OUT_temp + PWM_Motor_R_now;
+   88   2          //PID_MOTOR_L_OUT int32 PWM_Motor_L_now uint16
+   89   2          pid_motor->PID_MOTOR_L_OUT = constrain_int32(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max);
              - // Çý¶¯ÏÞ·ù
-   83   2          pid_motor->PID_MOTOR_R_OUT = constrain_int32(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
-   84   2      
-   85   2          // pwm_duty(MOTOR1_P,pid_motor->PID_MOTOR_L_OUT);//×óµç»úÇý¶¯
-   86   2          // pwm_duty(MOTOR1_N,pid_motor->PID_MOTOR_L_OUT);
-   87   2          // pwm_duty(PWMA_CH1P_P60,(uint32)0);//×óµç»úÇý¶¯
-   88   2          // pwm_duty(PWMA_CH2P_P62,pid_motor->PID_MOTOR_L_OUT/5);
-   89   2          // 15000 ¶ÔÓ¦Õ¼¿Õ±È1400
-   90   2          pwm_duty(L_Motor_P, 0); // ×óµç»úÇý¶¯
-   91   2          pwm_duty(L_Motor_N, 5000+pid_motor->PID_MOTOR_L_OUT); // µ¥¶ÀËüÒ»¸öÓÐÊýÖµ£¬·´×ª
-   92   2      
-   93   2          pwm_duty(R_Motor_P, 0); // ÓÒµç»úÇý¶¯
-   94   2          pwm_duty(R_Motor_N, 5000+pid_motor->PID_MOTOR_R_OUT);
-   95   2          PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT; // ×óµç»úPWM¸üÐÂ
-   96   2          PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT; // ÓÒµç»úPWM¸üÐÂ
-   97   2          break;
-   98   2      
-   99   2        case (Curve_Left): //×ó×ª
-  100   2          pid_motor->PID_MOTOR_L_OUT = (int)pid_motor->MOTOR_L_OUT_temp + PWM_Motor_L_now;
-  101   2          pid_motor->PID_MOTOR_R_OUT = (int)pid_motor->MOTOR_R_OUT_temp + PWM_Motor_R_now;
-  102   2          //PID_MOTOR_L_OUT int32 PWM_Motor_L_now uint16
-  103   2          pid_motor->PID_MOTOR_L_OUT = constrain_int32(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max);
+   90   2          pid_motor->PID_MOTOR_R_OUT = constrain_int32(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
+   91   2      
+   92   2          // pwm_duty(MOTOR1_P,pid_motor->PID_MOTOR_L_OUT);//×óµç»úÇý¶¯
+   93   2          // pwm_duty(MOTOR1_N,pid_motor->PID_MOTOR_L_OUT);
+   94   2          // pwm_duty(PWMA_CH1P_P60,(uint32)0);//×óµç»úÇý¶¯
+   95   2          // pwm_duty(PWMA_CH2P_P62,pid_motor->PID_MOTOR_L_OUT/5);
+   96   2          // 15000 ¶ÔÓ¦Õ¼¿Õ±È1400
+   97   2          pwm_duty(L_Motor_P, 0); // ×óµç»úÇý¶¯
+   98   2          pwm_duty(L_Motor_N, 5000+pid_motor->PID_MOTOR_L_OUT); // µ¥¶ÀËüÒ»¸öÓÐÊýÖµ£¬·´×ª
+   99   2      
+  100   2          pwm_duty(R_Motor_P, 0); // ÓÒµç»úÇý¶¯
+  101   2          pwm_duty(R_Motor_N, 5000+pid_motor->PID_MOTOR_R_OUT);
+  102   2          PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT; // ×óµç»úPWM¸üÐÂ
+  103   2          PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT; // ÓÒµç»úPWM¸üÐÂ
+  104   2          break;
+  105   2      
+  106   2        case (Curve_Left): //×ó×ª
+  107   2          pid_motor->PID_MOTOR_L_OUT = (int)pid_motor->MOTOR_L_OUT_temp + PWM_Motor_L_now;
+  108   2          pid_motor->PID_MOTOR_R_OUT = (int)pid_motor->MOTOR_R_OUT_temp + PWM_Motor_R_now;
+  109   2          //PID_MOTOR_L_OUT int32 PWM_Motor_L_now uint16
+  110   2          pid_motor->PID_MOTOR_L_OUT = constrain_int32(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max);
              - // Çý¶¯ÏÞ·ù
-  104   2          pid_motor->PID_MOTOR_R_OUT = constrain_int32(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
-  105   2          pwm_duty(L_Motor_P, 0); // ×óµç»úÇý¶¯
-  106   2          pwm_duty(L_Motor_N, 5000+pid_motor->PID_MOTOR_L_OUT); // µ¥¶ÀËüÒ»¸öÓÐÊýÖµ£¬·´×ª
-  107   2      
-  108   2          pwm_duty(R_Motor_P, 0); // ÓÒµç»úÇý¶¯
-  109   2          pwm_duty(R_Motor_N, 5000+pid_motor->PID_MOTOR_R_OUT);
-  110   2          PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT; // ×óµç»úPWM¸üÐÂ
-  111   2          PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT; // ÓÒµç»úPWM¸üÐÂ
-  112   2          break;
-  113   2        case (Curve_Right): //ÓÒ×ª
-  114   2        pid_motor->PID_MOTOR_L_OUT = (int)pid_motor->MOTOR_L_OUT_temp + PWM_Motor_L_now;
-C251 COMPILER V5.60.0,  control                                                            06/04/23  00:08:04  PAGE 3   
+  111   2          pid_motor->PID_MOTOR_R_OUT = constrain_int32(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
+  112   2          pwm_duty(L_Motor_P, 0); // ×óµç»úÇý¶¯
+  113   2          pwm_duty(L_Motor_N, 5000+pid_motor->PID_MOTOR_L_OUT); // µ¥¶ÀËüÒ»¸öÓÐÊýÖµ£¬·´×ª
+C251 COMPILER V5.60.0,  control                                                            09/04/23  22:44:26  PAGE 3   
 
-  115   2          pid_motor->PID_MOTOR_R_OUT = (int)pid_motor->MOTOR_R_OUT_temp + PWM_Motor_R_now;
-  116   2          //PID_MOTOR_L_OUT int32 PWM_Motor_L_now uint16
-  117   2          pid_motor->PID_MOTOR_L_OUT = constrain_int32(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max);
+  114   2      
+  115   2          pwm_duty(R_Motor_P, 0); // ÓÒµç»úÇý¶¯
+  116   2          pwm_duty(R_Motor_N, 5000+pid_motor->PID_MOTOR_R_OUT);
+  117   2          PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT; // ×óµç»úPWM¸üÐÂ
+  118   2          PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT; // ÓÒµç»úPWM¸üÐÂ
+  119   2          break;
+  120   2        case (Curve_Right): //ÓÒ×ª
+  121   2        pid_motor->PID_MOTOR_L_OUT = (int)pid_motor->MOTOR_L_OUT_temp + PWM_Motor_L_now;
+  122   2          pid_motor->PID_MOTOR_R_OUT = (int)pid_motor->MOTOR_R_OUT_temp + PWM_Motor_R_now;
+  123   2          //PID_MOTOR_L_OUT int32 PWM_Motor_L_now uint16
+  124   2          pid_motor->PID_MOTOR_L_OUT = constrain_int32(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max);
              - // Çý¶¯ÏÞ·ù
-  118   2          pid_motor->PID_MOTOR_R_OUT = constrain_int32(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
-  119   2          pwm_duty(L_Motor_P, 0); // ×óµç»úÇý¶¯
-  120   2          pwm_duty(L_Motor_N, 5000+pid_motor->PID_MOTOR_L_OUT); // µ¥¶ÀËüÒ»¸öÓÐÊýÖµ£¬·´×ª
-  121   2      
-  122   2          pwm_duty(R_Motor_P, 0); // ÓÒµç»úÇý¶¯
-  123   2          pwm_duty(R_Motor_N, 5000+pid_motor->PID_MOTOR_R_OUT);
-  124   2          PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT; // ×óµç»úPWM¸üÐÂ
-  125   2          PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT; // ÓÒµç»úPWM¸üÐÂ
-  126   2          break;
-  127   2        case (Stop):          // Í£ÏÂ
-  128   2          pwm_duty(L_Motor_P, 5000); // ×óµç»úÇý¶¯
-  129   2          pwm_duty(L_Motor_N, 5000); // µ¥¶ÀËüÒ»¸öÓÐÊýÖµ£¬·´×ª
-  130   2      
-  131   2          pwm_duty(R_Motor_P, 5000); // ÓÒµç»úÇý¶¯
-  132   2          pwm_duty(R_Motor_N, 5000);
+  125   2          pid_motor->PID_MOTOR_R_OUT = constrain_int32(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
+  126   2          pwm_duty(L_Motor_P, 0); // ×óµç»úÇý¶¯
+  127   2          pwm_duty(L_Motor_N, 5000+pid_motor->PID_MOTOR_L_OUT); // µ¥¶ÀËüÒ»¸öÓÐÊýÖµ£¬·´×ª
+  128   2      
+  129   2          pwm_duty(R_Motor_P, 0); // ÓÒµç»úÇý¶¯
+  130   2          pwm_duty(R_Motor_N, 5000+pid_motor->PID_MOTOR_R_OUT);
+  131   2          PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT; // ×óµç»úPWM¸üÐÂ
+  132   2          PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT; // ÓÒµç»úPWM¸üÐÂ
   133   2          break;
-  134   2      
-  135   2        default: // ±ðµÄ
-  136   2        pid_motor->PID_MOTOR_L_OUT = (int)pid_motor->MOTOR_L_OUT_temp + PWM_Motor_L_now;
-  137   2          pid_motor->PID_MOTOR_R_OUT = (int)pid_motor->MOTOR_R_OUT_temp + PWM_Motor_R_now;
-  138   2          //PID_MOTOR_L_OUT int32 PWM_Motor_L_now uint16
-  139   2          pid_motor->PID_MOTOR_L_OUT = constrain_int32(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max);
+  134   2        case (Stop):          // Í£ÏÂ
+  135   2          pwm_duty(L_Motor_P, 5000); // ×óµç»úÇý¶¯
+  136   2          pwm_duty(L_Motor_N, 5000); // µ¥¶ÀËüÒ»¸öÓÐÊýÖµ£¬·´×ª
+  137   2      
+  138   2          pwm_duty(R_Motor_P, 5000); // ÓÒµç»úÇý¶¯
+  139   2          pwm_duty(R_Motor_N, 5000);
+  140   2          break;
+  141   2      
+  142   2        default: // ±ðµÄ
+  143   2        pid_motor->PID_MOTOR_L_OUT = (int)pid_motor->MOTOR_L_OUT_temp + PWM_Motor_L_now;
+  144   2          pid_motor->PID_MOTOR_R_OUT = (int)pid_motor->MOTOR_R_OUT_temp + PWM_Motor_R_now;
+  145   2          //PID_MOTOR_L_OUT int32 PWM_Motor_L_now uint16
+  146   2          pid_motor->PID_MOTOR_L_OUT = constrain_int32(pid_motor->PID_MOTOR_L_OUT, PWM_Motor_Min, PWM_Motor_Max);
              - // Çý¶¯ÏÞ·ù
-  140   2          pid_motor->PID_MOTOR_R_OUT = constrain_int32(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
-  141   2          pwm_duty(L_Motor_P, 0); // ×óµç»úÇý¶¯
-  142   2          pwm_duty(L_Motor_N, 5000+pid_motor->PID_MOTOR_L_OUT); // µ¥¶ÀËüÒ»¸öÓÐÊýÖµ£¬·´×ª
-  143   2      
-  144   2          pwm_duty(R_Motor_P, 0); // ÓÒµç»úÇý¶¯
-  145   2          pwm_duty(R_Motor_N, 5000+pid_motor->PID_MOTOR_R_OUT);
-  146   2          PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT; // ×óµç»úPWM¸üÐÂ
-  147   2          PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT; // ÓÒµç»úPWM¸üÐÂ
-  148   2          break;
-  149   2        }
-  150   1      }
+  147   2          pid_motor->PID_MOTOR_R_OUT = constrain_int32(pid_motor->PID_MOTOR_R_OUT, PWM_Motor_Min, PWM_Motor_Max);
+  148   2          pwm_duty(L_Motor_P, 0); // ×óµç»úÇý¶¯
+  149   2          pwm_duty(L_Motor_N, 5000+pid_motor->PID_MOTOR_L_OUT); // µ¥¶ÀËüÒ»¸öÓÐÊýÖµ£¬·´×ª
+  150   2      
+  151   2          pwm_duty(R_Motor_P, 0); // ÓÒµç»úÇý¶¯
+  152   2          pwm_duty(R_Motor_N, 5000+pid_motor->PID_MOTOR_R_OUT);
+  153   2          PWM_Motor_L_now = pid_motor->PID_MOTOR_L_OUT; // ×óµç»úPWM¸üÐÂ
+  154   2          PWM_Motor_R_now = pid_motor->PID_MOTOR_R_OUT; // ÓÒµç»úPWM¸üÐÂ
+  155   2          break;
+  156   2        }
+  157   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       615     ------
+  code size            =       652     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
@@ -195,6 +203,8 @@ Module Information          Static   Overlayable
   const size           =    ------     ------
   hconst size          =    ------     ------
 End of Module Information.
+
+C251 COMPILER V5.60.0,  control                                                            09/04/23  22:44:26  PAGE 4   
 
 
 C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

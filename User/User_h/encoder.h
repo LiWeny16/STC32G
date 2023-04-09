@@ -7,6 +7,7 @@
 #include "zf_tim.h"//该文件主要用于读取编码器数据
 #include "road.h"
 #include "headfile.h"
+#include "TempVar.h"
 
 #define DIR_L P35 //方向
 #define DIR_R P36 
@@ -23,8 +24,7 @@
 typedef struct//速度状态结构体（以速度表示）
 {
 	      //   人为设定的目标速度值
-        uint32 Outgar_speed_L_ai;//出库左
-        uint32 Outgar_speed_R_ai;//出库右
+     
 	////////////我////////////用////////////的//////////////
         uint32 Strai_speed_L_ai;//直道左
         uint32 Strai_speed_R_ai;//直道右
@@ -35,8 +35,11 @@ typedef struct//速度状态结构体（以速度表示）
         uint32 Cur_R_speed_L_ai;//右转 左右轮
         uint32 Cur_R_speed_R_ai;//
 				
-				uint32 Ring_speed_L_ai;//圆环内部左
-	      uint32 Ring_speed_R_ai;//圆环内部右
+				uint32 Ring_L_speed_L_ai;//圆环内部左
+	      uint32 Ring_L_speed_R_ai;//圆环内部右
+	
+				uint32 Ring_R_speed_L_ai;//圆环内部左
+	      uint32 Ring_R_speed_R_ai;//圆环内部右
 				
         uint32 Ringin_speed_L_ai;//进圆环左
 				uint32 Ringin_speed_R_ai;//进圆环右
@@ -45,6 +48,8 @@ typedef struct//速度状态结构体（以速度表示）
         uint32 Ringout_speed_L_ai;//出圆环左
 				uint32 Ringout_speed_R_ai;//出圆环右
 				
+			  uint32 Outgar_speed_L_ai;//出库左
+        uint32 Outgar_speed_R_ai;//出库右
 	////////////我////////////用////////////的//////////////
         uint32 Cross_speed_L_ai;//十字左
         uint32 Cross_speed_R_ai;//十字右
@@ -89,14 +94,11 @@ typedef struct//当前速度结构体（表明当前状态下车的运行状态，值均已速度表示）
 	int speed_L_ai;//左轮目标值
 	int speed_R;//右轮当前速度值
 	int speed_R_ai;//右轮目标值
-	int speed_counter0_0;
-	int speed_counter0_1;
-	int speed_counter0_2;
-	int speed_counter_EN;
+
 }SPEED_now; 
 
 
 void speedout(Road road,SPEED_now* speed_now,SPEED_state* speed_state);//根据道路情况将速度状态结构体中的一组设定值赋给当前速度结构体中的目标值
-void speed_cal(SPEED_now* speed_now);//根据编码器数据计算速度值，并将其赋给当前速度结构体中的当前速度值
+void speed_cal(FOOT_COUNTER *foot_counter,SPEED_now* speed_now);//根据编码器数据计算速度值，并将其赋给当前速度结构体中的当前速度值
 void calculate_err_m(SPEED_now* speed_now,Err_Motor* err_Mot);//根据编码器数值计算偏差值，并更新偏差值结构体中last量,结果保存在电机偏差值结构体中
 #endif

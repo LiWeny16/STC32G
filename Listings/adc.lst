@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  adc                                                                06/04/23  00:08:04  PAGE 1   
+C251 COMPILER V5.60.0,  adc                                                                09/04/23  22:44:26  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE adc
@@ -26,8 +26,8 @@ stmt  level    source
    14   1        dg->L_zx_real = (int)(ADC_ReadAverage(ZX, count_dg, RE));
    15   1        dg->L_zh_real = (int)(ADC_ReadAverage(ZH, count_dg, RE)); // ×î´óÖµ255
    16   1      
-   17   1        //  dg->L_zs_real = (ADC_ReadAverage(ZS, count_dg, RE));//Ã»ÓÃ
-   18   1        //  dg->L_ys_real = (ADC_ReadAverage(YS, count_dg, RE));//Ã»ÓÃ
+   17   1        dg->L_zs_real = (int)(ADC_ReadAverage(ZS, count_dg, RE));//
+   18   1        dg->L_ys_real = (int)(ADC_ReadAverage(YS, count_dg, RE));//
    19   1      
    20   1        dg->L_yh_real = (int)(ADC_ReadAverage(YH, count_dg, RE)); // ×î´óÖµ255
    21   1        dg->L_yx_real = (int)(ADC_ReadAverage(YX, count_dg, RE));
@@ -39,73 +39,84 @@ stmt  level    source
    27   1        
    28   1        dg->L_zx_real = dg->L_zx_real >= 1 ? dg->L_zx_real : 1;
    29   1        dg->L_zh_real = dg->L_zh_real >= 1 ? dg->L_zh_real : 1;
-   30   1        // dg->L_zs_real = dg->L_zs_real >= 1 ? dg->L_zs_real : 1;//Ã»ÓÃ
-   31   1        // dg->L_ys_real = dg->L_ys_real >= 1 ? dg->L_ys_real : 1;//Ã»ÓÃ
-   32   1        dg->L_yh_real = dg->L_yh_real >= 1 ? dg->L_yh_real : 1;
-   33   1        dg->L_yx_real = dg->L_yx_real >= 1 ? dg->L_yx_real : 1;
-   34   1        // Ê¹²ÉÑù×îÐ¡ÖµÎª1
-   35   1      
-   36   1        // dg->L_zx_once = (sqrt((()dg->L_zx_real) / (dg->L_zx_max)));
-   37   1        // dg->L_zh_once = (sqrt((()dg->L_zh_real) / (dg->L_zh_max)));
-   38   1        // dg->L_zs_once = (sqrt((()dg->L_zs_real) / (dg->L_zs_max)));//Ã»ÓÃ
-   39   1        // dg->L_ys_once = (sqrt((()dg->L_ys_real) / (dg->L_ys_max)));//Ã»ÓÃ
-   40   1        // dg->L_yh_once = (sqrt((()dg->L_yh_real) / (dg->L_yh_max)));
-   41   1        // dg->L_yx_once = (sqrt((()dg->L_yx_real) / (dg->L_yx_max)));
-   42   1        dg->L_zx_once = (((float)dg->L_zx_real) / (dg->L_zx_max));
-   43   1        dg->L_zh_once = (((float)dg->L_zh_real) / (dg->L_zh_max));
-   44   1        dg->L_yh_once = (((float)dg->L_yh_real) / (dg->L_yh_max));
-   45   1        dg->L_yx_once = (((float)dg->L_yx_real) / (dg->L_yx_max));
-   46   1        // µÚÒ»´Î¹éÒ»»¯£¬Ê¹µÃµç¸Ð¾àÀëµç¸Ð×î´óÖµ´¦µÄÎÇºÏ¶ÈÓÃ°Ù·Ö±È±íÊ¾£¬²¢¿ª·½Ê¹µÃÆ«²îºÍÐ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³Éµ¥µ÷
+   30   1       
+   31   1        dg->L_zs_real = dg->L_zs_real >= 1 ? dg->L_zs_real : 1;
+   32   1        dg->L_ys_real = dg->L_ys_real >= 1 ? dg->L_ys_real : 1;
+   33   1        
+   34   1        dg->L_yh_real = dg->L_yh_real >= 1 ? dg->L_yh_real : 1;
+   35   1        dg->L_yx_real = dg->L_yx_real >= 1 ? dg->L_yx_real : 1;
+   36   1        // Ê¹²ÉÑù×îÐ¡ÖµÎª1
+   37   1      
+   38   1        // dg->L_zx_once = (sqrt((()dg->L_zx_real) / (dg->L_zx_max)));
+   39   1        // dg->L_zh_once = (sqrt((()dg->L_zh_real) / (dg->L_zh_max)));
+   40   1        // dg->L_zs_once = (sqrt((()dg->L_zs_real) / (dg->L_zs_max)));//Ã»ÓÃ
+   41   1        // dg->L_ys_once = (sqrt((()dg->L_ys_real) / (dg->L_ys_max)));//Ã»ÓÃ
+   42   1        // dg->L_yh_once = (sqrt((()dg->L_yh_real) / (dg->L_yh_max)));
+   43   1        // dg->L_yx_once = (sqrt((()dg->L_yx_real) / (dg->L_yx_max)));
+   44   1        dg->L_zx_once = (((float)dg->L_zx_real) / (dg->L_zx_max));
+   45   1        dg->L_zh_once = (((float)dg->L_zh_real) / (dg->L_zh_max));
+   46   1        
+   47   1        dg->L_yh_once = (((float)dg->L_yh_real) / (dg->L_yh_max));
+   48   1        dg->L_yx_once = (((float)dg->L_yx_real) / (dg->L_yx_max));
+   49   1        
+   50   1        dg->L_zs_once = (((float)dg->L_zs_real) / (dg->L_zs_max));
+   51   1        dg->L_ys_once = (((float)dg->L_ys_real) / (dg->L_ys_max));
+   52   1        
+   53   1        // µÚÒ»´Î¹éÒ»»¯£¬Ê¹µÃµç¸Ð¾àÀëµç¸Ð×î´óÖµ´¦µÄÎÇºÏ¶ÈÓÃ°Ù·Ö±È±íÊ¾£¬²¢¿ª·½Ê¹µÃÆ«²îºÍÐ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³Éµ¥µ÷
              -¹ØÏµ£¨¼´Ïû³ý¼«µã£©£¬Ê¹µÃ¶ªÏß¸üºÃÅÐ¶Ï
-   47   1      
-   48   1        // dg->L_zx_twice = (dg->L_zx_once) / (dg->L_zx_once * dg->L_zx_once + dg->L_yx_once * dg->L_yx_once + 
-             -dg->L_zh_once * dg->L_zh_once + dg->L_yh_once * dg->L_yh_once);
-   49   1        // dg->L_zh_twice = (dg->L_zh_once) / (dg->L_zx_once * dg->L_zx_once + dg->L_yx_once * dg->L_yx_once + 
-             -dg->L_zh_once * dg->L_zh_once + dg->L_yh_once * dg->L_yh_once);
-   50   1        // dg->L_yh_twice = (dg->L_yh_once) / (dg->L_zx_once * dg->L_zx_once + dg->L_yx_once * dg->L_yx_once + 
-             -dg->L_zh_once * dg->L_zh_once + dg->L_yh_once * dg->L_yh_once);
-   51   1        // dg->L_yx_twice = (dg->L_yx_once) / (dg->L_zx_once * dg->L_zx_once + dg->L_yx_once * dg->L_yx_once + 
-             -dg->L_zh_once * dg->L_zh_once + dg->L_yh_once * dg->L_yh_once);
-C251 COMPILER V5.60.0,  adc                                                                06/04/23  00:08:04  PAGE 2   
+   54   1      
+   55   1        // dg->L_zx_twice = (dg->L_zx_once) / (dg->L_zx_once * dg->L_zx_once + dg->L_yx_once * dg->L_yx_once + 
+C251 COMPILER V5.60.0,  adc                                                                09/04/23  22:44:26  PAGE 2   
 
-   52   1        // µÚ¶þ´Î¹éÒ»»¯£¬ÇóÈ¡ºáµç¸ÐºÍÐ±µç¸ÐÆ«²îÖµÕ¼×ÜµÄ°Ù·Ö±È
-   53   1      
-   54   1        // Err_Ste->Err_x = dg->L_zx_twice - dg->L_yx_twice;
-   55   1        // Err_Ste->Err_h = dg->L_zh_twice - dg->L_yh_twice;
-   56   1        // Err_Ste->Err = (-0.6151 * (Err_Ste->Err_x)) + (3.3868 * (Err_Ste->Err_h));
-   57   1        // // ÒÔÉÏÏµÊýÊ¹ÓÃmatlabÄâºÏ£¬Ê¹µÃÆ«²îºÍÐ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³ÉÏßÐÔ¹ØÏµ£¬ÖÁ´Ë£¬Æ«²îºÍÐ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³Éµ
+             -dg->L_zh_once * dg->L_zh_once + dg->L_yh_once * dg->L_yh_once);
+   56   1        // dg->L_zh_twice = (dg->L_zh_once) / (dg->L_zx_once * dg->L_zx_once + dg->L_yx_once * dg->L_yx_once + 
+             -dg->L_zh_once * dg->L_zh_once + dg->L_yh_once * dg->L_yh_once);
+   57   1        // dg->L_yh_twice = (dg->L_yh_once) / (dg->L_zx_once * dg->L_zx_once + dg->L_yx_once * dg->L_yx_once + 
+             -dg->L_zh_once * dg->L_zh_once + dg->L_yh_once * dg->L_yh_once);
+   58   1        // dg->L_yx_twice = (dg->L_yx_once) / (dg->L_zx_once * dg->L_zx_once + dg->L_yx_once * dg->L_yx_once + 
+             -dg->L_zh_once * dg->L_zh_once + dg->L_yh_once * dg->L_yh_once);
+   59   1        // µÚ¶þ´Î¹éÒ»»¯£¬ÇóÈ¡ºáµç¸ÐºÍÐ±µç¸ÐÆ«²îÖµÕ¼×ÜµÄ°Ù·Ö±È
+   60   1      
+   61   1        // Err_Ste->Err_x = dg->L_zx_twice - dg->L_yx_twice;
+   62   1        // Err_Ste->Err_h = dg->L_zh_twice - dg->L_yh_twice;
+   63   1        // Err_Ste->Err = (-0.6151 * (Err_Ste->Err_x)) + (3.3868 * (Err_Ste->Err_h));
+   64   1        // // ÒÔÉÏÏµÊýÊ¹ÓÃmatlabÄâºÏ£¬Ê¹µÃÆ«²îºÍÐ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³ÉÏßÐÔ¹ØÏµ£¬ÖÁ´Ë£¬Æ«²îºÍÐ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³Éµ
              -¥µ÷ÏßÐÔ¹ØÏµ
-   58   1        // Err_Ste->Errsum += Err_Ste->Err;
-   59   1        // Err_Ste->Errdif = Err_Ste->Err - Err_Ste->Err_last;
-   60   1        // // Î»ÖÃÊ½PID»ý·ÖºÍ²î·ÖÔËËã
-   61   1        // Err_Ste->Err_x_last = Err_Ste->Err_x;
-   62   1        // Err_Ste->Err_h_last = Err_Ste->Err_h;
-   63   1        // Err_Ste->Err_last = Err_Ste->Err;
-   64   1      
-   65   1        Err_Ste->Err_x = (dg->L_zx_once - dg->L_yx_once);
-   66   1        Err_Ste->Err_h = (dg->L_zh_once - dg->L_yh_once);
-   67   1        Err_Ste->Err_x=  Err_Ste->Err_x>1?1: Err_Ste->Err_x;
-   68   1        Err_Ste->Err_h=  Err_Ste->Err_h>1?1: Err_Ste->Err_h;
-   69   1        Err_Ste->Err_x=  Err_Ste->Err_x<(-1)?(-1): Err_Ste->Err_x;
-   70   1        Err_Ste->Err_h=  Err_Ste->Err_h<(-1)?(-1): Err_Ste->Err_h;
+   65   1        // Err_Ste->Errsum += Err_Ste->Err;
+   66   1        // Err_Ste->Errdif = Err_Ste->Err - Err_Ste->Err_last;
+   67   1        // // Î»ÖÃÊ½PID»ý·ÖºÍ²î·ÖÔËËã
+   68   1        // Err_Ste->Err_x_last = Err_Ste->Err_x;
+   69   1        // Err_Ste->Err_h_last = Err_Ste->Err_h;
+   70   1        // Err_Ste->Err_last = Err_Ste->Err;
    71   1        
-   72   1        Err_Ste->Err = (1.1151 * (Err_Ste->Err_x)) + (3.9868 * (Err_Ste->Err_h));
-   73   1        // ÒÔÉÏÏµÊýÊ¹ÓÃmatlabÄâºÏ£¬Ê¹µÃÆ«²îºÍÐ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³ÉÏßÐÔ¹ØÏµ£¬ÖÁ´Ë£¬Æ«²îºÍÐ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³Éµ¥µ÷
-             -ÏßÐÔ¹ØÏµ
-   74   1        Err_Ste->Errsum = Err_Ste->Err;
-   75   1        Err_Ste->Errdif = Err_Ste->Err - Err_Ste->Err_last;
-   76   1        // Î»ÖÃÊ½PID»ý·ÖºÍ²î·ÖÔËËã
-   77   1       // Err_Ste->Err_x_last = Err_Ste->Err_x;
-   78   1       // Err_Ste->Err_h_last = Err_Ste->Err_h;
-   79   1        Err_Ste->Err_last = Err_Ste->Err;
-   80   1      
-   81   1        // Æ«²îÖµ¸üÐÂ
-   82   1      }
+   72   1        //¹éÒ»»¯×ö²î
+   73   1        Err_Ste->Err_x = (dg->L_zx_once - dg->L_yx_once);
+   74   1        Err_Ste->Err_h = (dg->L_zh_once - dg->L_yh_once);
+   75   1        //ÏÞ·ù
+   76   1        Err_Ste->Err_x=  Err_Ste->Err_x>1?1: Err_Ste->Err_x;
+   77   1        Err_Ste->Err_h=  Err_Ste->Err_h>1?1: Err_Ste->Err_h;
+   78   1        Err_Ste->Err_x=  Err_Ste->Err_x<(-1)?(-1): Err_Ste->Err_x;
+   79   1        Err_Ste->Err_h=  Err_Ste->Err_h<(-1)?(-1): Err_Ste->Err_h;
+   80   1        
+   81   1        //Err_Ste->Err = (1.1151 * (Err_Ste->Err_x)) + (3.9868 * (Err_Ste->Err_h));
+   82   1        
+   83   1        // ÒÔÉÏÏµÊýÊ¹ÓÃmatlabÄâºÏ£¬Ê¹µÃÆ«²îºÍÐ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³ÉÏßÐÔ¹ØÏµ£¬ÖÁ´Ë£¬Æ«²îºÍÐ¡³µÆ«ÀëÈüµÀµÄ¾àÀë³Éµ¥µ÷Ï
+             -ßÐÔ¹ØÏµ
+   84   1        //Err_Ste->Errsum += Err_Ste->Err;
+   85   1        //Err_Ste->Errdif = Err_Ste->Err - Err_Ste->Err_last;
+   86   1        
+   87   1        // Î»ÖÃÊ½PID»ý·ÖºÍ²î·ÖÔËËã
+   88   1       // Err_Ste->Err_x_last = Err_Ste->Err_x;
+   89   1       // Err_Ste->Err_h_last = Err_Ste->Err_h;
+   90   1        //Err_Ste->Err_last = Err_Ste->Err;
+   91   1      
+   92   1        // Æ«²îÖµ¸üÐÂ
+   93   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       780     ------
+  code size            =       833     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

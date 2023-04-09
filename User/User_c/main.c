@@ -76,12 +76,15 @@ void main()
 
 		printf("DG_State.L_yh_real = %d\r\n", dg_state.L_yh_real);
 		printf("DG_State.L_zh_real = %d\r\n", dg_state.L_zh_real);
+		
+		printf("DG_State.L_ys_real = %d\r\n", dg_state.L_ys_real);
+		printf("DG_State.L_zs_real = %d\r\n", dg_state.L_zs_real);
 
-		printf("DG_State.L_zx_once = %f\r\n", dg_state.L_zx_once);
-		printf("DG_State.L_zh_once = %f\r\n", dg_state.L_zh_once);
+		// printf("DG_State.L_zx_once = %f\r\n", dg_state.L_zx_once);
+		// printf("DG_State.L_zh_once = %f\r\n", dg_state.L_zh_once);
 
-		printf("DG_State.L_yx_once = %f\r\n", dg_state.L_yx_once);
-		printf("DG_State.L_yh_once = %f\r\n", dg_state.L_yh_once);
+		// printf("DG_State.L_yx_once = %f\r\n", dg_state.L_yx_once);
+		// printf("DG_State.L_yh_once = %f\r\n", dg_state.L_yh_once);
 
 		// printf("dg_state.L_zx_max = %f\r\n", dg_state.L_zx_max);
 		// printf("dg_state.L_zh_max = %f\r\n", dg_state.L_zh_max);
@@ -126,13 +129,13 @@ void main()
 													   // printf("speed_state.Strai_speed_L_ai = %d\r\n",speed_state.Strai_speed_L_ai);
 													   // printf("speed_state.Strai_speed_R_ai = %d\r\n",speed_state.Strai_speed_R_ai);
 
-		printf("err_motor.err_L_m = %d\r\n",err_motor.err_L_m);
-		printf("err_motor.err_R_m = %d\r\n",err_motor.err_R_m);
+		// printf("err_motor.err_L_m = %d\r\n",err_motor.err_L_m);
+		// printf("err_motor.err_R_m = %d\r\n",err_motor.err_R_m);
 		
-		printf("pid_motor.MOTOR_L_OUT_temp = %f\r\n",pid_motor.MOTOR_L_OUT_temp);
-		printf("pid_motor.MOTOR_R_OUT_temp = %f\r\n",pid_motor.MOTOR_R_OUT_temp);
-		printf("PWM_Motor_L_now= %d\r\n",PWM_Motor_L_now);
-		printf("PWM_Motor_R_now = %d\r\n",PWM_Motor_R_now);
+		// printf("pid_motor.MOTOR_L_OUT_temp = %f\r\n",pid_motor.MOTOR_L_OUT_temp);
+		// printf("pid_motor.MOTOR_R_OUT_temp = %f\r\n",pid_motor.MOTOR_R_OUT_temp);
+		// printf("PWM_Motor_L_now= %d\r\n",PWM_Motor_L_now);
+		// printf("PWM_Motor_R_now = %d\r\n",PWM_Motor_R_now);
 
 		//send_data_sw((err_motor.err_L_m)*1000,0,0,0,0xf1);
 		//send_data_sw((err_motor.err_R_m)*1000,0,0,0,0xf2);
@@ -148,13 +151,20 @@ void main()
 
 		// 时间
 
-		printf("timer.time0_0 = %d\r\n", timer.time0_0);
-		printf("timer.time0_1 = %d\r\n", timer.time0_1);
-		printf("timer.time1_0 = %d\r\n", timer.time1_0);
+		// printf("timer.time0_0 = %d\r\n", timer.time0_0);
+		// printf("timer.time0_1 = %d\r\n", timer.time0_1);
+		// printf("timer.time1_0 = %d\r\n", timer.time1_0);
 		
-		printf("tempVar = %f\r\n", tempVar);
-		printf("tempVar1 = %f\r\n", tempVar1);
-		printf("tempVar2 = %f\r\n", tempVar2);
-		// 步数
+		 printf("tempVar = %f\r\n", tempVar);
+		 printf("tempVar1 = %f\r\n", tempVar1);
+		 printf("tempVar2 = %f\r\n", tempVar2);
+		// // 步数
+		 //printf("foot_counter.speed_counter0_0 = %d\r\n", foot_counter.speed_counter0_0);
+		 //printf("foot_counter.speed_counter0_1 = %d\r\n", foot_counter.speed_counter0_1);
+		 //printf("foot_counter.speed_counter0_2 = %d\r\n", foot_counter.speed_counter0_2);
+		 
+		 printf("foot_counter.speed_counter1_0 = %d\r\n", foot_counter.speed_counter1_0);
+		 printf("foot_counter.speed_counter1_1 = %d\r\n", foot_counter.speed_counter1_1);
+		 printf("foot_counter.speed_counter1_2 = %d\r\n", foot_counter.speed_counter1_2);
 	}
 }
